@@ -13,3 +13,11 @@
 .col-data-content {
   text-align: center;
 }
+
+.col-acoes-header {
+  width: 120px;
+}
+
+.col-acoes-content > a {
+  margin-right: 5px;
+}
