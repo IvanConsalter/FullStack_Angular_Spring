@@ -37,13 +37,13 @@
           </tr>
         </ng-template>
 
-        <ng-template pTemplate="body" let-lancamento styleClass="ng-template-body">
+        <ng-template pTemplate="body" let-lancamento>
           <tr>
             <td>{{ lancamento.pessoa }}</td>
             <td>{{ lancamento.descricao }}</td>
             <td class="col-data-content">{{ lancamento.dataVencimento }}</td>
             <td class="col-data-content">{{ lancamento.dataPagamento }}</td>
-            <td class="col-valor-content">{{ lancamento.valor }}</td>
+            <td class="col-valor-content" [style.color]="lancamento.tipo === 'RECEITA' ? 'blue' : 'red'">{{ lancamento.valor }}</td>
           </tr>
         </ng-template>
       </p-table>
