@@ -26,7 +26,14 @@
 
   <div class="p-grid">
     <div class="p-col-12">
-      <p-table [value]="lancamentos" [paginator]="true" [rows]="4" class="table">
+      <p-table
+        [value]="lancamentos"
+        [paginator]="true"
+        [rows]="4"
+        [responsive]="true"
+        class="table"
+      >
+
         <ng-template pTemplate="header">
           <tr>
             <th>Pessoa</th>
