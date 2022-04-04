@@ -46,13 +46,33 @@
         </ng-template>
 
         <ng-template pTemplate="body" let-lancamento>
-          <tr>
-            <td>{{ lancamento.pessoa }}</td>
-            <td>{{ lancamento.descricao }}</td>
-            <td class="col-data-content">{{ lancamento.dataVencimento }}</td>
-            <td class="col-data-content">{{ lancamento.dataPagamento }}</td>
-            <td class="col-valor-content" [style.color]="lancamento.tipo === 'RECEITA' ? 'blue' : 'red'">{{ lancamento.valor }}</td>
-            <td class="col-acoes-content">
+          <tr class="tr-body">
+            <td>
+              <span class="p-column-title">Pessoa</span>
+              {{ lancamento.pessoa }}
+            </td>
+
+            <td>
+              <span class="p-column-title">Descrição</span>
+              {{ lancamento.descricao }}
+            </td>
+
+            <td class="col-data">
+              <span class="p-column-title">Vencimento</span>
+              {{ lancamento.dataVencimento }}
+            </td>
+
+            <td class="col-data">
+              <span class="p-column-title">Pagamento</span>
+              {{ lancamento.dataPagamento }}
+            </td>
+
+            <td class="col-valor">
+              <span class="p-column-title">Valor</span>
+              <span [style.color]="lancamento.tipo === 'DESPESA' ? 'red' : 'blue'">{{ lancamento.valor }}</span>
+            </td>
+
+            <td class="col-acoes">
               <a pButton icon="pi pi-pencil" pTooltip="Editar" tooltipPosition="top"></a>
               <button pButton icon="pi pi-trash" pTooltip="Excluir" tooltipPosition="top"></button>
             </td>
