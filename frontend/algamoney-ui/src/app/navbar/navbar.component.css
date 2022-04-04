@@ -6,3 +6,40 @@
 .navbar-toggle {
   color: #fff;
 }
+
+.navbar-menu {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 300px;
+  margin: 0;
+  padding: 0;
+  z-index: 100;
+  height: 100%;
+  list-style: none;
+  background: #3a3633;
+  color: #fff;
+}
+
+.navbar-usuario {
+  display: flex;
+  justify-content: space-between;
+  text-transform: uppercase;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #525151;
+}
+
+.navbar-menuitem {
+  padding: 15px;
+}
+
+.navbar-menuitem a {
+  color: #c0bbb7;
+  text-decoration: none;
+}
+
+.navbar-menuitem a:hover {
+  color: #fff;
+}

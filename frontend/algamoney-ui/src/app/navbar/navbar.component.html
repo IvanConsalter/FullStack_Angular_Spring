@@ -2,8 +2,20 @@
   <div class="container">
     <div class="p-grid">
       <div class="p-col-12">
-        <a href="javascript:;" class="navbar-toggle"><i class="pi pi-bars"></i></a>
+        <a href="javascript:;" class="navbar-toggle" (click)="exibirMenu()"><i class="pi pi-bars"></i></a>
       </div>
     </div>
   </div>
+
+  <ul class="navbar-menu" [hidden]="mostrarMenu">
+    <li class="navbar-usuario">
+      José da Silva
+      <div class="btn-close" (click)="exibirMenu()">
+        <i class="pi pi-times"></i>
+      </div>
+    </li>
+    <li class="navbar-menuitem"><a href="#">Lançamentos</a></li>
+    <li class="navbar-menuitem"><a href="#">Pessoas</a></li>
+    <li class="navbar-menuitem"><a href="#">Logout</a></li>
+  </ul>
 </nav>
