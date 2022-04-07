@@ -1,0 +1,7 @@
+.col-acoes > a {
+  margin-right: .5rem;
+}
+
+.status-pessoa:hover {
+  cursor: pointer;
+}

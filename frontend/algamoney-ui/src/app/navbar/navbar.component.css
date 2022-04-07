@@ -31,6 +31,10 @@
   border-bottom: 1px solid #525151;
 }
 
+.navbar-usuario .btn-close:hover {
+  cursor: pointer;
+}
+
 .navbar-menuitem {
   padding: 15px;
 }
