@@ -7,6 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LancamentoCadastroComponent implements OnInit {
 
+  optionsConfig = {
+    prefix: 'R$',
+    thousands: '.',
+    decimal: ',',
+    allowNegative: false
+  };
+
   tipos = [
     { label: 'Receita', value: 'RECEITA' },
     { label: 'Despesa', value: 'DESPESA' }
