@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule } from '@angular/forms';
 
 // Primeng Modules
 import { InputTextModule } from 'primeng/inputtext';
@@ -12,6 +13,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputMaskModule } from 'primeng/inputmask';
+import { MessageModule } from 'primeng/message';
 // import { InputNumberModule } from 'primeng/inputnumber';
 // Fim Primeng Modules
 
@@ -38,6 +40,8 @@ import { PessoaCadastroComponent } from './pessoa-cadastro/pessoa-cadastro.compo
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    FormsModule,
+    // PrimeNg
     InputTextModule,
     ButtonModule,
     TableModule,
@@ -47,8 +51,10 @@ import { PessoaCadastroComponent } from './pessoa-cadastro/pessoa-cadastro.compo
     SelectButtonModule,
     DropdownModule,
     InputMaskModule,
+    MessageModule,
     // InputNumberModule,
-    CurrencyMaskModule // ng2-currency
+    // ng2-currency
+    CurrencyMaskModule
   ],
   providers: [],
   bootstrap: [AppComponent]
