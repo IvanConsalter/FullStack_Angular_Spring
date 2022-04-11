@@ -12,7 +12,15 @@
 
       <div class="p-col-12 p-md-6 p-lg-3 p-fluid">
         <label>Vencimento</label>
-        <p-calendar dateFormat="dd/mm/yy" [showIcon]="true"></p-calendar>
+        <p-calendar
+          dateFormat="dd/mm/yy"
+          [showIcon]="true"
+          name="vencimento"
+          ngModel #vencimento="ngModel"
+          [required]="true"
+        ></p-calendar>
+
+        <app-message [control]="vencimento" error="required" message="Data de vencimento é obrigatório!"></app-message>
       </div>
 
       <div class="p-col-12 p-md-6 p-lg-3 p-fluid">
@@ -21,8 +29,14 @@
       </div>
 
       <div class="p-col-12 p-md-9 p-fluid">
-        <label>Descrição {{ descricao.errors | json }}</label>
-        <input pInputText type="text" name="descricao" ngModel #descricao="ngModel" required minlength="10">
+        <label>Descrição</label>
+        <input
+          pInputText
+          type="text"
+          name="descricao"
+          ngModel #descricao="ngModel"
+          [required]="true"
+          minlength="10">
 
         <app-message [control]="descricao" error="required" message="Descrição é obrigatório!"></app-message>
         <app-message [control]="descricao" error="minlength" message="Mínimo é {{ descricao.errors?.minlength?.requiredLength }} caracteres"></app-message>
@@ -31,17 +45,44 @@
 
       <div class="p-col-12 p-md-3 p-fluid">
         <label>Valor</label>
-        <input pInputText currencyMask [options]="optionsConfig" placeholder="R$ 0,00">
+        <input
+          pInputText
+          currencyMask
+          [options]="optionsConfig"
+          name="valor"
+          ngModel #valor="ngModel"
+          [required]="true"
+          placeholder="R$ 0,00">
+
+        <app-message [control]="valor" error="required" message="Valor é obrigatório!"></app-message>
       </div>
 
       <div class="p-col-12 p-md-6 p-fluid">
         <label>Categoria</label>
-        <p-dropdown placeholder="Selecione" [options]="categorias" [filter]="true"></p-dropdown>
+        <p-dropdown
+          placeholder="Selecione"
+          [options]="categorias"
+          [filter]="true"
+          name="categoria"
+          ngModel #categoria="ngModel"
+          [required]="true"
+        ></p-dropdown>
+
+        <app-message [control]="categoria" error="required" message="Categoria é obrigatório!"></app-message>
       </div>
 
       <div class="p-col-12 p-md-6 p-fluid">
         <label>Pessoa</label>
-        <p-dropdown placeholder="Selecione" [options]="pessoas" [filter]="true"></p-dropdown>
+        <p-dropdown
+        placeholder="Selecione"
+        [options]="pessoas"
+        [filter]="true"
+        name="pessoa"
+        ngModel #pessoa="ngModel"
+        [required]="true"
+        ></p-dropdown>
+
+        <app-message [control]="pessoa" error="required" message="Pessoa é obrigatório!"></app-message>
       </div>
 
       <div class="p-col-12 p-md-6 p-fluid">
