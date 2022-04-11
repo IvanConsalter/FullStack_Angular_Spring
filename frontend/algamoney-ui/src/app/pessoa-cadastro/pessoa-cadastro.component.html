@@ -1,5 +1,5 @@
 <div class="container">
-  <form autocomplete="off">
+  <form autocomplete="off" #pessoaForm="ngForm">
 
     <div class="p-grid">
       <div class="p-col-12">
@@ -102,7 +102,7 @@
       </div>
 
       <div class="p-col-12">
-        <button pButton type="submit" label="Salvar" class="p-button-success"></button>
+        <button pButton type="submit" label="Salvar" class="p-button-success" [disabled]="pessoaForm.invalid"></button>
         <button pButton type="button" label="Novo"></button>
 
         <a href="javascript:;" pButton class="p-button-info">Voltar para a pesquisa</a>
