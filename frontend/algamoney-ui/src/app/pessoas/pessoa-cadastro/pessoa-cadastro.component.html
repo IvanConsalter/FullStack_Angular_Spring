@@ -15,8 +15,8 @@
           ngModel #nome="ngModel"
           [required]="true"
           minlength="5">
-        <!-- <app-message [control]="nome" error="required" message="Nome completo é obrigatório!"></app-message> -->
-        <!-- <app-message [control]="nome" error="minlength" message="Dever ter no mínimo {{ nome.errors?.minlength?.requiredLength }}"></app-message> -->
+        <app-message [control]="nome" error="required" message="Nome completo é obrigatório!"></app-message>
+        <app-message [control]="nome" error="minlength" message="Dever ter no mínimo {{ nome.errors?.minlength?.requiredLength }}"></app-message>
       </div>
 
       <div class="p-col-12 p-md-4 p-fluid">
@@ -28,7 +28,7 @@
           [required]="true"
         ></p-inputMask>
 
-        <!-- <app-message [control]="cep" error="required" message="CEP é obrigatório!"></app-message> -->
+        <app-message [control]="cep" error="required" message="CEP é obrigatório!"></app-message>
       </div>
 
       <div class="p-col-12 p-md-4 p-fluid">
@@ -41,8 +41,8 @@
           [required]="true"
           minlength="5">
 
-        <!-- <app-message [control]="bairro" error="required" message="Bairro é obrigatório!"></app-message> -->
-        <!-- <app-message [control]="bairro" error="minlength" message="Dever ter no mínimo {{ bairro.errors?.minlength?.requiredLength }}"></app-message> -->
+        <app-message [control]="bairro" error="required" message="Bairro é obrigatório!"></app-message>
+        <app-message [control]="bairro" error="minlength" message="Dever ter no mínimo {{ bairro.errors?.minlength?.requiredLength }}"></app-message>
       </div>
 
       <div class="p-col-12 p-md-4 p-fluid">
@@ -60,8 +60,8 @@
         [required]="true"
         minlength="5">
 
-      <!-- <app-message [control]="logradouro" error="required" message="Logradouro é obrigatório!"></app-message> -->
-      <!-- <app-message [control]="logradouro" error="minlength" message="Dever ter no mínimo {{ logradouro.errors?.minlength?.requiredLength }}"></app-message> -->
+      <app-message [control]="logradouro" error="required" message="Logradouro é obrigatório!"></app-message>
+      <app-message [control]="logradouro" error="minlength" message="Dever ter no mínimo {{ logradouro.errors?.minlength?.requiredLength }}"></app-message>
       </div>
 
       <div class="p-col-12 p-md-3 p-fluid">
@@ -73,7 +73,7 @@
         ngModel #numero="ngModel"
         [required]="true">
 
-        <!-- <app-message [control]="numero" error="required" message="Número é obrigatório!"></app-message> -->
+        <app-message [control]="numero" error="required" message="Número é obrigatório!"></app-message>
       </div>
 
       <div class="p-col-12 p-md-6 p-fluid">
@@ -85,7 +85,7 @@
           ngModel #cidade="ngModel"
           [required]="true">
 
-        <!-- <app-message [control]="cidade" error="required" message="Cidade é obrigatório!"></app-message> -->
+        <app-message [control]="cidade" error="required" message="Cidade é obrigatório!"></app-message>
       </div>
 
       <div class="p-col-12 p-md-6 p-fluid">
@@ -98,7 +98,7 @@
           [required]="true"
         >
 
-        <!-- <app-message [control]="estado" error="required" message="Estado é obrigatório!"></app-message> -->
+        <app-message [control]="estado" error="required" message="Estado é obrigatório!"></app-message>
       </div>
 
       <div class="p-col-12">

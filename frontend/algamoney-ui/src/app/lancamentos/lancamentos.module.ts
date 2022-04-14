@@ -1,3 +1,4 @@
+import { SharedModule } from './../shared/shared.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -31,6 +32,8 @@ import { LancamentosGridComponent } from './lancamentos-grid/lancamentos-grid.co
     // Angular Modules
     CommonModule,
     FormsModule,
+    // My Shared Module
+    SharedModule,
     // PrimeNg Modules
     InputTextModule,
     ButtonModule,

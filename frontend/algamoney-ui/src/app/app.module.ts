@@ -5,7 +5,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // My Components
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { MessageComponent } from './message/message.component';
 
 // my modules
 import { LancamentosModule } from './lancamentos/lancamentos.module';
@@ -15,7 +14,6 @@ import { PessoasModule } from './pessoas/pessoas.module';
   declarations: [
     AppComponent,
     NavbarComponent,
-    MessageComponent,
   ],
   imports: [
     // Angular Modules
