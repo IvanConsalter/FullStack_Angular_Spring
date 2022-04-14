@@ -1,0 +1,59 @@
+<p-table [value]="pessoas" [responsive]="true" [paginator]="true" [rows]="4">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Nome</th>
+      <th>Cidade</th>
+      <th>Cidade</th>
+      <th>Status</th>
+      <th class="col-acoes-header">Ações</th>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="body" let-pessoa>
+    <tr>
+      <td>
+        <span class="p-column-title">Nome</span>
+        {{ pessoa.nome }}
+      </td>
+      <td>
+        <span class="p-column-title">Cidade</span>
+        {{ pessoa.cidade }}
+      </td>
+      <td>
+        <span class="p-column-title">Estado</span>
+        {{ pessoa.estado }}
+      </td>
+      <td>
+        <span class="p-column-title">Status</span>
+        <a
+          class="status-pessoa"
+          [pTooltip]="!pessoa.status ? 'Ativar' : 'Desativar'"
+          tooltipPosition="top"
+        >
+          {{ pessoa.status ? "Ativo" : "Inativo" }}
+        </a>
+      </td>
+      <td class="col-acoes">
+        <span class="p-column-title">Status</span>
+        <a
+          icon="pi pi-pencil"
+          pTooltip="Editar"
+          tooltipPosition="top"
+          pButton
+        ></a>
+        <button
+          icon="pi pi-trash"
+          pTooltip="Excluir"
+          tooltipPosition="top"
+          pButton
+        ></button>
+      </td>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="emptyMessage">
+    <tr>
+      <td colspan="5">Nenhuma pessoa encontrada</td>
+    </tr>
+  </ng-template>
+</p-table>
