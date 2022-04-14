@@ -16,7 +16,7 @@ import { SelectButtonModule } from 'primeng/selectbutton';
 // ng2-currency
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 
-// my modules
+// my components
 import { LancamentosPesquisaComponent } from './lancamentos-pesquisa/lancamentos-pesquisa.component';
 import { LancamentoCadastroComponent } from './lancamento-cadastro/lancamento-cadastro.component';
 import { LancamentosGridComponent } from './lancamentos-grid/lancamentos-grid.component';
