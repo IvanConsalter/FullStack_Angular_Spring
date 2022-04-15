@@ -4,22 +4,22 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // My Components
 import { AppComponent } from './app.component';
-import { NavbarComponent } from './navbar/navbar.component';
 
 // my modules
+import { CoreModule } from './core/core.module';
 import { LancamentosModule } from './lancamentos/lancamentos.module';
 import { PessoasModule } from './pessoas/pessoas.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent,
   ],
   imports: [
     // Angular Modules
     BrowserModule,
     BrowserAnimationsModule,
     // My Modules
+    CoreModule,
     LancamentosModule,
     PessoasModule,
   ],
