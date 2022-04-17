@@ -1,4 +1,3 @@
-import { SharedModule } from './../shared/shared.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -16,6 +15,9 @@ import { SelectButtonModule } from 'primeng/selectbutton';
 
 // ng2-currency
 import { CurrencyMaskModule } from 'ng2-currency-mask';
+
+// my modules
+import { SharedModule } from './../shared/shared.module';
 
 // my components
 import { LancamentosPesquisaComponent } from './lancamentos-pesquisa/lancamentos-pesquisa.component';
