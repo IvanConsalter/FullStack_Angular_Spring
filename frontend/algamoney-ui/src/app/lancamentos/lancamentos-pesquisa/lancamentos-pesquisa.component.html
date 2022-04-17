@@ -1,35 +1,39 @@
 <div class="container">
-  <div class="p-grid">
+  <form autocomplete="off" (ngSubmit)="consultar()">
+    <div class="p-grid">
+      <div class="p-col-12">
+        <h1>Lançamentos</h1>
+      </div>
 
-    <div class="p-col-12">
-      <h1>Lançamentos</h1>
+      <div class="p-col-12 p-fluid">
+        <label>Descrição</label>
+        <input
+          type="text"
+          pInputText
+          name="descricao"
+          [(ngModel)]="descricao"
+        />
+      </div>
+
+      <div class="p-col-12">
+        <label style="display: block">Vencimento</label>
+        <input type="text" style="width: 95px" pInputText />
+
+        <label>até</label>
+        <input type="text" style="width: 95px" pInputText />
+      </div>
+
+      <div class="p-col-12">
+        <button type="submit" label="Pesquisar" pButton></button>
+      </div>
     </div>
-
-    <div class="p-col-12 p-fluid">
-      <label>Descrição</label>
-      <input type="text" pInputText >
-    </div>
-
-    <div class="p-col-12">
-      <label style="display: block;">Vencimento</label>
-      <input type="text" style="width: 95px;" pInputText>
-
-      <label>até</label>
-      <input type="text" style="width: 95px;" pInputText>
-    </div>
-
-    <div class="p-col-12">
-      <button type="submit" label="Pesquisar" pButton></button>
-    </div>
-
-  </div>
+  </form>
 
   <div class="p-grid">
     <div class="p-col-12">
       <app-lancamentos-grid [lancamentos]="lancamentos"></app-lancamentos-grid>
     </div>
 
-      <a pButton label="Novo Lançamento"></a>
+    <a pButton label="Novo Lançamento"></a>
   </div>
-
 </div>
