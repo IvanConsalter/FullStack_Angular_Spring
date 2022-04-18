@@ -11,7 +11,7 @@
           type="text"
           pInputText
           name="descricao"
-          [(ngModel)]="descricao"
+          [(ngModel)]="filtro.descricao"
         />
       </div>
 
@@ -24,7 +24,7 @@
           [yearNavigator]="true"
           yearRange="2015:2023"
           name="dataVencimentoInicio"
-          [(ngModel)]="dataVencimentoInicio"
+          [(ngModel)]="filtro.dataVencimentoInicio"
         ></p-calendar>
 
         <label class="divisor-calendarios">até</label>
@@ -36,7 +36,7 @@
           [yearNavigator]="true"
           yearRange="2015:2023"
           name="dataVencimentoFim"
-          [(ngModel)]="dataVencimentoFim"
+          [(ngModel)]="filtro.dataVencimentoFim"
         ></p-calendar>
       </div>
 
