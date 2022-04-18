@@ -17,10 +17,27 @@
 
       <div class="p-col-12">
         <label style="display: block">Vencimento</label>
-        <input type="text" style="width: 95px" pInputText />
+        <p-calendar
+          dateFormat="dd/mm/yy"
+          [showIcon]="true"
+          [monthNavigator]="true"
+          [yearNavigator]="true"
+          yearRange="2015:2023"
+          name="dataVencimentoInicio"
+          [(ngModel)]="dataVencimentoInicio"
+        ></p-calendar>
 
-        <label>até</label>
-        <input type="text" style="width: 95px" pInputText />
+        <label class="divisor-calendarios">até</label>
+
+        <p-calendar
+          dateFormat="dd/mm/yy"
+          [showIcon]="true"
+          [monthNavigator]="true"
+          [yearNavigator]="true"
+          yearRange="2015:2023"
+          name="dataVencimentoFim"
+          [(ngModel)]="dataVencimentoFim"
+        ></p-calendar>
       </div>
 
       <div class="p-col-12">
