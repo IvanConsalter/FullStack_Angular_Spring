@@ -1,9 +1,13 @@
-<p-table [value]="pessoas" [responsive]="true" [paginator]="true" [rows]="4">
+<p-table
+  [value]="pessoas"
+  [responsive]="true"
+  [paginator]="true"
+  [rows]="filtro.itensPorPagina">
   <ng-template pTemplate="header">
     <tr>
       <th>Nome</th>
       <th>Cidade</th>
-      <th>Cidade</th>
+      <th>Estado</th>
       <th>Status</th>
       <th class="col-acoes-header">Ações</th>
     </tr>
@@ -17,11 +21,11 @@
       </td>
       <td>
         <span class="p-column-title">Cidade</span>
-        {{ pessoa.cidade }}
+        {{ pessoa.endereco.cidade }}
       </td>
       <td>
         <span class="p-column-title">Estado</span>
-        {{ pessoa.estado }}
+        {{ pessoa.endereco.estado }}
       </td>
       <td>
         <span class="p-column-title">Status</span>

@@ -8,6 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class PessoasGridComponent implements OnInit {
 
   @Input() pessoas = [];
+  @Input() filtro;
 
   constructor() { }
 
