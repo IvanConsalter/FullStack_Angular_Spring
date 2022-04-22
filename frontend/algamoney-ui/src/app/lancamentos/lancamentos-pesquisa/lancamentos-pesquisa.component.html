@@ -48,7 +48,12 @@
 
   <div class="p-grid">
     <div class="p-col-12">
-      <app-lancamentos-grid [lancamentos]="lancamentos"></app-lancamentos-grid>
+      <app-lancamentos-grid
+        [lancamentos]="lancamentos"
+        [filtro]="filtro"
+        [totalRegistros]="totalRegistros"
+        (lazyLoad)="mudarPagina($event)"
+      ></app-lancamentos-grid>
     </div>
 
     <a pButton label="Novo Lançamento"></a>

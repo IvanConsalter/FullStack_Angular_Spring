@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LancamentosPesquisaComponent implements OnInit {
 
+  totalRegistros = 0;
   lancamentos: any[] = [];
   filtro = new LancamentoFiltro();
 
@@ -16,14 +17,22 @@ export class LancamentosPesquisaComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.consultar();
   }
 
-  consultar(): void {
+  consultar(pagina = 0): void {
+    this.filtro.pagina = pagina;
+
     this.lancamentoService.consultarLancamentos(this.filtro)
       .then(resposta => {
+        // console.log(resposta);
+        this.totalRegistros = resposta.totalElementos;
         this.lancamentos = resposta.lancamentos;
       });
+  }
+
+  mudarPagina(evento): void {
+    const pagina = evento.first / evento.rows;
+    this.consultar(pagina);
   }
 
 }
