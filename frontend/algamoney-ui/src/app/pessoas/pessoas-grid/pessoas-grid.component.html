@@ -2,7 +2,11 @@
   [value]="pessoas"
   [responsive]="true"
   [paginator]="true"
-  [rows]="filtro.itensPorPagina">
+  [rows]="filtro.itensPorPagina"
+  [totalRecords]="totalRegistros"
+  [lazy]="true"
+  (onLazyLoad)="aoMudarPagina($event)">
+
   <ng-template pTemplate="header">
     <tr>
       <th>Nome</th>

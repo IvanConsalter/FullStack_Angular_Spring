@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PessoasPesquisaComponent implements OnInit {
 
+  totalRegistros = 0;
   filtro = new PessoaFiltro();
   pessoas = [];
 
@@ -17,7 +18,7 @@ export class PessoasPesquisaComponent implements OnInit {
 
   ngOnInit(): void {
     // this.consultarPessoas();
-    this.consultarPessoasPorFiltro();
+    // this.consultarPessoasPorFiltro();
   }
 
   consultarPessoas(): void {
@@ -26,15 +27,23 @@ export class PessoasPesquisaComponent implements OnInit {
     );
   }
 
-  consultarPessoasPorFiltro(): void {
+  consultarPessoasPorFiltro(pagina = 0): void {
+
+    this.filtro.pagina = pagina;
 
     this.pessoaService.consultarPessoasPorFiltro(this.filtro)
       .then((resposta: any) => {
-        console.log(resposta);
-        console.log(this.filtro);
+        // console.log(resposta);
+        // console.log(this.filtro);
 
         this.pessoas = resposta.pessoas;
+        this.totalRegistros = resposta.totalRegistros;
       });
+  }
+
+  mudarPagina(evento) {
+    const pagina = evento.first / evento.rows;
+    this.consultarPessoasPorFiltro(pagina);
   }
 
 }

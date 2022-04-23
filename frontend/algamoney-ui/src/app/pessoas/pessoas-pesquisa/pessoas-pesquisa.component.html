@@ -23,7 +23,12 @@
 
   <div class="p-grid">
     <div class="p-col-12">
-      <app-pessoas-grid [pessoas]="pessoas" [filtro]="filtro"></app-pessoas-grid>
+      <app-pessoas-grid
+      [pessoas]="pessoas"
+      [filtro]="filtro"
+      [totalRegistros]="totalRegistros"
+      (lazyLoad)="mudarPagina($event)"
+      ></app-pessoas-grid>
     </div>
 
     <div class="p-col-12">

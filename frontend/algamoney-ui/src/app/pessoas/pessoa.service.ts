@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 export class PessoaFiltro {
   nome: string;
   itensPorPagina = 4;
+  pagina = 0;
 }
 
 @Injectable({
@@ -24,6 +25,9 @@ export class PessoaService {
 
     let params = new HttpParams();
 
+    params = params.set('page', filtro.pagina.toString());
+    params = params.set('size', filtro.itensPorPagina.toString());
+
     if(filtro.nome) {
       params = params.set('nome', filtro.nome);
     }
@@ -36,7 +40,7 @@ export class PessoaService {
 
         const resultado = {
           pessoas,
-          total: response.totalElements
+          totalRegistros: response.totalElements
         };
 
         return resultado;
