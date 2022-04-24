@@ -6,6 +6,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // PrimeNg
 import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService } from 'primeng/api';
 
 // My Components
 import { AppComponent } from './app.component';
@@ -33,13 +35,15 @@ import { PessoaService } from './pessoas/pessoa.service';
     LancamentosModule,
     PessoasModule,
     // PrimeNg
-    ToastModule
+    ToastModule,
+    ConfirmDialogModule
   ],
   providers: [
     LancamentoService,
     PessoaService,
     // PrimeNg
-    MessageService
+    MessageService,
+    ConfirmationService
   ],
   bootstrap: [AppComponent]
 })
