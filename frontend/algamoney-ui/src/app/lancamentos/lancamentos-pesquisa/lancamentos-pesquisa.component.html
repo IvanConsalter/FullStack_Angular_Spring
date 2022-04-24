@@ -57,6 +57,7 @@
         [responsive]="true"
         class="table"
         (onLazyLoad)="aoMudarPagina($event)"
+        #tabela
       >
         <ng-template pTemplate="header">
           <tr>
@@ -111,6 +112,7 @@
                 icon="pi pi-trash"
                 pTooltip="Excluir"
                 tooltipPosition="top"
+                (click)="excluir(lancamento)"
               ></button>
             </td>
           </tr>
