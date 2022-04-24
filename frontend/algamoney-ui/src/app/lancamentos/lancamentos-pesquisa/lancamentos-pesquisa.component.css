@@ -1,3 +1,7 @@
 .divisor-calendarios {
   margin: 0 1rem;
 }
+
+.col-acoes > a {
+  margin-right: .5rem;
+}

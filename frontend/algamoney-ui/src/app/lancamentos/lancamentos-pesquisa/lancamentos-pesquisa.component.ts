@@ -1,3 +1,4 @@
+import { LazyLoadEvent } from 'primeng/api';
 import { LancamentoService, LancamentoFiltro } from './../lancamento.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -30,7 +31,7 @@ export class LancamentosPesquisaComponent implements OnInit {
       });
   }
 
-  mudarPagina(evento): void {
+  aoMudarPagina(evento: LazyLoadEvent): void {
     const pagina = evento.first / evento.rows;
     this.consultar(pagina);
   }
