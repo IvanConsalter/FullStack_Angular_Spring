@@ -41,7 +41,7 @@ export class PessoasPesquisaComponent implements OnInit {
       });
   }
 
-  mudarPagina(evento) {
+  aoMudarPagina(evento): void {
     const pagina = evento.first / evento.rows;
     this.consultarPessoasPorFiltro(pagina);
   }
