@@ -10,6 +10,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 // Services
 import { LancamentoService } from '../lancamentos/lancamento.service';
 import { PessoaService } from '../pessoas/pessoa.service';
+import { ErrorHandlerService } from './error-handler.service';
 
 // Components
 import { NavbarComponent } from './navbar/navbar.component';
@@ -50,8 +51,10 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   ],
   providers: [
     DatePipe,
+
     LancamentoService,
     PessoaService,
+    ErrorHandlerService,
     // PrimeNg
     MessageService,
     ConfirmationService,

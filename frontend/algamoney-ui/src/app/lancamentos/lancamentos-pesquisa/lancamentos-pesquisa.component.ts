@@ -1,3 +1,4 @@
+import { ErrorHandlerService } from './../../core/error-handler.service';
 import {
   LazyLoadEvent,
   MessageService,
@@ -20,7 +21,8 @@ export class LancamentosPesquisaComponent implements OnInit {
   constructor(
     private lancamentoService: LancamentoService,
     private messageService: MessageService,
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
+    private erroHandler: ErrorHandlerService
   ) {}
 
   ngOnInit(): void {}
@@ -34,7 +36,8 @@ export class LancamentosPesquisaComponent implements OnInit {
         // console.log(resposta);
         this.totalRegistros = resposta.totalElementos;
         this.lancamentos = resposta.lancamentos;
-      });
+      })
+      .catch(erro => this.erroHandler.mostrarErro(erro));
   }
 
   confirmarExclusao(lancamento: any): void {
@@ -47,13 +50,15 @@ export class LancamentosPesquisaComponent implements OnInit {
   }
 
   excluir(lancamento: any): void {
-    this.lancamentoService.excluirLancamento(lancamento.codigo).then(() => {
-      this.tabela.reset();
-      this.messageService.add({
-        severity: 'success',
-        detail: 'Lançamento excluído com sucesso!',
-      });
-    });
+    this.lancamentoService.excluirLancamento(lancamento.codigo)
+      .then(() => {
+        this.tabela.reset();
+        this.messageService.add({
+          severity: 'success',
+          detail: 'Lançamento excluído com sucesso!',
+        });
+      })
+      .catch(erro => this.erroHandler.mostrarErro(erro));
   }
 
   aoMudarPagina(evento: LazyLoadEvent): void {
