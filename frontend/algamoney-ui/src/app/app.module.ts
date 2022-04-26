@@ -1,7 +1,8 @@
-import { HttpClientModule } from '@angular/common/http';
-import { NgModule, LOCALE_ID } from '@angular/core';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { registerLocaleData } from '@angular/common';
 
 // PrimeNg
 import { MessageService } from 'primeng/api';
@@ -21,6 +22,18 @@ import { PessoasModule } from './pessoas/pessoas.module';
 import { LancamentoService } from './lancamentos/lancamento.service';
 import { PessoaService } from './pessoas/pessoa.service';
 
+// Translate
+
+// Registra a Localização
+import localePt from '@angular/common/locales/pt';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
+registerLocaleData(localePt, 'pt-BR');
+
+export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
+  return new TranslateHttpLoader(http);
+}
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,7 +49,14 @@ import { PessoaService } from './pessoas/pessoa.service';
     PessoasModule,
     // PrimeNg
     ToastModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
   ],
   providers: [
     LancamentoService,
@@ -44,7 +64,7 @@ import { PessoaService } from './pessoas/pessoa.service';
     // PrimeNg
     MessageService,
     ConfirmationService,
-    { provide: LOCALE_ID, useValue: 'pt-BR' }
+    TranslateService
   ],
   bootstrap: [AppComponent]
 })

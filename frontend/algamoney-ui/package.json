@@ -20,6 +20,8 @@
     "@angular/platform-browser": "~11.2.3",
     "@angular/platform-browser-dynamic": "~11.2.3",
     "@angular/router": "~11.2.3",
+    "@ngx-translate/core": "^11.0.1",
+    "@ngx-translate/http-loader": "^6.0.0",
     "ng2-currency-mask": "^11.0.0",
     "primeflex": "^2.0.0",
     "primeicons": "^4.1.0",
