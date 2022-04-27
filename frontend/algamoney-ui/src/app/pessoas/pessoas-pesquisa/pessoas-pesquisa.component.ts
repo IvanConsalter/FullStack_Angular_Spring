@@ -1,5 +1,7 @@
+import { ErrorHandlerService } from './../../core/error-handler.service';
+import { MessageService, ConfirmationService } from 'primeng/api';
 import { PessoaService, PessoaFiltro } from './../pessoa.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-pessoas-pesquisa',
@@ -11,9 +13,13 @@ export class PessoasPesquisaComponent implements OnInit {
   totalRegistros = 0;
   filtro = new PessoaFiltro();
   pessoas = [];
+  @ViewChild('tabela') tabela;
 
   constructor(
-    private pessoaService: PessoaService
+    private pessoaService: PessoaService,
+    private messageService: MessageService,
+    private confirmatiomSerive: ConfirmationService,
+    private erroHandler: ErrorHandlerService
   ) { }
 
   ngOnInit(): void {
@@ -23,8 +29,8 @@ export class PessoasPesquisaComponent implements OnInit {
 
   consultarPessoas(): void {
     this.pessoaService.consultarPessoas()
-      .then(pessoas => this.pessoas = pessoas
-    );
+      .then(pessoas => this.pessoas = pessoas)
+      .catch(erro => this.erroHandler.mostrarErro(erro));
   }
 
   consultarPessoasPorFiltro(pagina = 0): void {
@@ -38,7 +44,26 @@ export class PessoasPesquisaComponent implements OnInit {
 
         this.pessoas = resposta.pessoas;
         this.totalRegistros = resposta.totalRegistros;
-      });
+      })
+      .catch(erro => this.erroHandler.mostrarErro(erro));
+  }
+
+  confirmarExclusao(pessoa: any): void {
+    this.confirmatiomSerive.confirm({
+      message: 'Tem certeza que deseja excluir?',
+      accept: () => {
+        this.excluir(pessoa);
+      }
+    });
+  }
+
+  excluir(pessoa: any): void {
+    this.pessoaService.excluirPessoa(pessoa.codigo)
+      .then( () => {
+        this.tabela.reset();
+        this.messageService.add({ severity: 'success', detail: 'Pessoa excluída com sucesso!' });
+      })
+      .catch(erro => this.erroHandler.mostrarErro(erro));
   }
 
   aoMudarPagina(evento): void {

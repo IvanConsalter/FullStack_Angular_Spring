@@ -26,6 +26,7 @@
         [totalRecords]="totalRegistros"
         [lazy]="true"
         (onLazyLoad)="aoMudarPagina($event)"
+        #tabela
       >
         <ng-template pTemplate="header">
           <tr>
@@ -74,6 +75,7 @@
                 pTooltip="Excluir"
                 tooltipPosition="top"
                 pButton
+                (click)="confirmarExclusao(pessoa)"
               ></button>
             </td>
           </tr>
