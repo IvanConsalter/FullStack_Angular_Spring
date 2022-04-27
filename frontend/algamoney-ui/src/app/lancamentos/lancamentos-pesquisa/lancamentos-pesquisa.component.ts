@@ -34,6 +34,10 @@ export class LancamentosPesquisaComponent implements OnInit {
       .consultarLancamentos(this.filtro)
       .then((resposta) => {
         // console.log(resposta);
+        if (this.filtro.pagina === 0) {
+          this.tabela.reset();
+        }
+
         this.totalRegistros = resposta.totalElementos;
         this.lancamentos = resposta.lancamentos;
       })
