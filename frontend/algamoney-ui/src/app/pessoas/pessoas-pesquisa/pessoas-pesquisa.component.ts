@@ -74,4 +74,18 @@ export class PessoasPesquisaComponent implements OnInit {
     this.consultarPessoasPorFiltro(pagina);
   }
 
+  alterarStatusPessoa(pessoa: any): void {
+
+    const novoStatus = !pessoa.ativo;
+
+    this.pessoaService.alterarStatusPessoa(pessoa.codigo, novoStatus)
+      .then(() => {
+        const acao = novoStatus ? 'ativada' : 'desativada';
+
+        pessoa.ativo = novoStatus;
+        this.messageService.add({severity: 'success', detail: `Pessoa ${acao} com sucesso!`});
+      })
+      .catch(erro => this.erroHandler.mostrarErro(erro));
+  }
+
 }

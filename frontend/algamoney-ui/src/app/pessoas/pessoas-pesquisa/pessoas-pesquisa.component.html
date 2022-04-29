@@ -56,10 +56,11 @@
               <span class="p-column-title">Status</span>
               <a
                 class="status-pessoa"
-                [pTooltip]="!pessoa.status ? 'Ativar' : 'Desativar'"
+                [pTooltip]="!pessoa.ativo ? 'Ativar' : 'Desativar'"
                 tooltipPosition="top"
+                (click)="alterarStatusPessoa(pessoa)"
               >
-                {{ pessoa.status ? "Ativo" : "Inativo" }}
+                {{ pessoa.ativo ? "Ativo" : "Inativo" }}
               </a>
             </td>
             <td class="col-acoes">
