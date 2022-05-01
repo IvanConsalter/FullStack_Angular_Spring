@@ -1,4 +1,7 @@
+import { CategoriaService } from './../../categorias/categoria.service';
 import { Component, OnInit } from '@angular/core';
+import { ErrorHandlerService } from 'src/app/core/error-handler.service';
+import { SelectItem } from 'primeng/api';
 
 @Component({
   selector: 'app-lancamento-cadastro',
@@ -19,10 +22,7 @@ export class LancamentoCadastroComponent implements OnInit {
     { label: 'Despesa', value: 'DESPESA' }
   ];
 
-  categorias = [
-    { label: 'Alimentação', value: 1 },
-    { label: 'Transporte', value: 2 }
-  ];
+  categorias: SelectItem[] = [ ];
 
   pessoas = [
     { label: 'João da Silva', value: 1 },
@@ -30,9 +30,23 @@ export class LancamentoCadastroComponent implements OnInit {
     { label: 'Maria Abadia', value: 3 }
   ];
 
-  constructor() { }
+  constructor(
+    private categoriaService: CategoriaService,
+    private erroHandler: ErrorHandlerService
+    ) { }
 
   ngOnInit(): void {
+    this.consultarCategorias();
+  }
+
+  consultarCategorias(): void {
+    this.categoriaService.consultarCategorias()
+      .then( (resposta) => {
+        this.categorias = resposta.map((categoria) => {
+          return { label: categoria.nome, value: categoria.codigo };
+        });
+      })
+      .catch(erro => this.erroHandler.mostrarErro(erro));
   }
 
 }
