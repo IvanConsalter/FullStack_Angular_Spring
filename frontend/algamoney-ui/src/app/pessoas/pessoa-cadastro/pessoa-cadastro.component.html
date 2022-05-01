@@ -1,5 +1,5 @@
 <div class="container">
-  <form autocomplete="off" #pessoaForm="ngForm">
+  <form autocomplete="off" #pessoaForm="ngForm" (ngSubmit)="salvarPessoa(pessoaForm)">
 
     <div class="p-grid">
       <div class="p-col-12">
@@ -14,7 +14,8 @@
           name="nome"
           ngModel #nome="ngModel"
           [required]="true"
-          minlength="5">
+          minlength="5"
+          [(ngModel)]="pessoa.nome">
         <app-message [control]="nome" error="required" message="Nome completo é obrigatório!"></app-message>
         <app-message [control]="nome" error="minlength" message="Dever ter no mínimo {{ nome.errors?.minlength?.requiredLength }}"></app-message>
       </div>
@@ -26,6 +27,7 @@
           name="cep"
           ngModel #cep="ngModel"
           [required]="true"
+          [(ngModel)]="pessoa.endereco.cep"
         ></p-inputMask>
 
         <app-message [control]="cep" error="required" message="CEP é obrigatório!"></app-message>
@@ -39,7 +41,8 @@
           name="bairro"
           ngModel #bairro="ngModel"
           [required]="true"
-          minlength="5">
+          minlength="5"
+          [(ngModel)]="pessoa.endereco.bairro">
 
         <app-message [control]="bairro" error="required" message="Bairro é obrigatório!"></app-message>
         <app-message [control]="bairro" error="minlength" message="Dever ter no mínimo {{ bairro.errors?.minlength?.requiredLength }}"></app-message>
@@ -47,7 +50,7 @@
 
       <div class="p-col-12 p-md-4 p-fluid">
         <label>Complemento</label>
-        <input pInputText type="text">
+        <input pInputText type="text" name="complemento" #complemento [(ngModel)]="pessoa.endereco.complemento">
       </div>
 
       <div class="p-col-12 p-md-9 p-fluid">
@@ -58,7 +61,8 @@
         name="logradouro"
         ngModel #logradouro="ngModel"
         [required]="true"
-        minlength="5">
+        minlength="5"
+        [(ngModel)]="pessoa.endereco.logradouro">
 
       <app-message [control]="logradouro" error="required" message="Logradouro é obrigatório!"></app-message>
       <app-message [control]="logradouro" error="minlength" message="Dever ter no mínimo {{ logradouro.errors?.minlength?.requiredLength }}"></app-message>
@@ -71,7 +75,8 @@
         type="text"
         name="numero"
         ngModel #numero="ngModel"
-        [required]="true">
+        [required]="true"
+        [(ngModel)]="pessoa.endereco.numero">
 
         <app-message [control]="numero" error="required" message="Número é obrigatório!"></app-message>
       </div>
@@ -83,7 +88,8 @@
           type="text"
           name="cidade"
           ngModel #cidade="ngModel"
-          [required]="true">
+          [required]="true"
+          [(ngModel)]="pessoa.endereco.cidade">
 
         <app-message [control]="cidade" error="required" message="Cidade é obrigatório!"></app-message>
       </div>
@@ -96,6 +102,7 @@
           name="estado"
           ngModel #estado="ngModel"
           [required]="true"
+          [(ngModel)]="pessoa.endereco.estado"
         >
 
         <app-message [control]="estado" error="required" message="Estado é obrigatório!"></app-message>
