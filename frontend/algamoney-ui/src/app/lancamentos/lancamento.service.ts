@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Lancamento } from '../shared/model/lancamento.model';
 
 export class LancamentoFiltro {
   descricao?: string;
@@ -55,6 +56,16 @@ export class LancamentoService {
 
         return resultado;
       });
+  }
+
+  salvarLancamento(lancamento: Lancamento): Promise<Lancamento> {
+
+    const headers = new HttpHeaders()
+      .append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==')
+      .append('Content-Type', 'application/json');
+
+    return this.http.post<Lancamento>(this.lancamentosUrl, lancamento, { headers })
+      .toPromise<Lancamento>();
   }
 
   excluirLancamento(codigo: number): Promise<void> {
