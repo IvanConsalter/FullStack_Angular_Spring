@@ -1,5 +1,5 @@
 <div class="container">
-  <form autocomplete="off" #lancamentoForm="ngForm">
+  <form autocomplete="off" #lancamentoForm="ngForm" (ngSubmit)="salvarLancamento(lancamentoForm)">
 
     <div class="p-grid">
       <div class="p-col-12">
@@ -7,7 +7,7 @@
       </div>
 
       <div class="p-col-12">
-        <p-selectButton [options]="tipos" aria-pressed="true"  #tipo></p-selectButton>
+        <p-selectButton [options]="tipos" aria-pressed="true" #tipo name="tipo" [(ngModel)]="lancamento.tipo"></p-selectButton>
       </div>
 
       <div class="p-col-12 p-md-6 p-lg-3 p-fluid">
@@ -18,6 +18,7 @@
           name="vencimento"
           ngModel #vencimento="ngModel"
           [required]="true"
+          [(ngModel)]="lancamento.dataVencimento"
         ></p-calendar>
 
         <app-message [control]="vencimento" error="required" message="Data de vencimento é obrigatório!"></app-message>
@@ -25,7 +26,7 @@
 
       <div class="p-col-12 p-md-6 p-lg-3 p-fluid">
         <label>{{ tipo.value === 'RECEITA' ? 'Recebimento' : 'Pagamento' }}</label>
-        <p-calendar dateFormat="dd/mm/yy" [showIcon]="true"></p-calendar>
+        <p-calendar dateFormat="dd/mm/yy" [showIcon]="true" name="dataPagamento"  [(ngModel)]="lancamento.dataPagamento"></p-calendar>
       </div>
 
       <div class="p-col-12 p-md-9 p-fluid">
@@ -36,7 +37,8 @@
           name="descricao"
           ngModel #descricao="ngModel"
           [required]="true"
-          minlength="10">
+          minlength="10"
+          [(ngModel)]="lancamento.descricao">
 
         <app-message [control]="descricao" error="required" message="Descrição é obrigatório!"></app-message>
         <app-message [control]="descricao" error="minlength" message="Mínimo é {{ descricao.errors?.minlength?.requiredLength }} caracteres"></app-message>
@@ -52,7 +54,8 @@
           name="valor"
           ngModel #valor="ngModel"
           [required]="true"
-          placeholder="R$ 0,00">
+          placeholder="R$ 0,00"
+          [(ngModel)]="lancamento.valor">
 
         <app-message [control]="valor" error="required" message="Valor é obrigatório!"></app-message>
       </div>
@@ -67,6 +70,7 @@
           name="categoria"
           ngModel #categoria="ngModel"
           [required]="true"
+          [(ngModel)]="lancamento.categoria.codigo"
         ></p-dropdown>
 
         <app-message [control]="categoria" error="required" message="Categoria é obrigatório!"></app-message>
@@ -82,6 +86,7 @@
         name="pessoa"
         ngModel #pessoa="ngModel"
         [required]="true"
+        [(ngModel)]="lancamento.pessoa.codigo"
         ></p-dropdown>
 
         <app-message [control]="pessoa" error="required" message="Pessoa é obrigatório!"></app-message>
@@ -89,7 +94,7 @@
 
       <div class="p-col-12 p-md-6 p-fluid">
         <label>Observação</label>
-        <input pInputTextarea rows="3">
+        <input pInputTextarea rows="3" name="observacao" [(ngModel)]="lancamento.observacao">
       </div>
 
       <div class="p-col-12">

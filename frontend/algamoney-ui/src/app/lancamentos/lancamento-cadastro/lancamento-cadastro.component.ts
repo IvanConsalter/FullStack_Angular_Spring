@@ -1,3 +1,5 @@
+import { NgForm } from '@angular/forms';
+import { Lancamento } from './../../shared/model/lancamento.model';
 import { PessoaService } from './../../pessoas/pessoa.service';
 import { CategoriaService } from './../../categorias/categoria.service';
 import { Component, OnInit } from '@angular/core';
@@ -18,12 +20,12 @@ export class LancamentoCadastroComponent implements OnInit {
     allowNegative: false
   };
 
-  pessoa: any;
-
   tipos = [
     { label: 'Receita', value: 'RECEITA' },
     { label: 'Despesa', value: 'DESPESA' }
   ];
+
+  lancamento = new Lancamento();
 
   categorias: SelectItem[] = [ ];
 
@@ -38,6 +40,11 @@ export class LancamentoCadastroComponent implements OnInit {
   ngOnInit(): void {
     this.consultarCategorias();
     this.consultarPessoas();
+  }
+
+  salvarLancamento(lancamentoForm: NgForm) {
+    console.log(this.lancamento);
+
   }
 
   consultarCategorias(): void {
