@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule, DatePipe, registerLocaleData } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
 
 // PrimeNg
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
@@ -31,6 +32,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   ],
   imports: [
     CommonModule,
+    RouterModule,
     // PrimeNg
     ToastModule,
     ConfirmDialogModule,
