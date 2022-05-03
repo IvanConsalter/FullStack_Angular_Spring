@@ -77,4 +77,16 @@ export class LancamentoService {
       .toPromise()
       .then(() => null);
   }
+
+  private converterStringParaData(lancamentos: Lancamento[]) {
+    for (const lancamento of lancamentos) {
+      let offset = new Date().getTimezoneOffset() * 60000;
+
+      lancamento.dataVencimento = new Date(new Date(lancamento.dataVencimento).getTime() + offset);
+
+      if(lancamento.dataPagamento) {
+        lancamento.dataPagamento = new Date(new Date(lancamento.dataPagamento).getTime() + offset);
+      }
+    }
+  }
 }
