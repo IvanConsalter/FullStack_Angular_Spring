@@ -41,9 +41,9 @@ export class PessoasPesquisaComponent implements OnInit {
       .then((resposta: any) => {
         // console.log(resposta);
         // console.log(this.filtro);
-        if (this.filtro.pagina === 0) {
-          this.tabela.reset();
-        }
+        // if (this.filtro.pagina === 0) {
+        //   this.tabela.reset();
+        // } // bug infinito na consulta
 
         this.pessoas = resposta.pessoas;
         this.totalRegistros = resposta.totalRegistros;
