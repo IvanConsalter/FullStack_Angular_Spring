@@ -58,6 +58,18 @@ export class LancamentoService {
       });
   }
 
+  consultarLancamentoPorCodigo(codigo: number): Promise<Lancamento> {
+    const headers = new HttpHeaders()
+      .append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
+
+    return this.http.get(`${this.lancamentosUrl}/${codigo}`, { headers })
+      .toPromise()
+      .then((response: any) => {
+        this.converterStringParaData([response]);
+        return response;
+      });
+  }
+
   salvarLancamento(lancamento: Lancamento): Promise<Lancamento> {
 
     const headers = new HttpHeaders()
