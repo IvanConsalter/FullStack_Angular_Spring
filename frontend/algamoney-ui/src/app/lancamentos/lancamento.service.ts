@@ -80,6 +80,15 @@ export class LancamentoService {
       .toPromise<Lancamento>();
   }
 
+  atualizarLancamento(lancamento: Lancamento): Promise<Lancamento> {
+    const headers = new HttpHeaders()
+      .append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==')
+      .append('Content-Type', 'application/json');
+
+    return this.http.put<Lancamento>(`${this.lancamentosUrl}/${lancamento.codigo}`, lancamento, { headers })
+      .toPromise();
+  }
+
   excluirLancamento(codigo: number): Promise<void> {
 
     const headers = new HttpHeaders()
@@ -90,7 +99,7 @@ export class LancamentoService {
       .then(() => null);
   }
 
-  private converterStringParaData(lancamentos: Lancamento[]) {
+  private converterStringParaData(lancamentos: Lancamento[]): void {
     for (const lancamento of lancamentos) {
       let offset = new Date().getTimezoneOffset() * 60000;
 
