@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { SelectItem, MessageService } from 'primeng/api';
 
@@ -42,7 +42,8 @@ export class LancamentoCadastroComponent implements OnInit {
     private lancamentoService: LancamentoService,
     private messageService: MessageService,
     private erroHandler: ErrorHandlerService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
     ) { }
 
   ngOnInit(): void {
@@ -56,7 +57,7 @@ export class LancamentoCadastroComponent implements OnInit {
     this.consultarPessoas();
   }
 
-  salvarLancamento(lancamentoForm: NgForm) {
+  salvarLancamento(lancamentoForm: NgForm): void {
     if (this.estaEditando()) {
       this.atualizarLancamento(lancamentoForm);
     }
@@ -111,6 +112,11 @@ export class LancamentoCadastroComponent implements OnInit {
         });
       })
       .catch(erro => this.erroHandler.mostrarErro(erro));
+  }
+
+  novoLancamento(lancamentoForm: NgForm): void {
+    lancamentoForm.reset(new Lancamento());
+    this.router.navigate(['lancamentos/novo']);
   }
 
   estaEditando(): boolean {
