@@ -3,7 +3,7 @@
 
     <div class="p-grid">
       <div class="p-col-12">
-        <h1>Novo Lançamento</h1>
+        <h1>{{ estaEditando() ? 'Edição de' : 'Novo' }} Lançamento</h1>
       </div>
 
       <div class="p-col-12">
@@ -99,7 +99,7 @@
 
       <div class="p-col-12">
         <button pButton type="submit" label="Salvar" class="p-button-success" [disabled]="lancamentoForm.invalid"></button>
-        <button pButton type="button" label="Novo"></button>
+        <button routerLink="/lancamentos/novo" pButton type="button" label="Novo"></button>
         <a routerLink="/lancamentos" pButton class="p-button-info">Voltar para a pesquisa</a>
       </div>
 
