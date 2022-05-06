@@ -49,9 +49,6 @@ import { LancamentoCadastroComponent } from './lancamento-cadastro/lancamento-ca
     // ng2-currency
     CurrencyMaskModule
   ],
-  exports: [
-    LancamentosPesquisaComponent,
-    LancamentoCadastroComponent
-  ]
+  exports: []
 })
 export class LancamentosModule { }
