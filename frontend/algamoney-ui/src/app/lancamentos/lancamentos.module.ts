@@ -23,6 +23,7 @@ import { SharedModule } from './../shared/shared.module';
 // my components
 import { LancamentosPesquisaComponent } from './lancamentos-pesquisa/lancamentos-pesquisa.component';
 import { LancamentoCadastroComponent } from './lancamento-cadastro/lancamento-cadastro.component';
+import { LancamentosRoutingModule } from './lancamentos-routing.module';
 
 @NgModule({
   declarations: [
@@ -33,9 +34,9 @@ import { LancamentoCadastroComponent } from './lancamento-cadastro/lancamento-ca
     // Angular Modules
     CommonModule,
     FormsModule,
-    RouterModule,
     // My Shared Module
     SharedModule,
+    LancamentosRoutingModule,
     // PrimeNg Modules
     InputTextModule,
     ButtonModule,
