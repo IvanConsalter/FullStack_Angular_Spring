@@ -10,6 +10,7 @@ import { LancamentoService } from './../lancamento.service';
 import { PessoaService } from './../../pessoas/pessoa.service';
 import { CategoriaService } from './../../categorias/categoria.service';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-lancamento-cadastro',
@@ -43,10 +44,12 @@ export class LancamentoCadastroComponent implements OnInit {
     private messageService: MessageService,
     private erroHandler: ErrorHandlerService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private title: Title
     ) { }
 
   ngOnInit(): void {
+    this.title.setTitle('Novo Lançamento');
     const codigoLancamento = this.route.snapshot.params.codigo;
 
     if (codigoLancamento) {
@@ -59,7 +62,7 @@ export class LancamentoCadastroComponent implements OnInit {
 
   salvarLancamento(lancamentoForm: NgForm): void {
     if (this.estaEditando()) {
-      this.atualizarLancamento(lancamentoForm);
+      this.atualizarLancamento();
     }
     else {
       this.salvarNovoLancamento(lancamentoForm);
@@ -77,10 +80,11 @@ export class LancamentoCadastroComponent implements OnInit {
 
   }
 
-  atualizarLancamento(lancamentoForm: NgForm): void {
+  atualizarLancamento(): void {
     this.lancamentoService.atualizarLancamento(this.lancamento)
       .then((lancamento) => {
         this.lancamento = lancamento;
+        this.atualizarTituloPagina();
         this.messageService.add({ severity: 'success', detail: 'Lançamento atualizado com sucesso!', });
       })
       .catch(erro => this.erroHandler.mostrarErro(erro));
@@ -90,6 +94,7 @@ export class LancamentoCadastroComponent implements OnInit {
     this.lancamentoService.consultarLancamentoPorCodigo(codigoLancamento)
       .then( (lancamento) => {
         this.lancamento = lancamento;
+        this.atualizarTituloPagina();
       })
       .catch(erro => this.erroHandler.mostrarErro(erro));
   }
@@ -125,6 +130,10 @@ export class LancamentoCadastroComponent implements OnInit {
     }
 
     return false;
+  }
+
+  atualizarTituloPagina(): void {
+    this.title.setTitle(`Edição de lançamento: ${this.lancamento.descricao}`);
   }
 
 }

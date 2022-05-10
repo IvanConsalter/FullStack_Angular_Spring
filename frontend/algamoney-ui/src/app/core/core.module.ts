@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule, DatePipe, registerLocaleData } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 // PrimeNg
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
@@ -55,6 +56,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   ],
   providers: [
     DatePipe,
+    Title,
 
     LancamentoService,
     PessoaService,
