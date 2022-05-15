@@ -8,7 +8,7 @@ import { Lancamento } from './../../shared/model/lancamento.model';
 
 import { LancamentoService } from './../lancamento.service';
 import { PessoaService } from './../../pessoas/pessoa.service';
-import { CategoriaService } from './../../categorias/categoria.service';
+import { CategoriaFiltro, CategoriaService } from './../../categorias/categoria.service';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 import { Title } from '@angular/platform-browser';
 
@@ -34,6 +34,7 @@ export class LancamentoCadastroComponent implements OnInit {
   lancamento = new Lancamento();
 
   categorias: SelectItem[] = [ ];
+  filtroCategoria: CategoriaFiltro;
 
   pessoas: SelectItem[] = [ ];
 
@@ -99,14 +100,24 @@ export class LancamentoCadastroComponent implements OnInit {
       .catch(erro => this.erroHandler.mostrarErro(erro));
   }
 
-  consultarCategorias(): void {
-    this.categoriaService.consultarCategorias()
+  consultarCategorias(filtro?: CategoriaFiltro): void {
+    this.categoriaService.consultarCategorias(filtro)
       .then( (resposta) => {
         this.categorias = resposta.map((categoria) => {
           return { label: categoria.nome, value: categoria.codigo };
         });
       })
       .catch(erro => this.erroHandler.mostrarErro(erro));
+  }
+
+  aoFiltrarCategoria(event?: any): void {
+    this.filtroCategoria = new CategoriaFiltro();
+
+    if (event) {
+      this.filtroCategoria.nome = event.filter;
+    }
+
+    this.consultarCategorias(this.filtroCategoria);
   }
 
   consultarPessoas(): void {
@@ -134,6 +145,10 @@ export class LancamentoCadastroComponent implements OnInit {
 
   atualizarTituloPagina(): void {
     this.title.setTitle(`Edição de lançamento: ${this.lancamento.descricao}`);
+  }
+
+  onScroll(event: any): void {
+    console.log(event);
   }
 
 }

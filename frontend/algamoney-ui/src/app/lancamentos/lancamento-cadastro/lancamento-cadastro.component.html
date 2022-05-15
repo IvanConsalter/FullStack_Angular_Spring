@@ -71,6 +71,7 @@
           ngModel #categoria="ngModel"
           [required]="true"
           [(ngModel)]="lancamento.categoria.codigo"
+          (onFilter)="aoFiltrarCategoria($event)"
         ></p-dropdown>
 
         <app-message [control]="categoria" error="required" message="Categoria é obrigatório!"></app-message>
