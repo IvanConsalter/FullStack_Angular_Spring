@@ -70,6 +70,7 @@
                 pTooltip="Editar"
                 tooltipPosition="top"
                 pButton
+                [routerLink]="['/pessoas', pessoa.codigo]"
               ></a>
               <button
                 icon="pi pi-trash"
@@ -91,7 +92,7 @@
     </div>
 
     <div class="p-col-12">
-      <a label="Nova Pessoa" pButton></a>
+      <a routerLink="/pessoas/nova" routerLinkActive="router-link-active"  label="Nova Pessoa" pButton></a>
     </div>
   </div>
 </div>

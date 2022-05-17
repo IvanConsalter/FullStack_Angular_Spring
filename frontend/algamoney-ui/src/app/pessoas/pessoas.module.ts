@@ -14,14 +14,17 @@ import { TableModule } from 'primeng/table';
 import { PessoasPesquisaComponent } from './pessoas-pesquisa/pessoas-pesquisa.component';
 import { PessoaCadastroComponent } from './pessoa-cadastro/pessoa-cadastro.component';
 
+import { PessoasRoutingModule } from './pessoas-routing.module';
+
 @NgModule({
   declarations: [
     PessoaCadastroComponent,
-    PessoasPesquisaComponent
+    PessoasPesquisaComponent,
   ],
   imports: [
     CommonModule,
     FormsModule,
+    PessoasRoutingModule,
     // My Shared Module
     SharedModule,
     // PrimeNg Modules
