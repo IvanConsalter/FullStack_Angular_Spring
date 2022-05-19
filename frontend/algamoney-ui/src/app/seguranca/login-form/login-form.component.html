@@ -14,9 +14,11 @@
           type="email"
           name="usuario"
           ngModel
-          #usuario
+          #usuario="ngModel"
           required
           placeholder="Email">
+
+          <app-message [control]="usuario" error="required" message="Precisa ser um formato de email válido!"></app-message>
       </div>
 
       <div class="p-col-12 p-fluid">
@@ -25,13 +27,16 @@
           type="password"
           name="senha"
           ngModel
-          #senha
+          #senha="ngModel"
           required
           placeholder="Senha">
+
+          <app-message [control]="senha" error="required" message="Informe uma senha!"></app-message>
       </div>
 
       <div class="p-col-12">
         <button
+          class="btn-login"
           pButton
           type="submit"
           label="Login"

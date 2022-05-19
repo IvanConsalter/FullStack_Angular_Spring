@@ -8,6 +8,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { LoginFormComponent } from './login-form/login-form.component';
 
 import { SegurancaRoutingModule } from './seguranca-routing.module';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,8 @@ import { SegurancaRoutingModule } from './seguranca-routing.module';
   imports: [
     CommonModule,
     FormsModule,
+
+    SharedModule,
 
     InputTextModule,
     ButtonModule,
