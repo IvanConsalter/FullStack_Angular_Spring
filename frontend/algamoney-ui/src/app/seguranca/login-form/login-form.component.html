@@ -41,7 +41,7 @@
           type="submit"
           label="Login"
           [disabled]="loginForm.invalid"
-          (click)="login(usuario.value, senha.value)"
+          (click)="login(usuario.value, senha.value); loginForm.reset()"
         ></button>
       </div>
 
