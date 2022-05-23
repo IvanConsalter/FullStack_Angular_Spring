@@ -12,6 +12,10 @@ import { LoginFormComponent } from './login-form/login-form.component';
 import { SegurancaRoutingModule } from './seguranca-routing.module';
 import { SharedModule } from '../shared/shared.module';
 
+export function pegarToken(): string {
+  return localStorage.getItem('token');
+}
+
 @NgModule({
   declarations: [
     LoginFormComponent
@@ -22,9 +26,9 @@ import { SharedModule } from '../shared/shared.module';
 
     JwtModule.forRoot({
       config: {
-        tokenGetter: () => {
-          return '';
-        }
+        tokenGetter: pegarToken,
+        allowedDomains: ['localhost:8080'],
+        disallowedRoutes: ['http://localhost:8080/oauth/token']
       }
     }),
 
