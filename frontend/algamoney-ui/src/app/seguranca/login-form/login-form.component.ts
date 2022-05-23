@@ -9,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 export class LoginFormComponent implements OnInit {
 
   constructor(
-    private authService: AuthService
+    public authService: AuthService
   ) { }
 
   ngOnInit(): void {
