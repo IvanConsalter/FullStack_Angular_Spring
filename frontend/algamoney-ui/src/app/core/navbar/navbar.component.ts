@@ -22,4 +22,8 @@ export class NavbarComponent implements OnInit {
   public exibirMenu(): void {
     this.mostrarMenu = !this.mostrarMenu;
   }
+
+  temPermissao(permissao: string): any {
+    return this.authService.temPermissao(permissao);
+  }
 }
