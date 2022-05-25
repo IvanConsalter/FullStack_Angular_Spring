@@ -1,3 +1,4 @@
+import { AuthService } from './../../seguranca/auth.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
@@ -25,6 +26,7 @@ export class LancamentosPesquisaComponent implements OnInit {
   constructor(
     private lancamentoService: LancamentoService,
     private messageService: MessageService,
+    private authService: AuthService,
     private confirmationService: ConfirmationService,
     private erroHandler: ErrorHandlerService,
     private title: Title
@@ -75,5 +77,9 @@ export class LancamentosPesquisaComponent implements OnInit {
   aoMudarPagina(evento: LazyLoadEvent): void {
     const pagina = evento.first / evento.rows;
     this.consultar(pagina);
+  }
+
+  temPermissao(permissao: string): any {
+    return this.authService.temPermissao(permissao);
   }
 }

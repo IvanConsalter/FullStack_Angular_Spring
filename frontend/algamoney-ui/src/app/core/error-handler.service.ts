@@ -21,7 +21,12 @@ export class ErrorHandlerService {
         respostaErro instanceof HttpErrorResponse &&
         respostaErro.status >= 400 &&
         respostaErro.status <= 499) {
+
       mensagem = 'Ocorreu um erro ao processar a sua solicitação!';
+
+      if (respostaErro.status === 403) {
+        mensagem = 'Usuário sem autorização para esta ação!';
+      }
 
       try {
         mensagem = respostaErro.error[0].mensagemUsuario;

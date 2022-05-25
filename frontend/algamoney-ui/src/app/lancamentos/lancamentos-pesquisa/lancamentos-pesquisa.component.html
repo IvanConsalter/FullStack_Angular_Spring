@@ -114,6 +114,7 @@
                 pTooltip="Excluir"
                 tooltipPosition="top"
                 (click)="confirmarExclusao(lancamento)"
+                [disabled]="!temPermissao('ROLE_REMOVER_LANCAMENTO')"
               ></button>
             </td>
           </tr>
