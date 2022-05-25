@@ -1,6 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { MessageService } from 'primeng/api';
+
+import { erroNaoAutenticado } from './../seguranca/money-http-interceptor';
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +12,7 @@ import { MessageService } from 'primeng/api';
 export class ErrorHandlerService {
 
   constructor(
+    private router: Router,
     private messageService: MessageService
   ) { }
 
@@ -16,6 +21,11 @@ export class ErrorHandlerService {
 
     if (typeof respostaErro === 'string') {
       mensagem = respostaErro;
+    }
+    else if (respostaErro instanceof erroNaoAutenticado) {
+      console.log('erro refresh');
+      mensagem = 'Seção expirada!';
+      this.router.navigate(['/login']);
     }
     else if (
         respostaErro instanceof HttpErrorResponse &&
