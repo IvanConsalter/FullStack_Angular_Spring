@@ -17,12 +17,13 @@ import { AuthService } from '../seguranca/auth.service';
 
 // Components
 import { NavbarComponent } from './navbar/navbar.component';
+import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada.component';
+import { NaoAutorizadoComponent } from './nao-autorizado/nao-autorizado.component';
 
 // Translate
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import localePt from '@angular/common/locales/pt';
-import { PaginaNaoEncontradaComponent } from './pagina-nao-encontrada.component';
 registerLocaleData(localePt, 'pt-BR');
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
@@ -32,7 +33,8 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
 @NgModule({
   declarations: [
     NavbarComponent,
-    PaginaNaoEncontradaComponent
+    PaginaNaoEncontradaComponent,
+    NaoAutorizadoComponent
   ],
   imports: [
     CommonModule,
