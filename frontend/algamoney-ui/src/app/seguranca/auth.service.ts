@@ -94,4 +94,9 @@ export class AuthService {
       this.armazenarToken(token);
     }
   }
+
+  limparAccessToken(): void {
+    localStorage.removeItem('token');
+    this.jwtPayload = null;
+  }
 }

@@ -20,6 +20,6 @@
     <li class="navbar-menuitem" routerLinkActive="ativo" *ngIf="temPermissao('ROLE_PESQUISAR_PESSOA')">
       <a routerLink="/pessoas" (click)="exibirMenu()">Pessoas</a>
     </li>
-    <li class="navbar-menuitem"><a href="#">Logout</a></li>
+    <li class="navbar-menuitem"><a (click)="logout()">Logout</a></li>
   </ul>
 </nav>

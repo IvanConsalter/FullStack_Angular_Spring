@@ -46,6 +46,7 @@
 
 .navbar-menuitem a:hover {
   color: #fff;
+  cursor: pointer;
 }
 
 .navbar-menuitem.ativo {

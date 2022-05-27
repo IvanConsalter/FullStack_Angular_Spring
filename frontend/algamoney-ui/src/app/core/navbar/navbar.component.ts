@@ -1,5 +1,9 @@
-import { AuthService } from './../../seguranca/auth.service';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
+import { ErrorHandlerService } from 'src/app/core/error-handler.service';
+import { LogoutService } from './../../seguranca/logout.service';
+import { AuthService } from './../../seguranca/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -12,7 +16,10 @@ export class NavbarComponent implements OnInit {
   usuarioLogado = '';
 
   constructor(
-    private authService: AuthService
+    private authService: AuthService,
+    private logoutService: LogoutService,
+    private router: Router,
+    private errorHandler: ErrorHandlerService
   ) { }
 
   ngOnInit(): void {
@@ -25,5 +32,13 @@ export class NavbarComponent implements OnInit {
 
   temPermissao(permissao: string): any {
     return this.authService.temPermissao(permissao);
+  }
+
+  logout(): void {
+    this.logoutService.logout()
+      .then( () => {
+        this.router.navigate(['/login']);
+      })
+      .catch( erro => this.errorHandler.mostrarErro(erro));
   }
 }
