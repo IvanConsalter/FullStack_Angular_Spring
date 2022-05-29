@@ -9,8 +9,6 @@ import { AppComponent } from './app.component';
 
 // my modules
 import { CoreModule } from './core/core.module';
-import { LancamentosModule } from './lancamentos/lancamentos.module';
-import { PessoasModule } from './pessoas/pessoas.module';
 import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
@@ -24,8 +22,6 @@ import { AppRoutingModule } from './app-routing.module';
     HttpClientModule,
     // My Modules
     CoreModule,
-    LancamentosModule,
-    PessoasModule,
     SegurancaModule,
     AppRoutingModule
   ],
