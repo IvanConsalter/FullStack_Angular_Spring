@@ -1,7 +1,10 @@
 import { DatePipe } from '@angular/common';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+
 import { Lancamento } from '../shared/model/lancamento.model';
+
+import { environment } from './../../environments/environment';
 
 export class LancamentoFiltro {
   descricao?: string;
@@ -16,7 +19,7 @@ export class LancamentoFiltro {
   providedIn: 'root',
 })
 export class LancamentoService {
-  lancamentosUrl = 'http://localhost:8080/lancamentos';
+  lancamentosUrl = `${environment.apiUrl}/lancamentos`;
 
   constructor(
     private http: HttpClient,
