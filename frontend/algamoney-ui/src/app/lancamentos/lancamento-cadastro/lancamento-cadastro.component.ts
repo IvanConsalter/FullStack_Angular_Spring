@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 import { SelectItem, MessageService } from 'primeng/api';
 
@@ -10,7 +11,6 @@ import { LancamentoService } from './../lancamento.service';
 import { PessoaService } from './../../pessoas/pessoa.service';
 import { CategoriaService } from './../../categorias/categoria.service';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
-import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-lancamento-cadastro',
@@ -31,7 +31,7 @@ export class LancamentoCadastroComponent implements OnInit {
     { label: 'Despesa', value: 'DESPESA' }
   ];
 
-  lancamento = new Lancamento();
+  lancamentoForm: FormGroup;
 
   categorias: SelectItem[] = [ ];
 
@@ -45,10 +45,12 @@ export class LancamentoCadastroComponent implements OnInit {
     private erroHandler: ErrorHandlerService,
     private route: ActivatedRoute,
     private router: Router,
-    private title: Title
+    private title: Title,
+    private formBuilder: FormBuilder
     ) { }
 
   ngOnInit(): void {
+    this.configurarLancamentoForm();
     this.title.setTitle('Novo Lançamento');
     const codigoLancamento = this.route.snapshot.params.codigo;
 
@@ -60,32 +62,62 @@ export class LancamentoCadastroComponent implements OnInit {
     this.consultarPessoas();
   }
 
-  salvarLancamento(lancamentoForm: NgForm): void {
+  configurarLancamentoForm(): void {
+    this.lancamentoForm = this.formBuilder.group({
+      codigo: [],
+      tipo: [ 'RECEITA', Validators.required ],
+      dataVencimento: [null , Validators.required ],
+      dataPagamento: [null],
+      descricao: [ null , [ this.validarObrigatoriedade, this.validarTamanhoMinimo(5) ] ],
+      valor: [ null, Validators.required ],
+      categoria: this.formBuilder.group({
+        codigo: [ null, Validators.required ],
+        nome: []
+      }),
+      pessoa: this.formBuilder.group({
+        codigo: [ null, Validators.required ],
+        nome: []
+      }),
+      observacao: []
+    });
+  }
+
+  validarObrigatoriedade(input: FormControl): any {
+    return (input.value ? null : { obrigatoriedade: true });
+  }
+
+  validarTamanhoMinimo(valorTamanho: number): any {
+    return (input: FormControl) => {
+      return (!input.value || input.value.length >= valorTamanho) ? null : { tamanhoMinimo: { tamanho: valorTamanho } };
+    };
+  }
+
+  salvarLancamento(): void {
     if (this.estaEditando()) {
       this.atualizarLancamento();
     }
     else {
-      this.salvarNovoLancamento(lancamentoForm);
+      this.salvarNovoLancamento();
     }
   }
 
-  salvarNovoLancamento(lancamentoForm: NgForm): void {
-    this.lancamentoService.salvarLancamento(this.lancamento)
+  salvarNovoLancamento(): void {
+    this.lancamentoService.salvarLancamento(this.lancamentoForm.value)
       .then(() => {
         this.messageService.add({ severity: 'success', detail: 'Lançamento adicionado com sucesso!', });
-        lancamentoForm.reset();
-        this.lancamento = new Lancamento();
+        this.lancamentoForm.reset(new Lancamento());
       })
       .catch(erro => this.erroHandler.mostrarErro(erro));
 
   }
 
   atualizarLancamento(): void {
-    this.lancamentoService.atualizarLancamento(this.lancamento)
-      .then((lancamento) => {
-        this.lancamento = lancamento;
+    this.lancamentoService.atualizarLancamento(this.lancamentoForm.value)
+      .then((lancamento: Lancamento) => {
+        this.lancamentoForm.patchValue(lancamento);
         this.atualizarTituloPagina();
         this.messageService.add({ severity: 'success', detail: 'Lançamento atualizado com sucesso!', });
+        this.router.navigate(['/lancamentos']);
       })
       .catch(erro => this.erroHandler.mostrarErro(erro));
   }
@@ -93,7 +125,7 @@ export class LancamentoCadastroComponent implements OnInit {
   carregarLancamento(codigoLancamento: number): void {
     this.lancamentoService.consultarLancamentoPorCodigo(codigoLancamento)
       .then( (lancamento) => {
-        this.lancamento = lancamento;
+        this.lancamentoForm.patchValue(lancamento);
         this.atualizarTituloPagina();
       })
       .catch(erro => this.erroHandler.mostrarErro(erro));
@@ -119,13 +151,13 @@ export class LancamentoCadastroComponent implements OnInit {
       .catch(erro => this.erroHandler.mostrarErro(erro));
   }
 
-  novoLancamento(lancamentoForm: NgForm): void {
-    lancamentoForm.reset(new Lancamento());
+  novoLancamento(): void {
+    this.lancamentoForm.reset(new Lancamento());
     this.router.navigate(['lancamentos/novo']);
   }
 
   estaEditando(): boolean {
-    if (this.lancamento.codigo) {
+    if (this.lancamentoForm.get('codigo').value) {
       return true;
     }
 
@@ -133,7 +165,7 @@ export class LancamentoCadastroComponent implements OnInit {
   }
 
   atualizarTituloPagina(): void {
-    this.title.setTitle(`Edição de lançamento: ${this.lancamento.descricao}`);
+    this.title.setTitle(`Edição de lançamento: ${this.lancamentoForm.get('descricao').value}`);
   }
 
 }

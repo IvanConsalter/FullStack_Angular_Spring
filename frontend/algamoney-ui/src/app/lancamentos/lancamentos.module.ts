@@ -1,7 +1,7 @@
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // PrimeNg
 import { DropdownModule } from 'primeng/dropdown';
@@ -34,6 +34,7 @@ import { LancamentosRoutingModule } from './lancamentos-routing.module';
     // Angular Modules
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     // My Shared Module
     SharedModule,
     LancamentosRoutingModule,

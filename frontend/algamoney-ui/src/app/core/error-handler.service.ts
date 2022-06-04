@@ -17,6 +17,8 @@ export class ErrorHandlerService {
   ) { }
 
   mostrarErro(respostaErro: any): void {
+    console.log(respostaErro);
+
     let mensagem: string;
 
     if (typeof respostaErro === 'string') {

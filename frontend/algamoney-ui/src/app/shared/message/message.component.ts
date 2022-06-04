@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { AbstractControl, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-message',
@@ -14,11 +14,11 @@ import { FormControl } from '@angular/forms';
   styles: [],
 })
 export class MessageComponent {
-  @Input() control: FormControl;
-  @Input() error: string;
-  @Input() message: string;
+  @Input() control?: AbstractControl | FormControl | null;
+  @Input() error = '';
+  @Input() message = '';
 
   hasError(): boolean {
-    return this.control.hasError(this.error) && this.control.dirty;
+    return this.control ? this.control.hasError(this.error) && this.control.dirty : true;
   }
 }

@@ -77,7 +77,12 @@ export class LancamentoService {
   atualizarLancamento(lancamento: Lancamento): Promise<Lancamento> {
 
     return this.http.put<Lancamento>(`${this.lancamentosUrl}/${lancamento.codigo}`, lancamento)
-      .toPromise();
+      .toPromise()
+      .then( (resposta: any) => {
+        const lancamentoAlterado = resposta as Lancamento;
+        this.converterStringParaData([lancamentoAlterado]);
+        return lancamentoAlterado;
+      });
   }
 
   excluirLancamento(codigo: number): Promise<void> {
