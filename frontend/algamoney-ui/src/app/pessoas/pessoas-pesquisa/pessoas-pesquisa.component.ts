@@ -2,6 +2,7 @@ import { ErrorHandlerService } from './../../core/error-handler.service';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { PessoaService, PessoaFiltro } from './../pessoa.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-pessoas-pesquisa',
@@ -19,12 +20,12 @@ export class PessoasPesquisaComponent implements OnInit {
     private pessoaService: PessoaService,
     private messageService: MessageService,
     private confirmatiomSerive: ConfirmationService,
-    private erroHandler: ErrorHandlerService
+    private erroHandler: ErrorHandlerService,
+    private title: Title
   ) { }
 
   ngOnInit(): void {
-    // this.consultarPessoas();
-    // this.consultarPessoasPorFiltro();
+    this.title.setTitle('Pesquisa de Pessoas');
   }
 
   consultarPessoas(): void {

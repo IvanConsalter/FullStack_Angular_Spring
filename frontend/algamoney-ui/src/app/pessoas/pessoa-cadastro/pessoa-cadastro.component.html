@@ -1,5 +1,5 @@
 <div class="container">
-  <form autocomplete="off" #pessoaForm="ngForm" (ngSubmit)="salvarPessoa(pessoaForm)">
+  <form autocomplete="off" (ngSubmit)="salvarPessoa()" [formGroup]="pessoaForm">
 
     <div class="p-grid">
       <div class="p-col-12">
@@ -12,105 +12,93 @@
           pInputText
           type="text"
           name="nome"
-          ngModel #nome="ngModel"
-          [required]="true"
-          minlength="5"
-          [(ngModel)]="pessoa.nome">
-        <app-message [control]="nome" error="required" message="Nome completo é obrigatório!"></app-message>
-        <app-message [control]="nome" error="minlength" message="Dever ter no mínimo {{ nome.errors?.minlength?.requiredLength }}"></app-message>
+          formControlName="nome"
+          >
+        <app-message [control]="pessoaForm.get('nome')" error="obrigatoriedade" message="Nome completo é obrigatório!"></app-message>
+        <app-message [control]="pessoaForm.get('nome')" error="tamanhoMinimo" message="Dever ter no mínimo {{ pessoaForm.get('nome').errors?.tamanhoMinimo?.tamanho }}"></app-message>
       </div>
 
-      <div class="p-col-12 p-md-4 p-fluid">
+      <div class="p-col-12 p-md-4 p-fluid" formGroupName="endereco">
         <label>CEP</label>
         <p-inputMask
           mask="99.999-999"
           name="cep"
-          ngModel #cep="ngModel"
-          [required]="true"
-          [(ngModel)]="pessoa.endereco.cep"
+          formControlName="cep"
         ></p-inputMask>
 
-        <app-message [control]="cep" error="required" message="CEP é obrigatório!"></app-message>
+        <app-message [control]="pessoaForm.get('endereco')" error="obrigatoriedade" message="CEP é obrigatório!"></app-message>
       </div>
 
-      <div class="p-col-12 p-md-4 p-fluid">
+      <div class="p-col-12 p-md-4 p-fluid" formGroupName="endereco">
         <label>Bairro</label>
         <input
           pInputText
           type="text"
           name="bairro"
-          ngModel #bairro="ngModel"
-          [required]="true"
-          minlength="5"
-          [(ngModel)]="pessoa.endereco.bairro">
+          formControlName="bairro"
+        >
 
-        <app-message [control]="bairro" error="required" message="Bairro é obrigatório!"></app-message>
-        <app-message [control]="bairro" error="minlength" message="Dever ter no mínimo {{ bairro.errors?.minlength?.requiredLength }}"></app-message>
+        <app-message [control]="pessoaForm.get('endereco')" error="obrigatoriedade" message="Bairro é obrigatório!"></app-message>
+        <!-- <app-message [control]="pessoaForm.get('bairro')" error="tamanhoMinimo" message="Dever ter no mínimo {{ pessoaForm.get('bairro').errors?.tamanhoMinimo?.tamanho }}"></app-message> -->
       </div>
 
-      <div class="p-col-12 p-md-4 p-fluid">
+      <div class="p-col-12 p-md-4 p-fluid" formGroupName="endereco">
         <label>Complemento</label>
-        <input pInputText type="text" name="complemento" #complemento [(ngModel)]="pessoa.endereco.complemento">
+        <input pInputText type="text" name="complemento" formControlName="complemento">
       </div>
 
-      <div class="p-col-12 p-md-9 p-fluid">
+      <div class="p-col-12 p-md-9 p-fluid" formGroupName="endereco">
         <label>Logradouro</label>
         <input
         pInputText
         type="text"
         name="logradouro"
-        ngModel #logradouro="ngModel"
-        [required]="true"
-        minlength="5"
-        [(ngModel)]="pessoa.endereco.logradouro">
+        formControlName="logradouro"
+        >
 
-      <app-message [control]="logradouro" error="required" message="Logradouro é obrigatório!"></app-message>
-      <app-message [control]="logradouro" error="minlength" message="Dever ter no mínimo {{ logradouro.errors?.minlength?.requiredLength }}"></app-message>
+      <app-message [control]="pessoaForm.get('endereco')" error="obrigatoriedade" message="Logradouro é obrigatório!"></app-message>
+      <!-- <app-message [control]="pessoaForm.get('logradouro')" error="tamanhoMinimo" message="Dever ter no mínimo {{ pessoaForm.get('logradouro').errors?.tamanhoMinimo?.tamanho }}"></app-message> -->
       </div>
 
-      <div class="p-col-12 p-md-3 p-fluid">
+      <div class="p-col-12 p-md-3 p-fluid" formGroupName="endereco">
         <label>Número</label>
         <input
-        pInputText
-        type="text"
-        name="numero"
-        ngModel #numero="ngModel"
-        [required]="true"
-        [(ngModel)]="pessoa.endereco.numero">
+          pInputText
+          type="text"
+          name="numero"
+          formControlName="numero"
+        >
 
-        <app-message [control]="numero" error="required" message="Número é obrigatório!"></app-message>
+        <app-message [control]="pessoaForm.get('endereco')" error="obrigatoriedade" message="Número é obrigatório!"></app-message>
       </div>
 
-      <div class="p-col-12 p-md-6 p-fluid">
+      <div class="p-col-12 p-md-6 p-fluid" formGroupName="endereco">
         <label>Cidade</label>
         <input
           pInputText
           type="text"
           name="cidade"
-          ngModel #cidade="ngModel"
-          [required]="true"
-          [(ngModel)]="pessoa.endereco.cidade">
+          formControlName="cidade"
+        >
 
-        <app-message [control]="cidade" error="required" message="Cidade é obrigatório!"></app-message>
+        <app-message [control]="pessoaForm.get('endereco')" error="obrigatoriedade" message="Cidade é obrigatório!"></app-message>
       </div>
 
-      <div class="p-col-12 p-md-6 p-fluid">
+      <div class="p-col-12 p-md-6 p-fluid" formGroupName="endereco">
         <label>Estado</label>
         <input
           pInputText
           type="text"
           name="estado"
-          ngModel #estado="ngModel"
-          [required]="true"
-          [(ngModel)]="pessoa.endereco.estado"
+          formControlName="estado"
         >
 
-        <app-message [control]="estado" error="required" message="Estado é obrigatório!"></app-message>
+        <app-message [control]="pessoaForm.get('endereco')" error="obrigatoriedade" message="Estado é obrigatório!"></app-message>
       </div>
 
       <div class="p-col-12">
         <button pButton type="submit" label="Salvar" class="p-button-success" [disabled]="pessoaForm.invalid"></button>
-        <button pButton type="button" label="Novo" (click)="novaPessoa(pessoaForm)"></button>
+        <button pButton type="button" label="Novo" (click)="novaPessoa()"></button>
 
         <a routerLink="/pessoas" pButton class="p-button-info">Voltar para a pesquisa</a>
       </div>

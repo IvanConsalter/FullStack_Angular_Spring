@@ -1,7 +1,13 @@
 import { Title } from '@angular/platform-browser';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import {
+  NgForm,
+  FormGroup,
+  FormBuilder,
+  Validators,
+  FormControl,
+} from '@angular/forms';
 
 import { MessageService } from 'primeng/api';
 
@@ -13,11 +19,10 @@ import { Pessoa } from 'src/app/shared/model/pessoa.model';
 @Component({
   selector: 'app-pessoa-cadastro',
   templateUrl: './pessoa-cadastro.component.html',
-  styleUrls: ['./pessoa-cadastro.component.css']
+  styleUrls: ['./pessoa-cadastro.component.css'],
 })
 export class PessoaCadastroComponent implements OnInit {
-
-  pessoa = new Pessoa();
+  pessoaForm: FormGroup;
 
   constructor(
     private pessoaService: PessoaService,
@@ -25,64 +30,107 @@ export class PessoaCadastroComponent implements OnInit {
     private erroHandler: ErrorHandlerService,
     private router: Router,
     private route: ActivatedRoute,
-    private title: Title
-  ) { }
+    private title: Title,
+    private formBuilder: FormBuilder
+  ) {}
 
   ngOnInit(): void {
+    this.configurarPessoaForm();
     this.title.setTitle('Nova Pessoa');
     const codigoPessoa = this.route.snapshot.params.codigo;
 
     if (codigoPessoa) {
       this.carregarPessoa(codigoPessoa);
     }
-
   }
 
-  salvarPessoa(pessoaForm: NgForm): void {
-    if(this.estaEditando()) {
+  configurarPessoaForm(): void {
+    this.pessoaForm = this.formBuilder.group({
+      codigo: [],
+      ativo: [true],
+      nome: [null, [this.validarObrigatoriedade, this.validarTamanhoMinimo(5)]],
+      endereco: this.formBuilder.group({
+        cep: [null, this.validarObrigatoriedade],
+        bairro: [
+          null,
+          [this.validarObrigatoriedade, this.validarTamanhoMinimo(5)],
+        ],
+        complemento: [null],
+        logradouro: [
+          null,
+          [this.validarObrigatoriedade, this.validarTamanhoMinimo(5)],
+        ],
+        numero: [null, this.validarObrigatoriedade],
+        cidade: [null, this.validarObrigatoriedade],
+        estado: [null, this.validarObrigatoriedade],
+      }),
+    });
+  }
+
+  validarObrigatoriedade(input: FormControl): any {
+    return input.value ? null : { obrigatoriedade: true };
+  }
+
+  validarTamanhoMinimo(valorTamanho: number): any {
+    return (input: FormControl) => {
+      return !input.value || input.value.length >= valorTamanho
+        ? null
+        : { tamanhoMinimo: { tamanho: valorTamanho } };
+    };
+  }
+
+  salvarPessoa(): void {
+    if (this.estaEditando()) {
       this.atualizarPessoa();
-    }
-    else {
-      this.salvarNovaPessoa(pessoaForm);
+    } else {
+      this.salvarNovaPessoa();
     }
   }
 
-  salvarNovaPessoa(pessoaForm: NgForm): void {
-    this.pessoaService.salvarPessoa(this.pessoa)
+  salvarNovaPessoa(): void {
+    this.pessoaService
+      .salvarPessoa(this.pessoaForm.value)
       .then(() => {
-        this.messageService.add({ severity: 'success', detail: 'Pessoa adicionada com sucesso!' });
-        pessoaForm.reset();
-        this.pessoa = new Pessoa();
+        this.messageService.add({
+          severity: 'success',
+          detail: 'Pessoa adicionada com sucesso!',
+        });
+        this.pessoaForm.reset(new Pessoa());
       })
-      .catch(erro => this.erroHandler.mostrarErro(erro));
-
+      .catch((erro) => this.erroHandler.mostrarErro(erro));
   }
 
   atualizarPessoa(): void {
-    this.pessoaService.atualizarPessoa(this.pessoa)
-      .then( (pessoa) => {
-        this.pessoa = pessoa;
+    this.pessoaService
+      .atualizarPessoa(this.pessoaForm.value)
+      .then((pessoa: Pessoa) => {
+        this.pessoaForm.patchValue(pessoa);
         this.atualizarTituloPagina();
-        this.messageService.add( { severity: 'success', detail: 'Pessoa atualizada com sucesso!', } );
+        this.messageService.add({
+          severity: 'success',
+          detail: 'Pessoa atualizada com sucesso!',
+        });
+        this.router.navigate(['/pessoas']);
       })
-      .catch(erro => this.erroHandler.mostrarErro(erro));
+      .catch((erro) => this.erroHandler.mostrarErro(erro));
   }
 
   carregarPessoa(codigoPessoa: number): void {
-    this.pessoaService.consultarPessoaPorCodigo(codigoPessoa)
-      .then( (pessoa) => {
-        this.pessoa = pessoa;
+    this.pessoaService
+      .consultarPessoaPorCodigo(codigoPessoa)
+      .then((pessoa: Pessoa) => {
+        this.pessoaForm.patchValue(pessoa);
         this.atualizarTituloPagina();
       });
   }
 
-  novaPessoa(pessoaForm: NgForm): void {
-    pessoaForm.reset(new Pessoa());
+  novaPessoa(): void {
+    this.pessoaForm.reset(new Pessoa());
     this.router.navigate(['pessoas/novo']);
   }
 
   estaEditando(): boolean {
-    if (this.pessoa.codigo) {
+    if (this.pessoaForm.get('codigo').value) {
       return true;
     }
 
@@ -90,6 +138,8 @@ export class PessoaCadastroComponent implements OnInit {
   }
 
   atualizarTituloPagina(): void {
-    this.title.setTitle(`Edição de Pessoa: ${this.pessoa.nome}`);
+    this.title.setTitle(
+      `Edição de Pessoa: ${this.pessoaForm.get('nome').value}`
+    );
   }
 }
