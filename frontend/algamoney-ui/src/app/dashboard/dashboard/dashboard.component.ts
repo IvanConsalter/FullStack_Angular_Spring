@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ErrorHandlerService } from 'src/app/core/error-handler.service';
+import { DashboardService } from '../dashboard.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -32,9 +34,26 @@ export class DashboardComponent implements OnInit {
     ]
   };
 
-  constructor() { }
+  constructor(
+    private dashboardService: DashboardService,
+    private erroHandler: ErrorHandlerService
+  ) { }
 
   ngOnInit(): void {
+    this.cnfigurarGraficoPizza();
+    this.configurarGraficoLinha();
+  }
+
+  cnfigurarGraficoPizza(): void {
+    this.dashboardService.lancamentosPorCategoria()
+      .then( resposta => console.log(resposta))
+      .catch( erro => this.erroHandler.mostrarErro(erro));
+  }
+
+  configurarGraficoLinha(): void {
+    this.dashboardService.lancamentosPorDia()
+      .then( resposta => console.log(resposta))
+      .catch( erro => this.erroHandler.mostrarErro(erro));
   }
 
 }
