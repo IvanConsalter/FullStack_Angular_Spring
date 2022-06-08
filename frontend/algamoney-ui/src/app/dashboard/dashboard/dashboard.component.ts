@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ErrorHandlerService } from 'src/app/core/error-handler.service';
+import { DecimalPipe } from '@angular/common';
+
 import { DashboardService } from '../dashboard.service';
+import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,7 +15,22 @@ export class DashboardComponent implements OnInit {
 
   lineChartData: any;
 
+  options = {
+    tooltips: {
+      callbacks: {
+        label: (tooltipItem: any, data: any) => {
+          const dataset = data.datasets[tooltipItem.datasetIndex];
+          const valor = dataset.data[tooltipItem.index];
+          const label = dataset.label ? (dataset.label + ': ') : '';
+
+          return label + this.decimalPipe.transform(valor, '1.2-2');
+        }
+      }
+    }
+  };
+
   constructor(
+    private decimalPipe: DecimalPipe,
     private dashboardService: DashboardService,
     private erroHandler: ErrorHandlerService
   ) { }

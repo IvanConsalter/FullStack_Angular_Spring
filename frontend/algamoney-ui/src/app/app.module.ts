@@ -10,6 +10,7 @@ import { AppComponent } from './app.component';
 // my modules
 import { CoreModule } from './core/core.module';
 import { AppRoutingModule } from './app-routing.module';
+import { DecimalPipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,7 @@ import { AppRoutingModule } from './app-routing.module';
     SegurancaModule,
     AppRoutingModule
   ],
-  providers: [ ],
+  providers: [DecimalPipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
