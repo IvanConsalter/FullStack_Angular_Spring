@@ -11,20 +11,7 @@ export class DashboardComponent implements OnInit {
 
   pieChartData: any;
 
-  lineChartData = {
-    labels: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
-    datasets: [
-      {
-        label: 'Receitas',
-        data: [4, 10, 18, 5, 1, 20, 3],
-        borderColor: '#3366CC'
-      }, {
-        label: 'Despesas',
-        data: [10, 15, 8, 5, 1, 7, 9],
-        borderColor: '#D62B00'
-      }
-    ]
-  };
+  lineChartData: any;
 
   constructor(
     private dashboardService: DashboardService,
@@ -54,11 +41,66 @@ export class DashboardComponent implements OnInit {
 
   configurarGraficoLinha(): void {
     this.dashboardService.lancamentosPorDia()
-      .then( resposta => console.log(resposta))
+      .then( resposta => {
+        const diasDoMes = this.configurarDiasMes();
+        const totaisReceitas = this.totaisPorCadaDiaMes(resposta.filter(item => item.tipo === 'RECEITA'), diasDoMes);
+        const totaisDepesas = this.totaisPorCadaDiaMes(resposta.filter(item => item.tipo === 'DESPESA'), diasDoMes);
+        console.log(resposta);
+
+        this.lineChartData = {
+          labels: diasDoMes,
+          datasets: [
+            {
+              label: 'Receitas',
+              data: totaisReceitas,
+              borderColor: '#3366CC'
+            }, {
+              label: 'Despesas',
+              data: totaisDepesas,
+              borderColor: '#D62B00'
+            }
+          ]
+        };
+      })
       .catch( erro => this.erroHandler.mostrarErro(erro));
   }
 
-  criarCor(): string {
+  private configurarDiasMes(): Array<number> {
+    const mesReferencia = new Date();
+
+    mesReferencia.setMonth(mesReferencia.getMonth() + 1);
+    mesReferencia.setDate(0);
+
+    const quantidade = mesReferencia.getDate();
+    const dias: Array<number> = [];
+
+    for(let i = 1; i <= quantidade; i++) {
+      dias.push(i);
+    }
+
+    return dias;
+  }
+
+  private totaisPorCadaDiaMes(dados: any, diasDoMes: Array<number>): Array<number> {
+    const totais: Array<number> = [];
+
+    for (const dia of diasDoMes) {
+      let total = 0;
+
+      for (const dado of dados) {
+        if (dado.dia.getDate() === dia) {
+          total = dado.total;
+          break;
+        }
+      }
+
+      totais.push(total);
+    }
+
+    return totais;
+  }
+
+  private criarCor(): string {
     const hexadecimal = Math.floor(Math.random() * 16777215).toString(16);
     const corHexadecimal = `#${hexadecimal}`;
     return corHexadecimal;
