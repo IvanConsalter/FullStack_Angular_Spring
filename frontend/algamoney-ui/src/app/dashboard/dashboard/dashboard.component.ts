@@ -9,15 +9,7 @@ import { DashboardService } from '../dashboard.service';
 })
 export class DashboardComponent implements OnInit {
 
-  pieChartData = {
-    labels: ['Mensal', 'Educação', 'Lazer', 'Imprevistos'],
-    datasets: [
-      {
-        data: [2500, 2700, 550, 235],
-        backgroundColor: ['#FF9900', '#109618', '#990099', '#3B3EAC']
-      }
-    ]
-  };
+  pieChartData: any;
 
   lineChartData = {
     labels: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
@@ -46,7 +38,17 @@ export class DashboardComponent implements OnInit {
 
   cnfigurarGraficoPizza(): void {
     this.dashboardService.lancamentosPorCategoria()
-      .then( resposta => console.log(resposta))
+      .then( resposta => {
+        this.pieChartData = {
+          labels: resposta.map(item => item.categoria.nome),
+          datasets: [
+            {
+              data: resposta.map(item => item.total),
+              backgroundColor: resposta.map(() => this.criarCor())
+            }
+          ]
+        };
+      })
       .catch( erro => this.erroHandler.mostrarErro(erro));
   }
 
@@ -54,6 +56,12 @@ export class DashboardComponent implements OnInit {
     this.dashboardService.lancamentosPorDia()
       .then( resposta => console.log(resposta))
       .catch( erro => this.erroHandler.mostrarErro(erro));
+  }
+
+  criarCor(): string {
+    const hexadecimal = Math.floor(Math.random() * 16777215).toString(16);
+    const corHexadecimal = `#${hexadecimal}`;
+    return corHexadecimal;
   }
 
 }

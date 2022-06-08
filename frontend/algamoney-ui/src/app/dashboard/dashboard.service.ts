@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { environment } from 'src/environments/environment';
@@ -17,20 +17,23 @@ export class DashboardService {
   }
 
   lancamentosPorCategoria(): Promise<Array<any>> {
-    return this.http.get(`${this.lancamentosUrl}/estatisticas/por-categoria`)
+    let params = new HttpParams();
+    params = params.set('mesReferencia', '2021-02-01');
+
+    return this.http.get(`${this.lancamentosUrl}/estatisticas/por-categoria`, { params })
       .toPromise()
       .then( (resposta: any) => {
-        console.log(resposta);
         return resposta;
       });
   }
 
   lancamentosPorDia(): Promise<Array<any>> {
-    return this.http.get(`${this.lancamentosUrl}/estatisticas/por-dia`)
+    let params = new HttpParams();
+    params = params.set('mesReferencia', '2021-02-01');
+
+    return this.http.get(`${this.lancamentosUrl}/estatisticas/por-dia`, { params })
       .toPromise()
       .then( (resposta: any) => {
-        console.log(resposta);
-
         const dados = resposta;
         this.converterStringParaData(dados);
         return dados;
