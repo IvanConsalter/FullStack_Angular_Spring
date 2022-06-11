@@ -1,7 +1,12 @@
+import { DatePipe } from '@angular/common';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { environment } from 'src/environments/environment';
+
+export class MesReferenciaFiltro {
+  mesReferencia: Date = new Date();
+}
 
 @Injectable({
   providedIn: 'root'
@@ -11,14 +16,15 @@ export class DashboardService {
   lancamentosUrl: string;
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private datePipe: DatePipe
   ) {
     this.lancamentosUrl = `${environment.apiUrl}/lancamentos`;
   }
 
-  lancamentosPorCategoria(): Promise<Array<any>> {
+  lancamentosPorCategoria(mesReferencia: any): Promise<Array<any>> {
     let params = new HttpParams();
-    params = params.set('mesReferencia', '2021-02-01');
+    params = params.set('mesReferencia', this.datePipe.transform(mesReferencia, 'yyyy-MM-dd'));
 
     return this.http.get(`${this.lancamentosUrl}/estatisticas/por-categoria`, { params })
       .toPromise()
@@ -27,9 +33,9 @@ export class DashboardService {
       });
   }
 
-  lancamentosPorDia(): Promise<Array<any>> {
+  lancamentosPorDia(mesReferencia: any): Promise<Array<any>> {
     let params = new HttpParams();
-    params = params.set('mesReferencia', '2021-02-01');
+    params = params.set('mesReferencia', this.datePipe.transform(mesReferencia, 'yyyy-MM-dd'));
 
     return this.http.get(`${this.lancamentosUrl}/estatisticas/por-dia`, { params })
       .toPromise()

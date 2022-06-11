@@ -4,6 +4,20 @@
       <h1>Dashboard</h1>
     </div>
 
+    <div class="p-col-12">
+      <label style="display: block">Mês Referência</label>
+      <p-calendar
+        dateFormat="dd/mm/yy"
+        [showIcon]="true"
+        [monthNavigator]="true"
+        [yearNavigator]="true"
+        yearRange="2015:2023"
+        name="mesReferencia"
+        [(ngModel)]="mesReferenciaFiltro.mesReferencia"
+        (onSelect)="Pesquisar($event)"
+      ></p-calendar>
+    </div>
+
     <div class="p-col-12 p-lg-6">
       <p-panel header="Lançamentos por Categoria">
         <p-chart type="pie" [data]="pieChartData" [options]="options"></p-chart>

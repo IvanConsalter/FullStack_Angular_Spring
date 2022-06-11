@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 
-import { DashboardService } from '../dashboard.service';
+import { DashboardService, MesReferenciaFiltro } from '../dashboard.service';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 
 @Component({
@@ -11,8 +11,8 @@ import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 })
 export class DashboardComponent implements OnInit {
 
+  mesReferenciaFiltro = new MesReferenciaFiltro();
   pieChartData: any;
-
   lineChartData: any;
 
   options = {
@@ -40,8 +40,14 @@ export class DashboardComponent implements OnInit {
     this.configurarGraficoLinha();
   }
 
+  Pesquisar(event: any): void {
+    this.mesReferenciaFiltro.mesReferencia = event;
+    this.cnfigurarGraficoPizza();
+    this.configurarGraficoLinha();
+  }
+
   cnfigurarGraficoPizza(): void {
-    this.dashboardService.lancamentosPorCategoria()
+    this.dashboardService.lancamentosPorCategoria(this.mesReferenciaFiltro.mesReferencia)
       .then( resposta => {
         this.pieChartData = {
           labels: resposta.map(item => item.categoria.nome),
@@ -57,7 +63,7 @@ export class DashboardComponent implements OnInit {
   }
 
   configurarGraficoLinha(): void {
-    this.dashboardService.lancamentosPorDia()
+    this.dashboardService.lancamentosPorDia(this.mesReferenciaFiltro.mesReferencia)
       .then( resposta => {
         const diasDoMes = this.configurarDiasMes();
         const totaisReceitas = this.totaisPorCadaDiaMes(resposta.filter(item => item.tipo === 'RECEITA'), diasDoMes);
@@ -83,7 +89,7 @@ export class DashboardComponent implements OnInit {
   }
 
   private configurarDiasMes(): Array<number> {
-    const mesReferencia = new Date();
+    const mesReferencia = this.mesReferenciaFiltro.mesReferencia;
 
     mesReferencia.setMonth(mesReferencia.getMonth() + 1);
     mesReferencia.setDate(0);
