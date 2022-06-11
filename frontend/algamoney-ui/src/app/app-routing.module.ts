@@ -10,6 +10,7 @@ const routes: Routes = [
   { path: 'lancamentos', loadChildren: () => import('../app/lancamentos/lancamentos.module').then(m => m.LancamentosModule)},
   { path: 'pessoas', loadChildren: () => import('../app/pessoas/pessoas.module').then(m => m.PessoasModule)},
   { path: 'dashboard', loadChildren: () => import('../app/dashboard/dashboard.module').then(m => m.DashboardModule)},
+  { path: 'relatorios', loadChildren: () => import('../app/relatorios/relatorios.module').then(m => m.RelatoriosModule)},
 
   { path: '', component: DashboardComponent},
   { path: 'pagina-nao-encontrada', component: PaginaNaoEncontradaComponent },
