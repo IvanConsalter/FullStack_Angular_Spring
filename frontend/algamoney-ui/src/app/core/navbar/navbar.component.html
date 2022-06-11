@@ -14,6 +14,9 @@
         <i class="pi pi-times"></i>
       </div>
     </li>
+    <li class="navbar-menuitem" routerLinkActive="ativo">
+      <a routerLink="/dashboard" (click)="exibirMenu()">Dashboard</a>
+    </li>
     <li class="navbar-menuitem" routerLinkActive="ativo" *ngIf="temPermissao('ROLE_PESQUISAR_LANCAMENTO')">
       <a routerLink="/lancamentos"  (click)="exibirMenu()">Lançamentos</a>
     </li>
