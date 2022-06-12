@@ -2,7 +2,6 @@ import { Title } from '@angular/platform-browser';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import {
-  NgForm,
   FormGroup,
   FormBuilder,
   Validators,
@@ -66,6 +65,12 @@ export class PessoaCadastroComponent implements OnInit {
         cidade: [null, this.validarObrigatoriedade],
         estado: [null, this.validarObrigatoriedade],
       }),
+      contatos: this.formBuilder.group({
+        codigo: [],
+        nome: [null, [this.validarObrigatoriedade]],
+        email: [null, [this.validarObrigatoriedade, Validators.email]],
+        telefone: [null]
+      })
     });
   }
 

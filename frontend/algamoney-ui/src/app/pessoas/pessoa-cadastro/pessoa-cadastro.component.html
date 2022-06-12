@@ -160,4 +160,50 @@
   </form>
 </div>
 
-<p-dialog header="Novo Contato" [(visible)]="exibirFormularioContato" [modal]="true"></p-dialog>
+<p-dialog header="Novo Contato" [(visible)]="exibirFormularioContato" [modal]="true" >
+  <form [formGroup]="pessoaForm">
+    <div class="p-grid">
+      <div class="p-col-12 p-fluid" formGroupName="contatos">
+        <label>Nome</label>
+        <input
+          pInputText
+          type="text"
+          name="nome"
+          formControlName="nome"
+        >
+        <app-message [control]="pessoaForm.get('contatos')" error="obrigatoriedade" message="Nome é obrigatório!"></app-message>
+      </div>
+
+      <div class="p-col-12 p-fluid" formGroupName="contatos">
+        <label>Email</label>
+        <input
+          pInputText
+          type="email"
+          name="email"
+          formControlName="email"
+        >
+        <app-message [control]="pessoaForm.get('contatos')" error="obrigatoriedade" message="Nome é obrigatório!"></app-message>
+        <app-message [control]="pessoaForm.get('contatos')" error="email" message="Informe um e-mail válido!"></app-message>
+      </div>
+
+      <div class="p-col-12 p-fluid" formGroupName="contatos">
+        <label>Telefone</label>
+        <p-inputMask
+          mask="(99) 9 9999-9999"
+          name="telefone"
+          formControlName="telefone"
+        ></p-inputMask>
+      </div>
+
+      <div class="p-col-12">
+        <button
+          pButton
+          type="submit"
+          label="Salvar"
+          [disabled]="pessoaForm.invalid"
+        ></button>
+      </div>
+
+    </div>
+  </form>
+</p-dialog>
