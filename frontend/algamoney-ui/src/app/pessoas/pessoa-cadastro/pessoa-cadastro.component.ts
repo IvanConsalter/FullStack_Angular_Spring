@@ -23,6 +23,7 @@ import { Pessoa } from 'src/app/shared/model/pessoa.model';
 })
 export class PessoaCadastroComponent implements OnInit {
   pessoaForm: FormGroup;
+  contatos = [];
 
   constructor(
     private pessoaService: PessoaService,
@@ -119,6 +120,7 @@ export class PessoaCadastroComponent implements OnInit {
     this.pessoaService
       .consultarPessoaPorCodigo(codigoPessoa)
       .then((pessoa: Pessoa) => {
+        this.contatos = pessoa.contatos;
         this.pessoaForm.patchValue(pessoa);
         this.atualizarTituloPagina();
       });
