@@ -13,6 +13,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { LancamentoService } from '../lancamentos/lancamento.service';
 import { PessoaService } from '../pessoas/pessoa.service';
 import { DashboardService } from '../dashboard/dashboard.service';
+import { RelatoriosService } from '../relatorios/relatorios.service';
 import { ErrorHandlerService } from './error-handler.service';
 import { AuthService } from '../seguranca/auth.service';
 
@@ -65,6 +66,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     LancamentoService,
     PessoaService,
     DashboardService,
+    RelatoriosService,
     ErrorHandlerService,
     AuthService,
     // PrimeNg
