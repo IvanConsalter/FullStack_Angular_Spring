@@ -10,6 +10,8 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { TableModule } from 'primeng/table';
 import { PanelModule } from 'primeng/panel';
+import { DialogModule } from 'primeng/dialog';
+
 
 // my modules
 import { PessoasPesquisaComponent } from './pessoas-pesquisa/pessoas-pesquisa.component';
@@ -35,7 +37,8 @@ import { PessoasRoutingModule } from './pessoas-routing.module';
     ButtonModule,
     InputMaskModule,
     TooltipModule,
-    PanelModule
+    PanelModule,
+    DialogModule
   ],
   exports: []
 })

@@ -100,6 +100,15 @@
         <p-panel header="Contatos">
           <div class="p-grid">
             <div class="p-col-12">
+              <button
+                pButton
+                label="Novo Contato"
+                icon="pi pi-plus"
+                type="button"
+                (click)="exibirModalContato()"
+              ></button>
+            </div>
+            <div class="p-col-12">
               <p-table [value]="contatos" [responsive]="true">
                 <ng-template pTemplate="header">
                   <tr>
@@ -150,3 +159,5 @@
     </div>
   </form>
 </div>
+
+<p-dialog header="Novo Contato" [(visible)]="exibirFormularioContato" [modal]="true"></p-dialog>

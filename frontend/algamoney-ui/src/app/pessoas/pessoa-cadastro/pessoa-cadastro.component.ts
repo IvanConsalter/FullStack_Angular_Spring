@@ -22,6 +22,7 @@ import { Pessoa } from 'src/app/shared/model/pessoa.model';
   styleUrls: ['./pessoa-cadastro.component.css'],
 })
 export class PessoaCadastroComponent implements OnInit {
+  exibirFormularioContato = false;
   pessoaForm: FormGroup;
   contatos = [];
 
@@ -143,5 +144,9 @@ export class PessoaCadastroComponent implements OnInit {
     this.title.setTitle(
       `Edição de Pessoa: ${this.pessoaForm.get('nome').value}`
     );
+  }
+
+  exibirModalContato(): void {
+    this.exibirFormularioContato = true;
   }
 }
