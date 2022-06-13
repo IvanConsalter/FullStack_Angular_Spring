@@ -107,6 +107,12 @@ export class PessoaCadastroComponent implements OnInit {
       .catch((erro) => this.erroHandler.mostrarErro(erro));
   }
 
+  confirmarContato(): void {
+    this.contatos.push(this.pessoaForm.get('contatos').value);
+    this.pessoaForm.reset(new Pessoa());
+    this.exibirFormularioContato = false;
+  }
+
   atualizarPessoa(): void {
     this.pessoaService
       .atualizarPessoa(this.pessoaForm.value)

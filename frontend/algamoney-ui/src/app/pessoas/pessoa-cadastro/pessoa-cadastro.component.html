@@ -161,7 +161,7 @@
 </div>
 
 <p-dialog header="Novo Contato" [(visible)]="exibirFormularioContato" [modal]="true" >
-  <form [formGroup]="pessoaForm">
+  <form [formGroup]="pessoaForm" (ngSubmit)="confirmarContato()">
     <div class="p-grid">
       <div class="p-col-12 p-fluid" formGroupName="contatos">
         <label>Nome</label>
@@ -200,7 +200,7 @@
           pButton
           type="submit"
           label="Salvar"
-          [disabled]="pessoaForm.invalid"
+          [disabled]="pessoaForm.get('contatos').invalid"
         ></button>
       </div>
 
