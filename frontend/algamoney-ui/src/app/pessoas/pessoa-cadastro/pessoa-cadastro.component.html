@@ -26,7 +26,7 @@
           formControlName="cep"
         ></p-inputMask>
 
-        <app-message [control]="pessoaForm.get('endereco')" error="obrigatoriedade" message="CEP é obrigatório!"></app-message>
+        <app-message [control]="pessoaForm.get('endereco.cep')" error="obrigatoriedade" message="CEP é obrigatório!"></app-message>
       </div>
 
       <div class="p-col-12 p-md-4 p-fluid" formGroupName="endereco">
@@ -38,7 +38,7 @@
           formControlName="bairro"
         >
 
-        <app-message [control]="pessoaForm.get('endereco')" error="obrigatoriedade" message="Bairro é obrigatório!"></app-message>
+        <app-message [control]="pessoaForm.get('endereco.bairro')" error="obrigatoriedade" message="Bairro é obrigatório!"></app-message>
         <!-- <app-message [control]="pessoaForm.get('bairro')" error="tamanhoMinimo" message="Dever ter no mínimo {{ pessoaForm.get('bairro').errors?.tamanhoMinimo?.tamanho }}"></app-message> -->
       </div>
 
@@ -56,7 +56,7 @@
         formControlName="logradouro"
         >
 
-      <app-message [control]="pessoaForm.get('endereco')" error="obrigatoriedade" message="Logradouro é obrigatório!"></app-message>
+      <app-message [control]="pessoaForm.get('endereco.logradouro')" error="obrigatoriedade" message="Logradouro é obrigatório!"></app-message>
       <!-- <app-message [control]="pessoaForm.get('logradouro')" error="tamanhoMinimo" message="Dever ter no mínimo {{ pessoaForm.get('logradouro').errors?.tamanhoMinimo?.tamanho }}"></app-message> -->
       </div>
 
@@ -69,7 +69,7 @@
           formControlName="numero"
         >
 
-        <app-message [control]="pessoaForm.get('endereco')" error="obrigatoriedade" message="Número é obrigatório!"></app-message>
+        <app-message [control]="pessoaForm.get('endereco.numero')" error="obrigatoriedade" message="Número é obrigatório!"></app-message>
       </div>
 
       <div class="p-col-12 p-md-6 p-fluid" formGroupName="endereco">
@@ -81,7 +81,7 @@
           formControlName="cidade"
         >
 
-        <app-message [control]="pessoaForm.get('endereco')" error="obrigatoriedade" message="Cidade é obrigatório!"></app-message>
+        <app-message [control]="pessoaForm.get('endereco.cidade')" error="obrigatoriedade" message="Cidade é obrigatório!"></app-message>
       </div>
 
       <div class="p-col-12 p-md-6 p-fluid" formGroupName="endereco">
@@ -93,7 +93,7 @@
           formControlName="estado"
         >
 
-        <app-message [control]="pessoaForm.get('endereco')" error="obrigatoriedade" message="Estado é obrigatório!"></app-message>
+        <app-message [control]="pessoaForm.get('endereco.estado')" error="obrigatoriedade" message="Estado é obrigatório!"></app-message>
       </div>
 
       <div class="p-col-12">
@@ -171,7 +171,7 @@
           name="nome"
           formControlName="nome"
         >
-        <app-message [control]="pessoaForm.get('contatos')" error="obrigatoriedade" message="Nome é obrigatório!"></app-message>
+        <app-message [control]="pessoaForm.get('contatos.nome')" error="obrigatoriedade" message="Nome é obrigatório!"></app-message>
       </div>
 
       <div class="p-col-12 p-fluid" formGroupName="contatos">
@@ -182,8 +182,8 @@
           name="email"
           formControlName="email"
         >
-        <app-message [control]="pessoaForm.get('contatos')" error="obrigatoriedade" message="Nome é obrigatório!"></app-message>
-        <app-message [control]="pessoaForm.get('contatos')" error="email" message="Informe um e-mail válido!"></app-message>
+        <app-message [control]="pessoaForm.get('contatos.email')" error="obrigatoriedade" message="Nome é obrigatório!"></app-message>
+        <app-message [control]="pessoaForm.get('contatos.email')" error="email" message="Informe um e-mail válido!"></app-message>
       </div>
 
       <div class="p-col-12 p-fluid" formGroupName="contatos">
