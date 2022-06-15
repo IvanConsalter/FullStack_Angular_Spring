@@ -1,3 +1,4 @@
+import { Contato } from './../../shared/model/contato.model';
 import { Title } from '@angular/platform-browser';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
@@ -23,6 +24,7 @@ import { Pessoa } from 'src/app/shared/model/pessoa.model';
 export class PessoaCadastroComponent implements OnInit {
   exibirFormularioContato = false;
   pessoaForm: FormGroup;
+  contatoForm: FormGroup;
   contatos = [];
 
   constructor(
@@ -37,6 +39,7 @@ export class PessoaCadastroComponent implements OnInit {
 
   ngOnInit(): void {
     this.configurarPessoaForm();
+    this.configurarContatoForm();
     this.title.setTitle('Nova Pessoa');
     const codigoPessoa = this.route.snapshot.params.codigo;
 
@@ -64,7 +67,12 @@ export class PessoaCadastroComponent implements OnInit {
         numero: [null, this.validarObrigatoriedade],
         cidade: [null, this.validarObrigatoriedade],
         estado: [null, this.validarObrigatoriedade],
-      }),
+      })
+    });
+  }
+
+  configurarContatoForm(): void {
+    this.contatoForm = this.formBuilder.group({
       contatos: this.formBuilder.group({
         codigo: [],
         nome: [null, [this.validarObrigatoriedade]],
@@ -108,8 +116,8 @@ export class PessoaCadastroComponent implements OnInit {
   }
 
   confirmarContato(): void {
-    this.contatos.push(this.pessoaForm.get('contatos').value);
-    this.pessoaForm.reset(new Pessoa());
+    this.contatos.push(this.contatoForm.get('contatos').value);
+    this.contatoForm.get('contatos').reset(new Contato());
     this.exibirFormularioContato = false;
   }
 
