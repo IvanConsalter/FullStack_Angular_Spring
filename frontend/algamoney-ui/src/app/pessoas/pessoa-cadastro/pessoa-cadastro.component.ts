@@ -104,7 +104,7 @@ export class PessoaCadastroComponent implements OnInit {
 
   salvarNovaPessoa(): void {
     this.pessoaService
-      .salvarPessoa(this.pessoaForm.value)
+      .salvarPessoa(this.pessoaForm.value, this.contatos)
       .then(() => {
         this.messageService.add({
           severity: 'success',
@@ -115,15 +115,9 @@ export class PessoaCadastroComponent implements OnInit {
       .catch((erro) => this.erroHandler.mostrarErro(erro));
   }
 
-  confirmarContato(): void {
-    this.contatos.push(this.contatoForm.get('contatos').value);
-    this.contatoForm.get('contatos').reset(new Contato());
-    this.exibirFormularioContato = false;
-  }
-
   atualizarPessoa(): void {
     this.pessoaService
-      .atualizarPessoa(this.pessoaForm.value)
+      .atualizarPessoa(this.pessoaForm.value, this.contatos)
       .then((pessoa: Pessoa) => {
         this.pessoaForm.patchValue(pessoa);
         this.atualizarTituloPagina();
@@ -134,6 +128,12 @@ export class PessoaCadastroComponent implements OnInit {
         this.router.navigate(['/pessoas']);
       })
       .catch((erro) => this.erroHandler.mostrarErro(erro));
+  }
+
+  confirmarContato(): void {
+    this.contatos.push(this.contatoForm.get('contatos').value);
+    this.contatoForm.get('contatos').reset(new Contato());
+    this.exibirFormularioContato = false;
   }
 
   carregarPessoa(codigoPessoa: number): void {

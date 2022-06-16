@@ -1,5 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Contato } from '../shared/model/contato.model';
 
 import { Pessoa } from '../shared/model/pessoa.model';
 
@@ -63,13 +64,19 @@ export class PessoaService {
       .toPromise();
   }
 
-  salvarPessoa(pessoa: Pessoa): Promise<Pessoa> {
+  salvarPessoa(pessoa: Pessoa, contatos: Array<Contato>): Promise<Pessoa> {
+    if (contatos.length) {
+      pessoa.contatos = contatos;
+    }
 
     return this.http.post<Pessoa>(this.pessoasUrl, pessoa)
       .toPromise<Pessoa>();
   }
 
-  atualizarPessoa(pessoa: Pessoa): Promise<Pessoa> {
+  atualizarPessoa(pessoa: Pessoa, contatos: Array<Contato>): Promise<Pessoa> {
+    if (contatos.length) {
+      pessoa.contatos = contatos;
+    }
 
     return this.http.put<Pessoa>(`${this.pessoasUrl}/${pessoa.codigo}`, pessoa)
       .toPromise();
