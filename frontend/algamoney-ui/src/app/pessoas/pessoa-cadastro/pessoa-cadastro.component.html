@@ -119,7 +119,7 @@
                   </tr>
                 </ng-template>
 
-                <ng-template pTemplate="body" let-contato>
+                <ng-template pTemplate="body" let-contato let-rowIndex="rowIndex">
                   <tr>
                     <td>{{ contato.nome }}</td>
                     <td>{{ contato.email }}</td>
@@ -131,6 +131,7 @@
                         type="button"
                         pTooltip="Editar"
                         tooltipPosition="top"
+                        (click)="prepararEdicaoContato(contato, rowIndex)"
                       ></button>
 
                       <button

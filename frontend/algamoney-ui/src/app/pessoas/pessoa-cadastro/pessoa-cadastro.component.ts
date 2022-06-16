@@ -26,6 +26,7 @@ export class PessoaCadastroComponent implements OnInit {
   pessoaForm: FormGroup;
   contatoForm: FormGroup;
   contatos = [];
+  contatoIndex?: number;
 
   constructor(
     private pessoaService: PessoaService,
@@ -131,9 +132,29 @@ export class PessoaCadastroComponent implements OnInit {
   }
 
   confirmarContato(): void {
+    if (this.contatoForm.get('contatos.codigo').value){
+      this.editarContato();
+    }
+    else {
+      this.salvarNovoContato();
+    }
+    this.exibirFormularioContato = false;
+  }
+
+  salvarNovoContato(): void {
     this.contatos.push(this.contatoForm.get('contatos').value);
     this.contatoForm.get('contatos').reset(new Contato());
-    this.exibirFormularioContato = false;
+  }
+
+  editarContato(): void {
+    this.contatos[this.contatoIndex] = this.contatoForm.get('contatos').value;
+    this.contatoForm.get('contatos').reset(new Contato());
+  }
+
+  prepararEdicaoContato(contato: Contato, rowIndex: number): void {
+    this.contatoIndex = rowIndex;
+    this.exibirFormularioContato = true;
+    this.contatoForm.get('contatos').patchValue(contato);
   }
 
   carregarPessoa(codigoPessoa: number): void {
