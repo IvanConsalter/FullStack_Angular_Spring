@@ -9,7 +9,7 @@ import {
   FormControl,
 } from '@angular/forms';
 
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 import { PessoaService } from './../pessoa.service';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
@@ -32,6 +32,7 @@ export class PessoaCadastroComponent implements OnInit {
     private pessoaService: PessoaService,
     private messageService: MessageService,
     private erroHandler: ErrorHandlerService,
+    private confirmationService: ConfirmationService,
     private router: Router,
     private route: ActivatedRoute,
     private title: Title,
@@ -149,6 +150,15 @@ export class PessoaCadastroComponent implements OnInit {
   editarContato(): void {
     this.contatos[this.contatoIndex] = this.contatoForm.get('contatos').value;
     this.contatoForm.get('contatos').reset(new Contato());
+  }
+
+  removerContato(rowIndex: number): void {
+    this.confirmationService.confirm({
+      message: 'Tem certeza que deseja excluir?',
+      accept: () => {
+        this.contatos.splice(rowIndex, 1);
+      }
+    });
   }
 
   prepararEdicaoContato(contato: Contato, rowIndex: number): void {

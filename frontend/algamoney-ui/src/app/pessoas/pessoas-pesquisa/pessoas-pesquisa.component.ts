@@ -19,7 +19,7 @@ export class PessoasPesquisaComponent implements OnInit {
   constructor(
     private pessoaService: PessoaService,
     private messageService: MessageService,
-    private confirmatiomSerive: ConfirmationService,
+    private confirmationService: ConfirmationService,
     private erroHandler: ErrorHandlerService,
     private title: Title
   ) { }
@@ -40,12 +40,6 @@ export class PessoasPesquisaComponent implements OnInit {
 
     this.pessoaService.consultarPessoasPorFiltro(this.filtro)
       .then((resposta: any) => {
-        // console.log(resposta);
-        // console.log(this.filtro);
-        // if (this.filtro.pagina === 0) {
-        //   this.tabela.reset();
-        // } // bug infinito na consulta
-
         this.pessoas = resposta.pessoas;
         this.totalRegistros = resposta.totalRegistros;
       })
@@ -53,7 +47,7 @@ export class PessoasPesquisaComponent implements OnInit {
   }
 
   confirmarExclusao(pessoa: any): void {
-    this.confirmatiomSerive.confirm({
+    this.confirmationService.confirm({
       message: 'Tem certeza que deseja excluir?',
       accept: () => {
         this.excluir(pessoa);
