@@ -65,18 +65,14 @@ export class PessoaService {
   }
 
   salvarPessoa(pessoa: Pessoa, contatos: Array<Contato>): Promise<Pessoa> {
-    if (contatos.length) {
-      pessoa.contatos = contatos;
-    }
+    pessoa.contatos = contatos;
 
     return this.http.post<Pessoa>(this.pessoasUrl, pessoa)
       .toPromise<Pessoa>();
   }
 
   atualizarPessoa(pessoa: Pessoa, contatos: Array<Contato>): Promise<Pessoa> {
-    if (contatos.length) {
-      pessoa.contatos = contatos;
-    }
+    pessoa.contatos = contatos;
 
     return this.http.put<Pessoa>(`${this.pessoasUrl}/${pessoa.codigo}`, pessoa)
       .toPromise();
