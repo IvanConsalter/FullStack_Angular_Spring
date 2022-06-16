@@ -3,7 +3,7 @@
 
     <div class="p-grid">
       <div class="p-col-12">
-        <h1>Nova Pessoa</h1>
+        <h1>{{ !estaEditando() ? 'Nova' : 'Edição de'}} Pessoa</h1>
       </div>
 
       <div class="p-col-12 p-fluid">
@@ -98,56 +98,7 @@
 
       <div class="p-col-12">
         <p-panel header="Contatos">
-          <div class="p-grid">
-            <div class="p-col-12">
-              <button
-                pButton
-                label="Novo Contato"
-                icon="pi pi-plus"
-                type="button"
-                (click)="exibirModalContato()"
-              ></button>
-            </div>
-            <div class="p-col-12">
-              <p-table [value]="contatos" [responsive]="true">
-                <ng-template pTemplate="header">
-                  <tr>
-                    <th>Nome</th>
-                    <th>E-mail</th>
-                    <th>Telefone</th>
-                    <th class="col-acoes-header"></th>
-                  </tr>
-                </ng-template>
-
-                <ng-template pTemplate="body" let-contato let-rowIndex="rowIndex">
-                  <tr>
-                    <td>{{ contato.nome }}</td>
-                    <td>{{ contato.email }}</td>
-                    <td>{{ contato.telefone }}</td>
-                    <td class="col-acoes">
-                      <button
-                        pButton
-                        icon="pi pi-pencil"
-                        type="button"
-                        pTooltip="Editar"
-                        tooltipPosition="top"
-                        (click)="prepararEdicaoContato(contato, rowIndex)"
-                      ></button>
-
-                      <button
-                        pButton
-                        icon="pi pi-trash"
-                        type="button"
-                        pTooltip="Excluir"
-                        tooltipPosition="top"
-                        (click)="removerContato(rowIndex)"
-                      ></button>
-                    </td>
-                  </tr>
-                </ng-template>
-              </p-table>
-            </div>
-          </div>
+          <app-pessoa-cadastro-contato [contatos]="contatos"></app-pessoa-cadastro-contato>
         </p-panel>
       </div>
 
@@ -162,50 +113,4 @@
   </form>
 </div>
 
-<p-dialog header="Novo Contato" [(visible)]="exibirFormularioContato" [modal]="true" >
-  <form [formGroup]="contatoForm" (ngSubmit)="confirmarContato()">
-    <div class="p-grid">
-      <div class="p-col-12 p-fluid" formGroupName="contatos">
-        <label>Nome</label>
-        <input
-          pInputText
-          type="text"
-          name="nome"
-          formControlName="nome"
-        >
-        <app-message [control]="contatoForm.get('contatos.nome')" error="obrigatoriedade" message="Nome é obrigatório!"></app-message>
-      </div>
 
-      <div class="p-col-12 p-fluid" formGroupName="contatos">
-        <label>Email</label>
-        <input
-          pInputText
-          type="email"
-          name="email"
-          formControlName="email"
-        >
-        <app-message [control]="contatoForm.get('contatos.email')" error="obrigatoriedade" message="Nome é obrigatório!"></app-message>
-        <app-message [control]="contatoForm.get('contatos.email')" error="email" message="Informe um e-mail válido!"></app-message>
-      </div>
-
-      <div class="p-col-12 p-fluid" formGroupName="contatos">
-        <label>Telefone</label>
-        <p-inputMask
-          mask="(99) 9 9999-9999"
-          name="telefone"
-          formControlName="telefone"
-        ></p-inputMask>
-      </div>
-
-      <div class="p-col-12">
-        <button
-          pButton
-          type="submit"
-          label="Salvar"
-          [disabled]="contatoForm.get('contatos').invalid"
-        ></button>
-      </div>
-
-    </div>
-  </form>
-</p-dialog>

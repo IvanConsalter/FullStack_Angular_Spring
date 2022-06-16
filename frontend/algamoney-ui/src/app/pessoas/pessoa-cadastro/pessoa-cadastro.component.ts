@@ -5,7 +5,6 @@ import { Component, OnInit } from '@angular/core';
 import {
   FormGroup,
   FormBuilder,
-  Validators,
   FormControl,
 } from '@angular/forms';
 
@@ -22,17 +21,14 @@ import { Pessoa } from 'src/app/shared/model/pessoa.model';
   styleUrls: ['./pessoa-cadastro.component.css'],
 })
 export class PessoaCadastroComponent implements OnInit {
-  exibirFormularioContato = false;
+
   pessoaForm: FormGroup;
-  contatoForm: FormGroup;
-  contatos = [];
-  contatoIndex?: number;
+  contatos: Array<Contato>;
 
   constructor(
     private pessoaService: PessoaService,
     private messageService: MessageService,
     private erroHandler: ErrorHandlerService,
-    private confirmationService: ConfirmationService,
     private router: Router,
     private route: ActivatedRoute,
     private title: Title,
@@ -41,8 +37,6 @@ export class PessoaCadastroComponent implements OnInit {
 
   ngOnInit(): void {
     this.configurarPessoaForm();
-    this.configurarContatoForm();
-    this.title.setTitle('Nova Pessoa');
     const codigoPessoa = this.route.snapshot.params.codigo;
 
     if (codigoPessoa) {
@@ -69,17 +63,6 @@ export class PessoaCadastroComponent implements OnInit {
         numero: [null, this.validarObrigatoriedade],
         cidade: [null, this.validarObrigatoriedade],
         estado: [null, this.validarObrigatoriedade],
-      })
-    });
-  }
-
-  configurarContatoForm(): void {
-    this.contatoForm = this.formBuilder.group({
-      contatos: this.formBuilder.group({
-        codigo: [],
-        nome: [null, [this.validarObrigatoriedade]],
-        email: [null, [this.validarObrigatoriedade, Validators.email]],
-        telefone: [null]
       })
     });
   }
@@ -132,40 +115,7 @@ export class PessoaCadastroComponent implements OnInit {
       .catch((erro) => this.erroHandler.mostrarErro(erro));
   }
 
-  confirmarContato(): void {
-    if (this.contatoForm.get('contatos.codigo').value){
-      this.editarContato();
-    }
-    else {
-      this.salvarNovoContato();
-    }
-    this.exibirFormularioContato = false;
-  }
 
-  salvarNovoContato(): void {
-    this.contatos.push(this.contatoForm.get('contatos').value);
-    this.contatoForm.get('contatos').reset(new Contato());
-  }
-
-  editarContato(): void {
-    this.contatos[this.contatoIndex] = this.contatoForm.get('contatos').value;
-    this.contatoForm.get('contatos').reset(new Contato());
-  }
-
-  removerContato(rowIndex: number): void {
-    this.confirmationService.confirm({
-      message: 'Tem certeza que deseja excluir?',
-      accept: () => {
-        this.contatos.splice(rowIndex, 1);
-      }
-    });
-  }
-
-  prepararEdicaoContato(contato: Contato, rowIndex: number): void {
-    this.contatoIndex = rowIndex;
-    this.exibirFormularioContato = true;
-    this.contatoForm.get('contatos').patchValue(contato);
-  }
 
   carregarPessoa(codigoPessoa: number): void {
     this.pessoaService
@@ -196,7 +146,4 @@ export class PessoaCadastroComponent implements OnInit {
     );
   }
 
-  exibirModalContato(): void {
-    this.exibirFormularioContato = true;
-  }
 }
