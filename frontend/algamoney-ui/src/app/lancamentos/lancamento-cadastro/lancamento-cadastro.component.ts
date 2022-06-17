@@ -181,6 +181,10 @@ export class LancamentoCadastroComponent implements OnInit {
     });
   }
 
+  erroUpload(event): void {
+    this.erroHandler.mostrarErro('Erro ao carregar anexo!');
+  }
+
   get nomeAnexo(): string {
     const nome = this.lancamentoForm.get('anexo').value;
 

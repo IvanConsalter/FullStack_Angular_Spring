@@ -98,6 +98,7 @@
           [headers]="uploadHeaders"
           [url]="urlUploadAnexo"
           (onUpload)="aoTerminarUploadAnexo($event)"
+          (onError)="erroUpload($event)"
         ></p-fileUpload>
       </div>
 
