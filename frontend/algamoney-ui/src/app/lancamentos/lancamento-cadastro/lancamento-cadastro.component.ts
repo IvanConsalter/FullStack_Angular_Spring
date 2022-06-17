@@ -1,3 +1,4 @@
+import { HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -166,6 +167,14 @@ export class LancamentoCadastroComponent implements OnInit {
 
   atualizarTituloPagina(): void {
     this.title.setTitle(`Edição de lançamento: ${this.lancamentoForm.get('descricao').value}`);
+  }
+
+  get urlUploadAnexo(): string {
+    return this.lancamentoService.urlUploadAnexo();
+  }
+
+  get uploadHeaders(): HttpHeaders {
+    return this.lancamentoService.uploadHeaders();
   }
 
 }

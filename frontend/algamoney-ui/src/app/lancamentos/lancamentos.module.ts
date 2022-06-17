@@ -12,6 +12,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { TableModule } from 'primeng/table';
 import { CalendarModule } from 'primeng/calendar';
 import { SelectButtonModule } from 'primeng/selectbutton';
+import { FileUploadModule } from 'primeng/fileupload';
 // import { InputMaskModule } from 'primeng/inputmask';
 
 // ng2-currency
@@ -47,6 +48,7 @@ import { LancamentosRoutingModule } from './lancamentos-routing.module';
     CalendarModule,
     SelectButtonModule,
     DropdownModule,
+    FileUploadModule,
     // InputMaskModule,
     // ng2-currency
     CurrencyMaskModule

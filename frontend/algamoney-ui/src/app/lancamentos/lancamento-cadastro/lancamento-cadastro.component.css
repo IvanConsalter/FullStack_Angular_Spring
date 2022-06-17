@@ -5,3 +5,7 @@
 a {
   text-decoration: none;
 }
+
+.anexo-arquivos {
+  align-self: flex-end;
+}

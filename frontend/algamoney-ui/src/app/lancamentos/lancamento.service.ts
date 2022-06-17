@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { Lancamento } from '../shared/model/lancamento.model';
@@ -102,5 +102,14 @@ export class LancamentoService {
         lancamento.dataPagamento = new Date(new Date(lancamento.dataPagamento).getTime() + offset);
       }
     }
+  }
+
+  public urlUploadAnexo(): string {
+    return `${this.lancamentosUrl}/anexo`;
+  }
+
+  public uploadHeaders(): HttpHeaders {
+    return new HttpHeaders()
+      .append('Authorization', `Bearer ${localStorage.getItem('token')}`);
   }
 }
