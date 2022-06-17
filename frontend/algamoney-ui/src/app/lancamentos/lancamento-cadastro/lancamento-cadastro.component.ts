@@ -79,7 +79,9 @@ export class LancamentoCadastroComponent implements OnInit {
         codigo: [ null, Validators.required ],
         nome: []
       }),
-      observacao: []
+      observacao: [],
+      anexo: [],
+      urlAnexo: []
     });
   }
 
@@ -167,6 +169,26 @@ export class LancamentoCadastroComponent implements OnInit {
 
   atualizarTituloPagina(): void {
     this.title.setTitle(`Edição de lançamento: ${this.lancamentoForm.get('descricao').value}`);
+  }
+
+  aoTerminarUploadAnexo(event): void {
+    const anexo = event.originalEvent.body;
+    console.log(anexo);
+
+    this.lancamentoForm.patchValue({
+      anexo: anexo.nome,
+      urlAnexo: (anexo.url as string).replace('\\', 'https://')
+    });
+  }
+
+  get nomeAnexo(): string {
+    const nome = this.lancamentoForm.get('anexo').value;
+
+    if (nome) {
+      return nome.substring(nome.indexOf('_') + 1, nome.length);
+    }
+
+    return '';
   }
 
   get urlUploadAnexo(): string {

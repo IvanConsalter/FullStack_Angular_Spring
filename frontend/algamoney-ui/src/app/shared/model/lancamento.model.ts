@@ -11,4 +11,6 @@ export class Lancamento {
   descricao: string;
   pessoa = new Pessoa();
   categoria = new Categoria();
+  anexo: string;
+  urlAnexo: string;
 }
