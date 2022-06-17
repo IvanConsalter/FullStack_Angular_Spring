@@ -31,6 +31,7 @@ export class LancamentoCadastroComponent implements OnInit {
     { label: 'Receita', value: 'RECEITA' },
     { label: 'Despesa', value: 'DESPESA' }
   ];
+  mostrarSpinner = false;
 
   lancamentoForm: FormGroup;
 
@@ -171,6 +172,10 @@ export class LancamentoCadastroComponent implements OnInit {
     this.title.setTitle(`Edição de lançamento: ${this.lancamentoForm.get('descricao').value}`);
   }
 
+  antesUpload(event): void {
+    this.mostrarSpinner = true;
+  }
+
   aoTerminarUploadAnexo(event): void {
     const anexo = event.originalEvent.body;
     console.log(anexo);
@@ -179,10 +184,12 @@ export class LancamentoCadastroComponent implements OnInit {
       anexo: anexo.nome,
       urlAnexo: (anexo.url as string).replace('\\', 'https://')
     });
+    this.mostrarSpinner = false;
   }
 
   erroUpload(event): void {
     this.erroHandler.mostrarErro('Erro ao carregar anexo!');
+    this.mostrarSpinner = false;
   }
 
   get nomeAnexo(): string {

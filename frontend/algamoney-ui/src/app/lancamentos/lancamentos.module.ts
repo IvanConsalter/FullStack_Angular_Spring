@@ -13,6 +13,7 @@ import { TableModule } from 'primeng/table';
 import { CalendarModule } from 'primeng/calendar';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { FileUploadModule } from 'primeng/fileupload';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 // import { InputMaskModule } from 'primeng/inputmask';
 
 // ng2-currency
@@ -49,6 +50,7 @@ import { LancamentosRoutingModule } from './lancamentos-routing.module';
     SelectButtonModule,
     DropdownModule,
     FileUploadModule,
+    ProgressSpinnerModule,
     // InputMaskModule,
     // ng2-currency
     CurrencyMaskModule

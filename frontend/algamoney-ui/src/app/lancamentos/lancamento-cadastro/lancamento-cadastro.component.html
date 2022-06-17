@@ -99,7 +99,12 @@
           [url]="urlUploadAnexo"
           (onUpload)="aoTerminarUploadAnexo($event)"
           (onError)="erroUpload($event)"
+          (onBeforeUpload)="antesUpload($event)"
+          [hidden]="mostrarSpinner"
         ></p-fileUpload>
+
+        <p-progressSpinner [hidden]="!mostrarSpinner"
+            [style]="{ width: '25px', height: '25px' }"></p-progressSpinner>
       </div>
 
       <div class="p-col-12" *ngIf="lancamentoForm.get('anexo').value">
