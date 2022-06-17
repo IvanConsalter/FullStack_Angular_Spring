@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { MessageService } from 'primeng/api';
+import { stringify } from 'querystring';
 
 import { erroNaoAutenticado } from './../seguranca/money-http-interceptor';
 
@@ -20,9 +21,17 @@ export class ErrorHandlerService {
     console.log(respostaErro);
 
     let mensagem: string;
+    let mensagemPermissao: string;
+
+    if (respostaErro.error) {
+      mensagemPermissao = this.naoPodeDeletarUsuarioComLancamento(respostaErro.error[0].mensagemDesenvolvedor);
+    }
 
     if (typeof respostaErro === 'string') {
       mensagem = respostaErro;
+    }
+    else if (mensagemPermissao === 'Cannot delete or update a parent row') {
+      mensagem = 'Não é possivel remover uma pessoa com lançamento ativo';
     }
     else if (respostaErro instanceof erroNaoAutenticado) {
       console.log('erro refresh');
@@ -52,5 +61,9 @@ export class ErrorHandlerService {
     }
 
     this.messageService.add({severity: 'error', detail: mensagem, life: 10000});
+  }
+
+  naoPodeDeletarUsuarioComLancamento(mensagem: string): string {
+    return mensagem.slice(42, 78);
   }
 }
