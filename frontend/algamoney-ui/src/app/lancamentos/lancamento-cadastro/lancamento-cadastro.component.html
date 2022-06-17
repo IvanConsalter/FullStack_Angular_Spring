@@ -118,7 +118,7 @@
       </div>
 
       <div class="p-col-12 p-mt-6">
-        <button pButton type="submit" label="Salvar" class="p-button-success" [disabled]="lancamentoForm.invalid"></button>
+        <button pButton type="submit" label="Salvar" class="p-button-success" [disabled]="lancamentoForm.invalid || mostrarSpinner"></button>
         <button pButton type="button" label="Novo" (click)="novoLancamento()"></button>
         <a routerLink="/lancamentos" pButton class="p-button-info">Voltar para a pesquisa</a>
       </div>
