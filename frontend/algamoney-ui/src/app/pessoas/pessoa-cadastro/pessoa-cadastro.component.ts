@@ -8,7 +8,7 @@ import {
   FormControl,
 } from '@angular/forms';
 
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService, SelectItem } from 'primeng/api';
 
 import { PessoaService } from './../pessoa.service';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
@@ -24,6 +24,9 @@ export class PessoaCadastroComponent implements OnInit {
 
   pessoaForm: FormGroup;
   contatos: Array<Contato>;
+  cidades: SelectItem[];
+  estados: SelectItem[];
+  estadoSelecionado: number;
 
   constructor(
     private pessoaService: PessoaService,
@@ -37,6 +40,7 @@ export class PessoaCadastroComponent implements OnInit {
 
   ngOnInit(): void {
     this.configurarPessoaForm();
+    this.carregarEstados();
     const codigoPessoa = this.route.snapshot.params.codigo;
 
     if (codigoPessoa) {
@@ -51,6 +55,14 @@ export class PessoaCadastroComponent implements OnInit {
       nome: [null, [this.validarObrigatoriedade, this.validarTamanhoMinimo(5)]],
       endereco: this.formBuilder.group({
         cep: [null, this.validarObrigatoriedade],
+        cidade: this.formBuilder.group({
+          codigo: [],
+          nome: [null, [this.validarObrigatoriedade]],
+          estado: this.formBuilder.group({
+            codigo: [],
+            nome: [null, [this.validarObrigatoriedade]]
+          })
+        }),
         bairro: [
           null,
           [this.validarObrigatoriedade, this.validarTamanhoMinimo(5)],
@@ -61,8 +73,6 @@ export class PessoaCadastroComponent implements OnInit {
           [this.validarObrigatoriedade, this.validarTamanhoMinimo(5)],
         ],
         numero: [null, this.validarObrigatoriedade],
-        cidade: [null, this.validarObrigatoriedade],
-        estado: [null, this.validarObrigatoriedade],
       })
     });
   }
@@ -115,8 +125,6 @@ export class PessoaCadastroComponent implements OnInit {
       .catch((erro) => this.erroHandler.mostrarErro(erro));
   }
 
-
-
   carregarPessoa(codigoPessoa: number): void {
     this.pessoaService
       .consultarPessoaPorCodigo(codigoPessoa)
@@ -130,6 +138,25 @@ export class PessoaCadastroComponent implements OnInit {
   novaPessoa(): void {
     this.pessoaForm.reset(new Pessoa());
     this.router.navigate(['pessoas/novo']);
+  }
+
+  carregarEstados(): void {
+    this.pessoaService.consultarEstados()
+      .then( resposta => {
+        this.estados = resposta.map( estado => {
+          return { label: estado.nome, value: estado.codigo };
+        });
+      })
+      .catch(erro => this.erroHandler.mostrarErro(erro));
+  }
+
+  carregarCidades(): void {
+    this.pessoaService.consultarCidades(this.estadoSelecionado)
+      .then( resposta => {
+        this.cidades = resposta.map( cidade => {
+          return { label: cidade.nome, value: cidade.codigo };
+        });
+      });
   }
 
   estaEditando(): boolean {

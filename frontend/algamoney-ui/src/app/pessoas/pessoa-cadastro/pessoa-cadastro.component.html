@@ -72,28 +72,34 @@
         <app-message [control]="pessoaForm.get('endereco.numero')" error="obrigatoriedade" message="Número é obrigatório!"></app-message>
       </div>
 
-      <div class="p-col-12 p-md-6 p-fluid" formGroupName="endereco">
-        <label>Cidade</label>
-        <input
-          pInputText
-          type="text"
-          name="cidade"
-          formControlName="cidade"
-        >
+      <div class="p-col-12 p-md-6 p-fluid">
+        <label>Estado</label>
+        <p-dropdown
+          [options]="estados"
+          placeholder="Selecione..."
+          [filter]="true"
+          name="estadoSelecionado"
+          [(ngModel)]="estadoSelecionado"
+          [ngModelOptions]="{standalone: true}"
+          (onChange)="carregarCidades()"
+          emptyFilterMessage="Nenhum resultado encontrado!"
+          emptyMessage="Nenhum resultado encontrado!"
+        ></p-dropdown>
 
-        <app-message [control]="pessoaForm.get('endereco.cidade')" error="obrigatoriedade" message="Cidade é obrigatório!"></app-message>
+        <app-message [control]="pessoaForm.get('endereco.cidade.estado')" error="obrigatoriedade" message="Estado é obrigatório!"></app-message>
       </div>
 
-      <div class="p-col-12 p-md-6 p-fluid" formGroupName="endereco">
-        <label>Estado</label>
-        <input
-          pInputText
-          type="text"
-          name="estado"
-          formControlName="estado"
-        >
+      <div class="p-col-12 p-md-6 p-fluid">
+        <label>Cidade</label>
+        <p-dropdown
+          [options]="cidades"
+          placeholder="Selecione..."
+          [filter]="true"
+          emptyFilterMessage="Nenhum resultado encontrado!"
+          emptyMessage="Nenhum resultado encontrado!"
+        ></p-dropdown>
 
-        <app-message [control]="pessoaForm.get('endereco.estado')" error="obrigatoriedade" message="Estado é obrigatório!"></app-message>
+        <app-message [control]="pessoaForm.get('endereco.cidade')" error="obrigatoriedade" message="Cidade é obrigatório!"></app-message>
       </div>
 
       <div class="p-col-12">

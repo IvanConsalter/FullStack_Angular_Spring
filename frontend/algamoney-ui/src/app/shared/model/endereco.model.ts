@@ -1,6 +1,7 @@
+import { Cidade } from './cidade.model';
+
 export class Endereco {
-  cidade: string;
-  estado: string;
+  cidade = new Cidade();
   complemento: string;
   numero: string;
   logradouro: string;

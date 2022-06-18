@@ -11,6 +11,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TableModule } from 'primeng/table';
 import { PanelModule } from 'primeng/panel';
 import { DialogModule } from 'primeng/dialog';
+import { DropdownModule } from 'primeng/dropdown';
 
 
 // my modules
@@ -40,7 +41,8 @@ import { PessoaCadastroContatoComponent } from './pessoa-cadastro-contato/pessoa
     InputMaskModule,
     TooltipModule,
     PanelModule,
-    DialogModule
+    DialogModule,
+    DropdownModule
   ],
   exports: []
 })
