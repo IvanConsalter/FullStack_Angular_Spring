@@ -192,6 +192,13 @@ export class LancamentoCadastroComponent implements OnInit {
     this.mostrarSpinner = false;
   }
 
+  removerAnexo(): void {
+    this.lancamentoForm.patchValue({
+      anexo: null,
+      urlAnexo: null
+    });
+  }
+
   get nomeAnexo(): string {
     const nome = this.lancamentoForm.get('anexo').value;
 

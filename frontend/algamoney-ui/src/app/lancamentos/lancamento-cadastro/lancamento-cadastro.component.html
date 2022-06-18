@@ -107,8 +107,17 @@
             [style]="{ width: '25px', height: '25px' }"></p-progressSpinner>
       </div>
 
-      <div class="p-col-12" *ngIf="lancamentoForm.get('anexo').value">
+      <div class="p-col-12 p-d-flex p-ai-center" *ngIf="lancamentoForm.get('anexo').value">
+        <p-button
+          icon="pi pi-times"
+          styleClass="p-button-rounded p-button-danger"
+          [style]="{ width: '25px', height: '25px' }"
+          pTooltip="Remover anexo"
+          tooltipPosition="top"
+          (click)="removerAnexo()"
+        ></p-button>
         <a
+          class="p-ml-2"
           target="_blank"
           pTooltip="Baixar anexo"
           tooltipPosition="top"
