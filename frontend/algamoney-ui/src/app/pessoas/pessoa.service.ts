@@ -1,6 +1,8 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Cidade } from '../shared/model/cidade.model';
 import { Contato } from '../shared/model/contato.model';
+import { Estado } from '../shared/model/estado.model';
 
 import { Pessoa } from '../shared/model/pessoa.model';
 
@@ -18,6 +20,8 @@ export class PessoaFiltro {
 export class PessoaService {
 
   pessoasUrl = `${environment.apiUrl}/pessoas`;
+  estadosUrl = `${environment.apiUrl}/estados`;
+  cidadesUrl = `${environment.apiUrl}/cidades`;
 
   constructor(
     private http: HttpClient
@@ -88,6 +92,19 @@ export class PessoaService {
   alterarStatusPessoa(codigo: number, ativo: boolean): Promise<any> {
 
     return this.http.put(`${this.pessoasUrl}/${codigo}/ativo`, ativo)
+      .toPromise();
+  }
+
+  consultarEstados(): Promise<Array<Estado>> {
+    return this.http.get<Array<Estado>>(this.estadosUrl)
+      .toPromise();
+  }
+
+  consultarCidades(estadoId: number): Promise<Array<Cidade>> {
+    let params = new HttpParams();
+    params = params.set('estado', estadoId.toString());
+
+    return this.http.get<Array<Cidade>>(this.cidadesUrl, { params })
       .toPromise();
   }
 }
