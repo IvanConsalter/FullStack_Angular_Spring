@@ -8,7 +8,7 @@ import {
   FormControl,
 } from '@angular/forms';
 
-import { ConfirmationService, MessageService, SelectItem } from 'primeng/api';
+import { MessageService, SelectItem } from 'primeng/api';
 
 import { PessoaService } from './../pessoa.service';
 import { ErrorHandlerService } from 'src/app/core/error-handler.service';
@@ -26,7 +26,6 @@ export class PessoaCadastroComponent implements OnInit {
   contatos: Array<Contato>;
   cidades: SelectItem[];
   estados: SelectItem[];
-  estadoSelecionado: number;
 
   constructor(
     private pessoaService: PessoaService,
@@ -151,7 +150,9 @@ export class PessoaCadastroComponent implements OnInit {
   }
 
   carregarCidades(): void {
-    this.pessoaService.consultarCidades(this.estadoSelecionado)
+    const estadoSelecionado = this.pessoaForm.get('endereco.cidade.estado.codigo').value;
+
+    this.pessoaService.consultarCidades(estadoSelecionado)
       .then( resposta => {
         this.cidades = resposta.map( cidade => {
           return { label: cidade.nome, value: cidade.codigo };

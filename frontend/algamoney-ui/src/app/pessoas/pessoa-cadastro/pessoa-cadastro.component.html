@@ -72,29 +72,30 @@
         <app-message [control]="pessoaForm.get('endereco.numero')" error="obrigatoriedade" message="Número é obrigatório!"></app-message>
       </div>
 
-      <div class="p-col-12 p-md-6 p-fluid">
+      <div class="p-col-12 p-md-6 p-fluid" formGroupName="cidade">
         <label>Estado</label>
         <p-dropdown
           [options]="estados"
           placeholder="Selecione..."
           [filter]="true"
-          name="estadoSelecionado"
-          [(ngModel)]="estadoSelecionado"
-          [ngModelOptions]="{standalone: true}"
+          name="estado"
+          formControlName="estado"
           (onChange)="carregarCidades()"
           emptyFilterMessage="Nenhum resultado encontrado!"
           emptyMessage="Nenhum resultado encontrado!"
         ></p-dropdown>
 
-        <app-message [control]="pessoaForm.get('endereco.cidade.estado')" error="obrigatoriedade" message="Estado é obrigatório!"></app-message>
+        <app-message [control]="pessoaForm.get('cidade.estado')" error="obrigatoriedade" message="Estado é obrigatório!"></app-message>
       </div>
 
-      <div class="p-col-12 p-md-6 p-fluid">
+      <div class="p-col-12 p-md-6 p-fluid" formGroupName="endereco">
         <label>Cidade</label>
         <p-dropdown
           [options]="cidades"
           placeholder="Selecione..."
           [filter]="true"
+          name="cidade"
+          formControlName="cidade"
           emptyFilterMessage="Nenhum resultado encontrado!"
           emptyMessage="Nenhum resultado encontrado!"
         ></p-dropdown>
