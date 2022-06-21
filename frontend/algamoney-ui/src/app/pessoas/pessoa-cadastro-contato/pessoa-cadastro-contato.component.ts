@@ -14,7 +14,7 @@ export class PessoaCadastroContatoComponent implements OnInit {
 
   @Input() contatos: Array<Contato> = [];
   contatoForm: FormGroup;
-  contatoIndex?: number;
+  contatoIndex?: number = null;
   exibirFormularioContato = false;
 
   constructor(
@@ -50,11 +50,13 @@ export class PessoaCadastroContatoComponent implements OnInit {
   salvarNovoContato(): void {
     this.contatos.push(this.contatoForm.get('contatos').value);
     this.contatoForm.get('contatos').reset(new Contato());
+    this.contatoIndex = null;
   }
 
   editarContato(): void {
     this.contatos[this.contatoIndex] = this.contatoForm.get('contatos').value;
     this.contatoForm.get('contatos').reset(new Contato());
+    this.contatoIndex = null;
   }
 
   removerContato(rowIndex: number): void {
@@ -73,7 +75,7 @@ export class PessoaCadastroContatoComponent implements OnInit {
   }
 
   estaEditando(): boolean {
-    if (this.contatoForm.get('contatos.codigo').value) {
+    if (this.contatoForm.get('contatos.codigo').value || this.contatoIndex !== null) {
       return true;
     }
 

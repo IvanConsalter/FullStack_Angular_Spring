@@ -55,11 +55,11 @@ export class PessoaCadastroComponent implements OnInit {
       endereco: this.formBuilder.group({
         cep: [null, this.validarObrigatoriedade],
         cidade: this.formBuilder.group({
-          codigo: [],
-          nome: [null, [this.validarObrigatoriedade]],
+          codigo: [null, this.validarObrigatoriedade],
+          nome: [],
           estado: this.formBuilder.group({
-            codigo: [],
-            nome: [null, [this.validarObrigatoriedade]]
+            codigo: [null, this.validarObrigatoriedade],
+            nome: []
           })
         }),
         bairro: [

@@ -18,121 +18,96 @@
         <app-message [control]="pessoaForm.get('nome')" error="tamanhoMinimo" message="Dever ter no mínimo {{ pessoaForm.get('nome').errors?.tamanhoMinimo?.tamanho }}"></app-message>
       </div>
 
-      <div class="p-col-12 p-md-4 p-fluid" formGroupName="endereco">
-        <label>CEP</label>
-        <p-inputMask
-          mask="99.999-999"
-          name="cep"
-          formControlName="cep"
-        ></p-inputMask>
+      <ng-container formGroupName="endereco">
+        <div class="p-col-12 p-md-4 p-fluid">
+          <label>CEP</label>
+          <p-inputMask
+            mask="99.999-999"
+            name="cep"
+            formControlName="cep"
+          ></p-inputMask>
 
-        <app-message [control]="pessoaForm.get('endereco.cep')" error="obrigatoriedade" message="CEP é obrigatório!"></app-message>
-      </div>
+          <app-message [control]="pessoaForm.get('endereco.cep')" error="obrigatoriedade" message="CEP é obrigatório!"></app-message>
+        </div>
 
-      <div class="p-col-12 p-md-4 p-fluid" formGroupName="endereco">
-        <label>Bairro</label>
-        <input
+        <div class="p-col-12 p-md-4 p-fluid">
+          <label>Bairro</label>
+          <input
+            pInputText
+            type="text"
+            name="bairro"
+            formControlName="bairro"
+          >
+
+          <app-message [control]="pessoaForm.get('endereco.bairro')" error="obrigatoriedade" message="Bairro é obrigatório!"></app-message>
+          <!-- <app-message [control]="pessoaForm.get('bairro')" error="tamanhoMinimo" message="Dever ter no mínimo {{ pessoaForm.get('bairro').errors?.tamanhoMinimo?.tamanho }}"></app-message> -->
+        </div>
+
+        <div class="p-col-12 p-md-4 p-fluid">
+          <label>Complemento</label>
+          <input pInputText type="text" name="complemento" formControlName="complemento">
+        </div>
+
+        <div class="p-col-12 p-md-9 p-fluid">
+          <label>Logradouro</label>
+          <input
           pInputText
           type="text"
-          name="bairro"
-          formControlName="bairro"
-        >
+          name="logradouro"
+          formControlName="logradouro"
+          >
 
-        <app-message [control]="pessoaForm.get('endereco.bairro')" error="obrigatoriedade" message="Bairro é obrigatório!"></app-message>
-        <!-- <app-message [control]="pessoaForm.get('bairro')" error="tamanhoMinimo" message="Dever ter no mínimo {{ pessoaForm.get('bairro').errors?.tamanhoMinimo?.tamanho }}"></app-message> -->
-      </div>
+        <app-message [control]="pessoaForm.get('endereco.logradouro')" error="obrigatoriedade" message="Logradouro é obrigatório!"></app-message>
+        <!-- <app-message [control]="pessoaForm.get('logradouro')" error="tamanhoMinimo" message="Dever ter no mínimo {{ pessoaForm.get('logradouro').errors?.tamanhoMinimo?.tamanho }}"></app-message> -->
+        </div>
 
-      <div class="p-col-12 p-md-4 p-fluid" formGroupName="endereco">
-        <label>Complemento</label>
-        <input pInputText type="text" name="complemento" formControlName="complemento">
-      </div>
+        <div class="p-col-12 p-md-3 p-fluid">
+          <label>Número</label>
+          <input
+            pInputText
+            type="text"
+            name="numero"
+            formControlName="numero"
+          >
 
-      <div class="p-col-12 p-md-9 p-fluid" formGroupName="endereco">
-        <label>Logradouro</label>
-        <input
-        pInputText
-        type="text"
-        name="logradouro"
-        formControlName="logradouro"
-        >
+          <app-message [control]="pessoaForm.get('endereco.numero')" error="obrigatoriedade" message="Número é obrigatório!"></app-message>
+        </div>
 
-      <app-message [control]="pessoaForm.get('endereco.logradouro')" error="obrigatoriedade" message="Logradouro é obrigatório!"></app-message>
-      <!-- <app-message [control]="pessoaForm.get('logradouro')" error="tamanhoMinimo" message="Dever ter no mínimo {{ pessoaForm.get('logradouro').errors?.tamanhoMinimo?.tamanho }}"></app-message> -->
-      </div>
+        <ng-container formGroupName="cidade">
+          <div class="p-col-12 p-md-6 p-fluid" formGroupName="estado">
+            <label>Estado</label>
+            <p-dropdown
+              [options]="estados"
+              placeholder="Selecione..."
+              [filter]="true"
+              name="estado"
+              formControlName="codigo"
+              (onChange)="carregarCidades()"
+              emptyFilterMessage="Nenhum resultado encontrado!"
+              emptyMessage="Nenhum resultado encontrado!"
+            ></p-dropdown>
 
-      <div class="p-col-12 p-md-3 p-fluid" formGroupName="endereco">
-        <label>Número</label>
-        <input
-          pInputText
-          type="text"
-          name="numero"
-          formControlName="numero"
-        >
+            <app-message [control]="pessoaForm.get('endereco.cidade.estado.codigo')" error="obrigatoriedade" message="Estado é obrigatório!"></app-message>
+          </div>
 
-        <app-message [control]="pessoaForm.get('endereco.numero')" error="obrigatoriedade" message="Número é obrigatório!"></app-message>
-      </div>
+          <div class="p-col-12 p-md-6 p-fluid">
+            <label>Cidade</label>
+            <p-dropdown
+              [options]="cidades"
+              placeholder="Selecione..."
+              [filter]="true"
+              name="cidade"
+              formControlName="codigo"
+              emptyFilterMessage="Nenhum resultado encontrado!"
+              emptyMessage="Nenhum resultado encontrado!"
+            ></p-dropdown>
 
-      <div class="p-col-12 p-md-6 p-fluid" formGroupName="cidade">
-        <label>Estado</label>
-        <p-dropdown
-          [options]="estados"
-          placeholder="Selecione..."
-          [filter]="true"
-          name="estado"
-          formControlName="estado.codigo"
-          (onChange)="carregarCidades()"
-          emptyFilterMessage="Nenhum resultado encontrado!"
-          emptyMessage="Nenhum resultado encontrado!"
-        ></p-dropdown>
+            <app-message [control]="pessoaForm.get('endereco.cidade.codigo')" error="obrigatoriedade" message="Cidade é obrigatório!"></app-message>
+          </div>
+        </ng-container>
 
-        <app-message [control]="pessoaForm.get('cidade.estado.codigo')" error="obrigatoriedade" message="Estado é obrigatório!"></app-message>
-      </div>
+      </ng-container>
 
-      <div class="p-col-12 p-md-6 p-fluid" formGroupName="endereco">
-        <label>Cidade</label>
-        <p-dropdown
-          [options]="cidades"
-          placeholder="Selecione..."
-          [filter]="true"
-          name="cidade"
-          formControlName="cidade.codigo"
-          emptyFilterMessage="Nenhum resultado encontrado!"
-          emptyMessage="Nenhum resultado encontrado!"
-        ></p-dropdown>
-
-        <app-message [control]="pessoaForm.get('endereco.cidade.codigo')" error="obrigatoriedade" message="Cidade é obrigatório!"></app-message>
-      </div>
-
-      <!-- <div class="p-col-12 p-md-6 p-fluid" formGroupName="estado">
-        <label>Estado</label>
-        <p-dropdown
-          [options]="estados"
-          placeholder="Selecione..."
-          [filter]="true"
-          name="estado"
-          formControlName="codigo"
-          (onChange)="carregarCidades()"
-          emptyFilterMessage="Nenhum resultado encontrado!"
-          emptyMessage="Nenhum resultado encontrado!"
-        ></p-dropdown>
-
-        <app-message [control]="pessoaForm.get('estado.codigo')" error="obrigatoriedade" message="Estado é obrigatório!"></app-message>
-      </div>
-
-      <div class="p-col-12 p-md-6 p-fluid" formGroupName="cidade">
-        <label>Cidade</label>
-        <p-dropdown
-          [options]="cidades"
-          placeholder="Selecione..."
-          [filter]="true"
-          name="cidade"
-          formControlName="codigo"
-          emptyFilterMessage="Nenhum resultado encontrado!"
-          emptyMessage="Nenhum resultado encontrado!"
-        ></p-dropdown>
-
-        <app-message [control]="pessoaForm.get('cidade.codigo')" error="obrigatoriedade" message="Cidade é obrigatório!"></app-message>
-      </div> -->
 
       <div class="p-col-12">
         <p-panel header="Contatos">
