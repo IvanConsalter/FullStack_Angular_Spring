@@ -23,7 +23,7 @@ import { Pessoa } from 'src/app/shared/model/pessoa.model';
 export class PessoaCadastroComponent implements OnInit {
 
   pessoaForm: FormGroup;
-  contatos: Array<Contato>;
+  contatos: Array<Contato> = [];
   cidades: SelectItem[];
   estados: SelectItem[];
 
