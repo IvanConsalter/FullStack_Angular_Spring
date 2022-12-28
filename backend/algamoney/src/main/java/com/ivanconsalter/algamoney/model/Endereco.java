@@ -1,5 +1,8 @@
 package com.ivanconsalter.algamoney.model;
 
+import javax.persistence.Embeddable;
+
+@Embeddable
 public class Endereco {
 	
 	String logradouro;
