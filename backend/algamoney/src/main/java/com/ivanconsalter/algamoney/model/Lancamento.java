@@ -42,14 +42,17 @@ public class Lancamento {
 	String observacao;
 	
 	@Enumerated(EnumType.STRING)
+	@NotNull
 	Tipo tipo;
 	
 	@ManyToOne
 	@JoinColumn(name = "pessoa_codigo")
+	@NotNull
 	Pessoa pessoa;
 	
 	@ManyToOne
 	@JoinColumn(name = "categoria_codigo")
+	@NotNull
 	Categoria categoria;
 
 	public Long getCodigo() {
