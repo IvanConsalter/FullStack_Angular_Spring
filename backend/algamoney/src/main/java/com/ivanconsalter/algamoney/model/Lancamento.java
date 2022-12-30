@@ -23,7 +23,6 @@ public class Lancamento {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@NotNull
 	Long codigo;
 	
 	@NotNull
