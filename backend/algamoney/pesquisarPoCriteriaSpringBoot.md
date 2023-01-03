@@ -38,7 +38,7 @@
    ![4 6](https://user-images.githubusercontent.com/50461475/210439533-dd0b5ae9-daf4-452f-b959-df0290dd1a5f.png)
    
 5. Criar um MetaModel para a entidade
-   1. no STS, botão direito em cima do projeto -> Properties
+   1. no STS, botão direito em cima do projeto -> Properties <br>
    ![5 1](https://user-images.githubusercontent.com/50461475/210439534-536d60f4-11a4-4c2e-8533-921a3024428a.png)
    
    2. Java Compiler -> Annotation Processing
@@ -67,4 +67,5 @@
    11. Caso ainda não funcione, rodar o comando na pasta raiz -> mvn clean package -Dmaven.test.skip
 
 6. Voltar na classe de implementação -> ClasseRepositoryImpl
-   1. trocar as strings com os nomes dos campos pela Classe do MetaModel
+   1. trocar as strings com os nomes dos campos pela Classe do MetaModel, ex:
+   ![6 1](https://user-images.githubusercontent.com/50461475/210441278-bc387922-62ed-4a65-bb3c-292c80087424.png)
