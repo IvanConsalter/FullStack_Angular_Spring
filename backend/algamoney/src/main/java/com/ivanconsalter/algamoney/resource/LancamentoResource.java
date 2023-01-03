@@ -24,6 +24,7 @@ import com.ivanconsalter.algamoney.event.RecursoCriadoEvent;
 import com.ivanconsalter.algamoney.exceptionhandler.Erro;
 import com.ivanconsalter.algamoney.model.Lancamento;
 import com.ivanconsalter.algamoney.repository.LancamentoRepository;
+import com.ivanconsalter.algamoney.repository.filter.LancamentoFilter;
 import com.ivanconsalter.algamoney.service.LancamentoService;
 import com.ivanconsalter.algamoney.service.exception.PessoaInexistenteOuInativaException;
 
@@ -44,8 +45,8 @@ public class LancamentoResource {
 	private MessageSource messageSource;
 	
 	@GetMapping()
-	public List<Lancamento> listar() {
-		return lancamentoRepository.findAll();
+	public List<Lancamento> pesquisar(LancamentoFilter lancamentoFilter) {
+		return lancamentoRepository.pesquisar(lancamentoFilter);
 	}
 	
 	@GetMapping(path = "/{codigo}")
