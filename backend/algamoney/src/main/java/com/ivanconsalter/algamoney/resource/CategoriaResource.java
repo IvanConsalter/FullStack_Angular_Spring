@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,11 +32,13 @@ public class CategoriaResource {
 	private ApplicationEventPublisher eventPublisher;
 	
 	@GetMapping
+	@PreAuthorize("hasAuthority(T(com.ivanconsalter.algamoney.security.AuthorityEnum).ROLE_PESQUISAR_CATEGORIA.name()) and hasAuthority('SCOPE_read')")
 	public List<Categoria> listar() {
 		return categoriaRepository.findAll();
 	}
 	
 	@PostMapping
+	@PreAuthorize("hasAuthority(T(com.ivanconsalter.algamoney.security.AuthorityEnum).ROLE_CADASTRAR_CATEGORIA.name()) and hasAuthority('SCOPE_write')")
 	public ResponseEntity<Categoria> criar(
 			@Valid @RequestBody Categoria categoria,
 			HttpServletResponse response
@@ -48,6 +51,7 @@ public class CategoriaResource {
 	}
 	
 	@GetMapping(path = "/{codigo}")
+	@PreAuthorize("hasAuthority(T(com.ivanconsalter.algamoney.security.AuthorityEnum).ROLE_CADASTRAR_CATEGORIA.name()) and hasAuthority('SCOPE_read')")
 	public ResponseEntity<Categoria> buscarPorCodigo(@PathVariable Long codigo) {
 		return categoriaRepository.findById(codigo)
 				.map(ResponseEntity::ok)

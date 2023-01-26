@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,11 +39,13 @@ public class PessoaResource {
 	private ApplicationEventPublisher eventPublisher;
 	
 	@GetMapping
+	@PreAuthorize("hasAuthority(T(com.ivanconsalter.algamoney.security.AuthorityEnum).ROLE_PESQUISAR_PESSOA.name()) and hasAuthority('SCOPE_read')")
 	public List<Pessoa> listar() {
 		return pessoaRepository.findAll();
 	}
 	
 	@PostMapping
+	@PreAuthorize("hasAuthority(T(com.ivanconsalter.algamoney.security.AuthorityEnum).ROLE_CADASTRAR_PESSOA.name()) and hasAuthority('SCOPE_write')")
 	public ResponseEntity<Pessoa> criar(
 			@Valid @RequestBody Pessoa pessoa,
 			HttpServletResponse response
@@ -55,6 +58,7 @@ public class PessoaResource {
 	}
 	
 	@GetMapping(path = "/{codigo}")
+	@PreAuthorize("hasAuthority(T(com.ivanconsalter.algamoney.security.AuthorityEnum).ROLE_PESQUISAR_PESSOA.name()) and hasAuthority('SCOPE_read')")
 	public ResponseEntity<Pessoa> buscarPorCodigo(@PathVariable Long codigo) {
 		return pessoaRepository.findById(codigo)
 				.map(ResponseEntity::ok)
@@ -63,11 +67,13 @@ public class PessoaResource {
 	
 	@DeleteMapping(path = "/{codigo}")
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
+	@PreAuthorize("hasAuthority(T(com.ivanconsalter.algamoney.security.AuthorityEnum).ROLE_REMOVER_PESSOA.name()) and hasAuthority('SCOPE_write')")
 	public void deletar(@PathVariable Long codigo) {
 		pessoaRepository.deleteById(codigo);
 	}
 	
 	@PutMapping(path = "/{codigo}")
+	@PreAuthorize("hasAuthority(T(com.ivanconsalter.algamoney.security.AuthorityEnum).ROLE_CADASTRAR_PESSOA.name()) and hasAuthority('SCOPE_write')")
 	public ResponseEntity<Pessoa> atualizar(@Valid @RequestBody Pessoa pessoa, @PathVariable Long codigo) {
 		
 		Pessoa pessoaSalva = pessoaService.atualizar(codigo, pessoa);
@@ -77,6 +83,7 @@ public class PessoaResource {
 	
 	@PutMapping(path = "/{codigo}/ativo")
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
+	@PreAuthorize("hasAuthority(T(com.ivanconsalter.algamoney.security.AuthorityEnum).ROLE_CADASTRAR_PESSOA.name()) and hasAuthority('SCOPE_write')")
 	public void atualizarPropriedadeAtivo(@RequestBody Boolean ativo,@PathVariable Long codigo) {
 		pessoaService.atualizarPropriedadeAtivo(ativo, codigo);
 	}

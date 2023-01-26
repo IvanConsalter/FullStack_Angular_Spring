@@ -14,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,11 +50,13 @@ public class LancamentoResource {
 	private MessageSource messageSource;
 	
 	@GetMapping()
+	@PreAuthorize("hasAuthority(T(com.ivanconsalter.algamoney.security.AuthorityEnum).ROLE_PESQUISAR_LANCAMENTO.name()) and hasAuthority('SCOPE_read')")
 	public Page<Lancamento> pesquisar(LancamentoFilter lancamentoFilter, Pageable pageable) {
 		return lancamentoRepository.pesquisar(lancamentoFilter, pageable);
 	}
 	
 	@GetMapping(path = "/{codigo}")
+	@PreAuthorize("hasAuthority(T(com.ivanconsalter.algamoney.security.AuthorityEnum).ROLE_PESQUISAR_LANCAMENTO.name()) and hasAuthority('SCOPE_read')")
 	public ResponseEntity<Lancamento> buscarPorCodigo(@PathVariable Long codigo) {
 		return lancamentoRepository.findById(codigo)
 				.map(ResponseEntity::ok)
@@ -61,6 +64,7 @@ public class LancamentoResource {
 	}
 	
 	@PostMapping
+	@PreAuthorize("hasAuthority(T(com.ivanconsalter.algamoney.security.AuthorityEnum).ROLE_CADASTRAR_LANCAMENTO.name()) and hasAuthority('SCOPE_write')")
 	public ResponseEntity<Lancamento> criar(
 			@Valid @RequestBody Lancamento lancamento,
 			HttpServletResponse response
@@ -75,6 +79,7 @@ public class LancamentoResource {
 	
 	@DeleteMapping(path = "/{codigo}")
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
+	@PreAuthorize("hasAuthority(T(com.ivanconsalter.algamoney.security.AuthorityEnum).ROLE_REMOVER_LANCAMENTO.name()) and hasAuthority('SCOPE_write')")
 	public void deletar(@PathVariable Long codigo) {
 		lancamentoRepository.deleteById(codigo);
 	}
