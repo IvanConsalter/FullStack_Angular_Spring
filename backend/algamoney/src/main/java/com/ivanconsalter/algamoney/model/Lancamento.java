@@ -34,7 +34,7 @@ public class Lancamento {
 	LocalDate dataVencimento;
 	
 	@Column(name = "data_pagamento")
-	LocalDate datePagamento;
+	LocalDate dataPagamento;
 	
 	@NotNull
 	BigDecimal valor;
@@ -79,12 +79,12 @@ public class Lancamento {
 		this.dataVencimento = dataVencimento;
 	}
 
-	public LocalDate getDatePagamento() {
-		return datePagamento;
+	public LocalDate getDataPagamento() {
+		return dataPagamento;
 	}
-
-	public void setDatePagamento(LocalDate datePagamento) {
-		this.datePagamento = datePagamento;
+	
+	public void setDataPagamento(LocalDate dataPagamento) {
+		this.dataPagamento = dataPagamento;
 	}
 
 	public BigDecimal getValor() {
@@ -147,7 +147,7 @@ public class Lancamento {
 	@Override
 	public String toString() {
 		return "Lancamento [codigo=" + codigo + ", descricao=" + descricao + ", dataVencimento=" + dataVencimento
-				+ ", datePagamento=" + datePagamento + ", valor=" + valor + ", observacao=" + observacao + ", tipo="
+				+ ", dataPagamento=" + dataPagamento + ", valor=" + valor + ", observacao=" + observacao + ", tipo="
 				+ tipo + ", pessoa=" + pessoa + ", categoria=" + categoria + "]";
 	}
 

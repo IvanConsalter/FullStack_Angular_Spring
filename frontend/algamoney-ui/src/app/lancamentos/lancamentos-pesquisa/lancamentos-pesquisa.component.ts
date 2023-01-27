@@ -11,6 +11,7 @@ import {
 import { LancamentoService, LancamentoFiltro } from './../lancamento.service';
 
 import { ErrorHandlerService } from './../../core/error-handler.service';
+import { Lancamento } from 'src/app/shared/model/lancamento.model';
 
 @Component({
   selector: 'app-lancamentos-pesquisa',
@@ -19,7 +20,7 @@ import { ErrorHandlerService } from './../../core/error-handler.service';
 })
 export class LancamentosPesquisaComponent implements OnInit {
   totalRegistros = 0;
-  lancamentos: any[] = [];
+  arraylancamento: Array<Lancamento> = [];
   filtro = new LancamentoFiltro();
   @ViewChild('tabela') tabela;
 
@@ -48,7 +49,7 @@ export class LancamentosPesquisaComponent implements OnInit {
         // } // bug infinito na consulta
 
         this.totalRegistros = resposta.totalElementos;
-        this.lancamentos = resposta.lancamentos;
+        this.arraylancamento = resposta.lancamentos;
       })
       .catch(erro => this.erroHandler.mostrarErro(erro));
   }
