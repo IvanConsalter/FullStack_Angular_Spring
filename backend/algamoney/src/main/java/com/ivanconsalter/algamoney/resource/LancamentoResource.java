@@ -64,6 +64,7 @@ public class LancamentoResource {
 				.orElse(ResponseEntity.notFound().build());
 	}
 	
+	// TODO - MELHORAR MENSAGEM DE ERRO QUANDO PASSA CATEGORIA E PESSOA VAZIA
 	@PostMapping
 	@PreAuthorize("hasAuthority(T(com.ivanconsalter.algamoney.security.AuthorityEnum).ROLE_CADASTRAR_LANCAMENTO.name()) and hasAuthority('SCOPE_write')")
 	public ResponseEntity<Lancamento> criar(
@@ -78,6 +79,7 @@ public class LancamentoResource {
 		
 	}
 	
+	// TODO - MELHORAR MENSAGEM DE ERRO QUANDO PASSA CATEGORIA E PESSOA VAZIA
 	@PutMapping(path = "/{codigo}")
 	@PreAuthorize("hasAuthority(T(com.ivanconsalter.algamoney.security.AuthorityEnum).ROLE_CADASTRAR_LANCAMENTO.name()) and hasAuthority('SCOPE_write')")
 	public ResponseEntity<Lancamento> atualizar(@PathVariable Long codigo, @Valid @RequestBody Lancamento lancamento) {
