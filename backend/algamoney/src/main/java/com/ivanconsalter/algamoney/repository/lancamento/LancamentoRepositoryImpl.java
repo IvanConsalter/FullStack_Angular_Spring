@@ -96,7 +96,7 @@ public class LancamentoRepositoryImpl implements LancamentoRepositoryQuery {
 	}
 
 	@Override
-	public List<LancamentoEstatisticaCategoria> lancamentoPorCategoria(LocalDate mesReferencia) {
+	public List<LancamentoEstatisticaCategoria> porCategoria(LocalDate mesReferencia) {
 		
 		CriteriaBuilder criteriaBuilder = manager.getCriteriaBuilder();
 		
