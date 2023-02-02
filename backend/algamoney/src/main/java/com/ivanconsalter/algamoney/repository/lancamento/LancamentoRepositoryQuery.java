@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.ivanconsalter.algamoney.dto.LancamentoEstatisticaCategoria;
+import com.ivanconsalter.algamoney.dto.LancamentoEstatisticaDia;
 import com.ivanconsalter.algamoney.model.Lancamento;
 import com.ivanconsalter.algamoney.repository.filter.LancamentoFilter;
 
@@ -16,5 +17,5 @@ public interface LancamentoRepositoryQuery {
 	public Page<Lancamento> pesquisar(LancamentoFilter lancamentoFilter, Pageable pageable);
 	
 	public List<LancamentoEstatisticaCategoria> porCategoria(LocalDate mesReferencia); 
-
+	public List<LancamentoEstatisticaDia> porDia(LocalDate mesReferencia);
 }
