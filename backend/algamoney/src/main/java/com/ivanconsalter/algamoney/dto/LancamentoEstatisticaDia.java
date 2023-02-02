@@ -3,27 +3,27 @@ package com.ivanconsalter.algamoney.dto;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import com.ivanconsalter.algamoney.model.enums.TipoLancamento;
+import com.ivanconsalter.algamoney.model.Tipo;
 
 public class LancamentoEstatisticaDia {
 
-	private TipoLancamento tipo;
+	private Tipo tipo;
 	
 	private LocalDate dia;
 	
 	private BigDecimal total;
 
-	public LancamentoEstatisticaDia(TipoLancamento tipo, LocalDate dia, BigDecimal total) {
+	public LancamentoEstatisticaDia(Tipo tipo, LocalDate dia, BigDecimal total) {
 		this.tipo = tipo;
 		this.dia = dia;
 		this.total = total;
 	}
 
-	public TipoLancamento getTipo() {
+	public Tipo getTipo() {
 		return tipo;
 	}
 
-	public void setTipo(TipoLancamento tipo) {
+	public void setTipo(Tipo tipo) {
 		this.tipo = tipo;
 	}
 

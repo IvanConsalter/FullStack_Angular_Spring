@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ivanconsalter.algamoney.dto.LancamentoEstatisticaCategoria;
+import com.ivanconsalter.algamoney.dto.LancamentoEstatisticaDia;
 import com.ivanconsalter.algamoney.event.RecursoCriadoEvent;
 import com.ivanconsalter.algamoney.exceptionhandler.Erro;
 import com.ivanconsalter.algamoney.model.Lancamento;
@@ -53,9 +53,10 @@ public class LancamentoResource {
 	@Autowired
 	private MessageSource messageSource;
 	
-	@GetMapping(path = "/estatisticas/por-categoria")
-	public List<LancamentoEstatisticaCategoria> porCategoria() {
-		return this.lancamentoRepository.porCategoria(LocalDate.parse("2022-03-10", DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+	@GetMapping(path = "/estatisticas/por-dia")
+	@PreAuthorize("hasAuthority(T(com.ivanconsalter.algamoney.security.AuthorityEnum).ROLE_PESQUISAR_LANCAMENTO.name()) and hasAuthority('SCOPE_read')")
+	public List<LancamentoEstatisticaDia> porDia() {
+		return this.lancamentoRepository.porDia(LocalDate.now().minusYears(1).plusMonths(4));
 	}
 	
 	@GetMapping()
