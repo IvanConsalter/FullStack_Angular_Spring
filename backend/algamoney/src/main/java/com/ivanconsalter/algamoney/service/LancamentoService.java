@@ -37,7 +37,7 @@ public class LancamentoService {
 	@Autowired
 	private LancamentoRepository lancamentoRepository;
 	
-	@Scheduled(cron = "* 34 16 * * *")
+	@Scheduled(cron = "0 0 6 * * *")
 	public void avisarSobreLancamentoVencido() {
 		System.out.println(">>>>>>>>>>>>> Método sendo executado.....");
 	}
