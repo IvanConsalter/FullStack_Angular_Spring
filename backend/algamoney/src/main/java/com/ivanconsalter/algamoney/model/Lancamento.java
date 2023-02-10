@@ -17,6 +17,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "lancamento")
 public class Lancamento {
@@ -54,6 +56,11 @@ public class Lancamento {
 	@JoinColumn(name = "categoria_codigo")
 	@NotNull
 	Categoria categoria;
+	
+	@JsonIgnore
+	public boolean isReceita() {
+		return Tipo.RECEITA.equals(this.tipo);
+	}
 
 	public Long getCodigo() {
 		return codigo;
