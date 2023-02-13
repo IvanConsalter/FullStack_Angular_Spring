@@ -1,8 +1,10 @@
 package com.ivanconsalter.algamoney.mail;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -14,15 +16,18 @@ import org.springframework.stereotype.Component;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
+import com.ivanconsalter.algamoney.model.Lancamento;
+import com.ivanconsalter.algamoney.model.Usuario;
+
 @Component
 public class Mailer {
 
 	@Autowired
 	private JavaMailSender javaMailSender;
-	
+
 	@Autowired
 	private TemplateEngine templateEngine;
-	
+
 //	@Autowired
 //	private LancamentoRepository lancamentoRepository;
 //	@EventListener
@@ -68,16 +73,27 @@ public class Mailer {
 		}
 	}
 
-	public void enviarEmailComTemplate(String remetente, List<String> destinatarios, 
-			String assunto, String template, Map<String, Object> variaveis) {
+	public void enviarEmailComTemplate(String remetente, List<String> destinatarios, String assunto, String template,
+			Map<String, Object> variaveis) {
 
 		Context context = new Context(new Locale("pt", "BR"));
-		
+
 		variaveis.entrySet().forEach(entrada -> context.setVariable(entrada.getKey(), entrada.getValue()));
-		
+
 		String mensagem = templateEngine.process(template, context);
-		
+
 		this.enviarEmail(remetente, destinatarios, assunto, mensagem);
+	}
+
+	public void avisarSobreLancamentosVencidos(List<Lancamento> listLancamentosVencidos, List<Usuario> destinatarios) {
+
+		Map<String, Object> variaveis = new HashMap<>();
+		variaveis.put("lancamentos", listLancamentosVencidos);
+
+		List<String> emails = destinatarios.stream().map(user -> user.getEmail()).collect(Collectors.toList());
+
+		this.enviarEmailComTemplate("testes.algaworks@gmail.com", emails, "Lançamentos Vencidos",
+				"mail/aviso-lancamentos-vencidos", variaveis);
 	}
 
 }

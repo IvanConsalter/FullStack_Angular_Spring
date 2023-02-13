@@ -17,10 +17,14 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.ivanconsalter.algamoney.dto.LancamentoEstatisticaPessoa;
+import com.ivanconsalter.algamoney.mail.Mailer;
 import com.ivanconsalter.algamoney.model.Lancamento;
 import com.ivanconsalter.algamoney.model.Pessoa;
+import com.ivanconsalter.algamoney.model.Usuario;
 import com.ivanconsalter.algamoney.repository.LancamentoRepository;
 import com.ivanconsalter.algamoney.repository.PessoaRepository;
+import com.ivanconsalter.algamoney.repository.UsuarioRepository;
+import com.ivanconsalter.algamoney.security.AuthorityEnum;
 import com.ivanconsalter.algamoney.service.exception.PessoaInexistenteOuInativaException;
 
 import net.sf.jasperreports.engine.JasperExportManager;
@@ -31,15 +35,30 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 @Service
 public class LancamentoService {
 
+	private static final String DESTINATARIOS =  AuthorityEnum.ROLE_PESQUISAR_LANCAMENTO.toString();
+	
 	@Autowired
 	private PessoaRepository pessoaRepository;
 	
 	@Autowired
 	private LancamentoRepository lancamentoRepository;
 	
-	@Scheduled(cron = "0 0 6 * * *")
+	@Autowired
+	private UsuarioRepository usuarioRepository;
+	
+	@Autowired
+	private Mailer mailer;
+	
+//	@Scheduled(cron = "0 0 6 * * *")
+//	@Scheduled(fixedDelay = 1000 * 60 * 30)
 	public void avisarSobreLancamentoVencido() {
 		System.out.println(">>>>>>>>>>>>> Método sendo executado.....");
+		
+		List<Lancamento> listLancamentosVencidos = lancamentoRepository.findByDataVencimentoLessThanEqualAndDataPagamentoIsNull(LocalDate.now());
+		
+		List<Usuario> destinatarios = usuarioRepository.findByPermissoesDescricao(DESTINATARIOS);
+		
+		mailer.avisarSobreLancamentosVencidos(listLancamentosVencidos, destinatarios);
 	}
 
 	public byte[] relatorioPorPessoa(LocalDate inicio, LocalDate fim) throws Exception {
