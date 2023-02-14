@@ -51,7 +51,7 @@ public class PessoaResource {
 			@Valid @RequestBody Pessoa pessoa,
 			HttpServletResponse response
 	) {
-		Pessoa novaPessoa = pessoaRepository.save(pessoa);
+		Pessoa novaPessoa = pessoaService.salvar(pessoa);
 		
 		eventPublisher.publishEvent(new RecursoCriadoEvent(this, response, novaPessoa.getCodigo()));
 		

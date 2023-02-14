@@ -10,7 +10,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 @Entity
 public class Contato {
@@ -31,7 +30,6 @@ public class Contato {
 	
 	@ManyToOne()
 	@JoinColumn(name = "codigo_pessoa")
-	@NotNull
 	private Pessoa pessoa;
 
 	public Long getCodigo() {

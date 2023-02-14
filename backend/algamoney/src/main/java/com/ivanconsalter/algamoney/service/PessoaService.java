@@ -1,5 +1,7 @@
 package com.ivanconsalter.algamoney.service;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -14,8 +16,15 @@ public class PessoaService {
 	@Autowired
 	private PessoaRepository pessoaRepository;
 	
+	public Pessoa salvar(@Valid Pessoa pessoa) {
+		pessoa.getListContato().forEach( contato -> contato.setPessoa(pessoa));
+		return pessoaRepository.save(pessoa);
+	}
+	
 	public Pessoa atualizar(Long codigo, Pessoa pessoa) {
 		Pessoa pessoaSalva = this.buscarPessoaPorCodigo(codigo);
+		
+		pessoa.getListContato().forEach( contato -> contato.setPessoa(pessoa));
 		
 		BeanUtils.copyProperties(pessoa, pessoaSalva, "codigo");
 		return pessoaRepository.save(pessoaSalva);
@@ -33,4 +42,5 @@ public class PessoaService {
 		
 		return pessoaSalva;
 	}
+
 }
