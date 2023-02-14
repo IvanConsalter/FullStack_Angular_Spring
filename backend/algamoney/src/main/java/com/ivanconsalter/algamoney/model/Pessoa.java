@@ -40,7 +40,7 @@ public class Pessoa {
 	
 	@JsonIgnoreProperties(value = "pessoa")
 	@Valid
-	@OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL, orphanRemoval = true)
 	List<Contato> listContato = new ArrayList<>();
 
 	public Long getCodigo() {
