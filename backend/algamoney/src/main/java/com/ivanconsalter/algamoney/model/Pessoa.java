@@ -18,6 +18,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "pessoa")
@@ -37,6 +38,7 @@ public class Pessoa {
 	@Embedded
 	Endereco endereco;
 	
+	@JsonIgnoreProperties(value = "pessoa")
 	@Valid
 	@OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL)
 	List<Contato> listContato = new ArrayList<>();
@@ -73,6 +75,14 @@ public class Pessoa {
 		this.endereco = endereco;
 	}
 	
+	public List<Contato> getListContato() {
+		return listContato;
+	}
+	
+	public void setListContato(List<Contato> listContato) {
+		this.listContato = listContato;
+	}
+	
 	@JsonIgnore
 	@Transient
 	public boolean isInativo() {
@@ -98,7 +108,8 @@ public class Pessoa {
 
 	@Override
 	public String toString() {
-		return "Pessoa [codigo=" + codigo + ", nome=" + nome + ", ativo=" + ativo + ", endereco=" + endereco + "]";
+		return "Pessoa [codigo=" + codigo + ", nome=" + nome + ", ativo=" + ativo + ", endereco=" + endereco
+				+ ", listContato=" + listContato + "]";
 	}
 
 }
