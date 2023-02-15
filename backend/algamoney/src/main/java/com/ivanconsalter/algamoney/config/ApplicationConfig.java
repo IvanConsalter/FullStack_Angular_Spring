@@ -19,4 +19,10 @@ public class ApplicationConfig {
 	
 	@Value("${algamoney.mail.password}")
 	private String mailPassword;
+	
+	@Value("${algamoney.s3.access-key-id}")
+	private String accessKeyId;
+	
+	@Value("${algamoney.s3.secret-access-key}")
+	private String secretAccessKey;
 }
