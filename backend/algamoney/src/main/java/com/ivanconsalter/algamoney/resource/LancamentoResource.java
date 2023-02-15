@@ -1,6 +1,11 @@
 package com.ivanconsalter.algamoney.resource;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 
@@ -30,6 +35,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ivanconsalter.algamoney.dto.LancamentoEstatisticaDia;
 import com.ivanconsalter.algamoney.event.RecursoCriadoEvent;
@@ -46,65 +52,73 @@ public class LancamentoResource {
 
 	@Autowired
 	private LancamentoRepository lancamentoRepository;
-	
+
 	@Autowired
 	private LancamentoService lancamentoService;
-	
+
 	@Autowired
 	private ApplicationEventPublisher applicationEventPublisher;
-	
+
 	@Autowired
 	private MessageSource messageSource;
-	
+
+	@PostMapping(path = "/anexo")
+	@PreAuthorize("hasAuthority(T(com.ivanconsalter.algamoney.security.AuthorityEnum).ROLE_PESQUISAR_LANCAMENTO.name()) and hasAuthority('SCOPE_read')")
+	public String uploadAnexo(@RequestParam MultipartFile anexo) throws IOException {
+		
+		String nomeArquivoOriginal = anexo.getOriginalFilename();
+		int ultimoPontoIndex = nomeArquivoOriginal.lastIndexOf(".");
+		String nomeArquivo = nomeArquivoOriginal.substring(0, ultimoPontoIndex);
+		String extensao = nomeArquivoOriginal.substring(ultimoPontoIndex);
+		String novoNome = nomeArquivo + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + extensao;
+		
+		OutputStream outputStream = new FileOutputStream("C:\\Users\\ivan_\\Desktop\\" + novoNome);
+		outputStream.write(anexo.getBytes());
+		outputStream.close();
+		return "ok";
+	}
+
 	@GetMapping(path = "/relatorios/por-pessoa")
 	@PreAuthorize("hasAuthority(T(com.ivanconsalter.algamoney.security.AuthorityEnum).ROLE_PESQUISAR_LANCAMENTO.name()) and hasAuthority('SCOPE_read')")
 	public ResponseEntity<byte[]> relatorioPorPessoa(
-				@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate inicio,
-				@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate fim
-			) throws Exception {
-		
+			@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate inicio,
+			@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate fim) throws Exception {
+
 		byte[] relatorio = lancamentoService.relatorioPorPessoa(inicio, fim);
-		
-		return ResponseEntity.ok()
-					.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_PDF_VALUE)
-					.body(relatorio);
+
+		return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_PDF_VALUE).body(relatorio);
 	}
-	
+
 	@GetMapping(path = "/estatisticas/por-dia")
 	@PreAuthorize("hasAuthority(T(com.ivanconsalter.algamoney.security.AuthorityEnum).ROLE_PESQUISAR_LANCAMENTO.name()) and hasAuthority('SCOPE_read')")
 	public List<LancamentoEstatisticaDia> porDia() {
 		return this.lancamentoRepository.porDia(LocalDate.now().minusYears(1).plusMonths(4));
 	}
-	
+
 	@GetMapping()
 	@PreAuthorize("hasAuthority(T(com.ivanconsalter.algamoney.security.AuthorityEnum).ROLE_PESQUISAR_LANCAMENTO.name()) and hasAuthority('SCOPE_read')")
 	public Page<Lancamento> pesquisar(LancamentoFilter lancamentoFilter, Pageable pageable) {
 		return lancamentoRepository.pesquisar(lancamentoFilter, pageable);
 	}
-	
+
 	@GetMapping(path = "/{codigo}")
 	@PreAuthorize("hasAuthority(T(com.ivanconsalter.algamoney.security.AuthorityEnum).ROLE_PESQUISAR_LANCAMENTO.name()) and hasAuthority('SCOPE_read')")
 	public ResponseEntity<Lancamento> buscarPorCodigo(@PathVariable Long codigo) {
-		return lancamentoRepository.findById(codigo)
-				.map(ResponseEntity::ok)
-				.orElse(ResponseEntity.notFound().build());
+		return lancamentoRepository.findById(codigo).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
 	}
-	
+
 	// TODO - MELHORAR MENSAGEM DE ERRO QUANDO PASSA CATEGORIA E PESSOA VAZIA
 	@PostMapping
 	@PreAuthorize("hasAuthority(T(com.ivanconsalter.algamoney.security.AuthorityEnum).ROLE_CADASTRAR_LANCAMENTO.name()) and hasAuthority('SCOPE_write')")
-	public ResponseEntity<Lancamento> criar(
-			@Valid @RequestBody Lancamento lancamento,
-			HttpServletResponse response
-	) {
+	public ResponseEntity<Lancamento> criar(@Valid @RequestBody Lancamento lancamento, HttpServletResponse response) {
 		Lancamento novoLancamento = lancamentoService.salvar(lancamento);
-		
+
 		applicationEventPublisher.publishEvent(new RecursoCriadoEvent(this, response, novoLancamento.getCodigo()));
-		
+
 		return ResponseEntity.status(HttpStatus.CREATED).body(novoLancamento);
-		
+
 	}
-	
+
 	// TODO - MELHORAR MENSAGEM DE ERRO QUANDO PASSA CATEGORIA E PESSOA VAZIA
 	@PutMapping(path = "/{codigo}")
 	@PreAuthorize("hasAuthority(T(com.ivanconsalter.algamoney.security.AuthorityEnum).ROLE_CADASTRAR_LANCAMENTO.name()) and hasAuthority('SCOPE_write')")
@@ -116,21 +130,22 @@ public class LancamentoResource {
 			return ResponseEntity.notFound().build();
 		}
 	}
-	
+
 	@DeleteMapping(path = "/{codigo}")
 	@ResponseStatus(code = HttpStatus.NO_CONTENT)
 	@PreAuthorize("hasAuthority(T(com.ivanconsalter.algamoney.security.AuthorityEnum).ROLE_REMOVER_LANCAMENTO.name()) and hasAuthority('SCOPE_write')")
 	public void deletar(@PathVariable Long codigo) {
 		lancamentoRepository.deleteById(codigo);
 	}
-	
+
 	@ExceptionHandler({ PessoaInexistenteOuInativaException.class })
 	public ResponseEntity<Object> handlePessoaInexistenteOuInativaException(PessoaInexistenteOuInativaException ex) {
-		String mensagemUsuario = messageSource.getMessage("pessoa.inexistente-ou-inativa", null, LocaleContextHolder.getLocale());
+		String mensagemUsuario = messageSource.getMessage("pessoa.inexistente-ou-inativa", null,
+				LocaleContextHolder.getLocale());
 		String mensagemDesenvolvedor = ex.toString();
 		List<Erro> erros = Arrays.asList(new Erro(mensagemUsuario, mensagemDesenvolvedor));
-		
+
 		return ResponseEntity.badRequest().body(erros);
 	}
-	
+
 }
