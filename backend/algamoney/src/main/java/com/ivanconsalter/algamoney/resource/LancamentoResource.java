@@ -1,11 +1,7 @@
 package com.ivanconsalter.algamoney.resource;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 
@@ -37,6 +33,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ivanconsalter.algamoney.dto.Anexo;
 import com.ivanconsalter.algamoney.dto.LancamentoEstatisticaDia;
 import com.ivanconsalter.algamoney.event.RecursoCriadoEvent;
 import com.ivanconsalter.algamoney.exceptionhandler.Erro;
@@ -45,6 +42,7 @@ import com.ivanconsalter.algamoney.repository.LancamentoRepository;
 import com.ivanconsalter.algamoney.repository.filter.LancamentoFilter;
 import com.ivanconsalter.algamoney.service.LancamentoService;
 import com.ivanconsalter.algamoney.service.exception.PessoaInexistenteOuInativaException;
+import com.ivanconsalter.algamoney.storage.S3;
 
 @RestController
 @RequestMapping(path = "/lancamentos")
@@ -61,21 +59,27 @@ public class LancamentoResource {
 
 	@Autowired
 	private MessageSource messageSource;
-
+	
+	@Autowired
+	private S3 s3;
+	
 	@PostMapping(path = "/anexo")
 	@PreAuthorize("hasAuthority(T(com.ivanconsalter.algamoney.security.AuthorityEnum).ROLE_PESQUISAR_LANCAMENTO.name()) and hasAuthority('SCOPE_read')")
-	public String uploadAnexo(@RequestParam MultipartFile anexo) throws IOException {
+	public Anexo uploadAnexo(@RequestParam MultipartFile anexo) throws IOException {
 		
-		String nomeArquivoOriginal = anexo.getOriginalFilename();
-		int ultimoPontoIndex = nomeArquivoOriginal.lastIndexOf(".");
-		String nomeArquivo = nomeArquivoOriginal.substring(0, ultimoPontoIndex);
-		String extensao = nomeArquivoOriginal.substring(ultimoPontoIndex);
-		String novoNome = nomeArquivo + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + extensao;
+//		String nomeArquivoOriginal = anexo.getOriginalFilename();
+//		int ultimoPontoIndex = nomeArquivoOriginal.lastIndexOf(".");
+//		String nomeArquivo = nomeArquivoOriginal.substring(0, ultimoPontoIndex);
+//		String extensao = nomeArquivoOriginal.substring(ultimoPontoIndex);
+//		String novoNome = nomeArquivo + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")) + extensao;
+//		
+//		OutputStream outputStream = new FileOutputStream("C:\\Users\\ivan_\\Desktop\\" + novoNome);
+//		outputStream.write(anexo.getBytes());
+//		outputStream.close();
 		
-		OutputStream outputStream = new FileOutputStream("C:\\Users\\ivan_\\Desktop\\" + novoNome);
-		outputStream.write(anexo.getBytes());
-		outputStream.close();
-		return "ok";
+		String nome = s3.salvarTemporariamente(anexo);
+		return new Anexo(nome, s3.configurarUrl(nome));
+		
 	}
 
 	@GetMapping(path = "/relatorios/por-pessoa")

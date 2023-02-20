@@ -94,7 +94,7 @@ public class AlgamoneyApiProperty {
 		
 		private String accessKeyId;
 		private String secretAccessKey;
-		private String bucket = "aws-algamoney-arquivos";
+		private String bucket = "aw-algamoney-arquivos-ivan";
 		
 		public String getAccessKeyId() {
 			return accessKeyId;
