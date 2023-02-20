@@ -13,8 +13,6 @@ import com.amazonaws.services.s3.model.BucketLifecycleConfiguration;
 import com.amazonaws.services.s3.model.CreateBucketRequest;
 import com.amazonaws.services.s3.model.Tag;
 import com.amazonaws.services.s3.model.lifecycle.LifecycleFilter;
-import com.amazonaws.services.s3.model.lifecycle.LifecycleFilterPredicate;
-import com.amazonaws.services.s3.model.lifecycle.LifecyclePredicateVisitor;
 import com.amazonaws.services.s3.model.lifecycle.LifecycleTagPredicate;
 import com.ivanconsalter.algamoney.config.property.AlgamoneyApiProperty;
 
