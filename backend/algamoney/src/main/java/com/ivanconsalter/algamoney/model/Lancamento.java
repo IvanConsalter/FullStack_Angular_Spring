@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -58,6 +59,11 @@ public class Lancamento {
 	@JoinColumn(name = "categoria_codigo")
 	@NotNull
 	Categoria categoria;
+	
+	private String anexo;
+	
+	@Transient
+	private String urlAnexo;
 	
 	@JsonIgnore
 	public boolean isReceita() {
@@ -135,6 +141,22 @@ public class Lancamento {
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
 	}
+	
+	public String getAnexo() {
+		return anexo;
+	}
+	
+	public void setAnexo(String anexo) {
+		this.anexo = anexo;
+	}
+	
+	public String getUrlAnexo() {
+		return urlAnexo;
+	}
+	
+	public void setUrlAnexo(String urlAnexo) {
+		this.urlAnexo = urlAnexo;
+	}
 
 	@Override
 	public int hashCode() {
@@ -157,7 +179,8 @@ public class Lancamento {
 	public String toString() {
 		return "Lancamento [codigo=" + codigo + ", descricao=" + descricao + ", dataVencimento=" + dataVencimento
 				+ ", dataPagamento=" + dataPagamento + ", valor=" + valor + ", observacao=" + observacao + ", tipo="
-				+ tipo + ", pessoa=" + pessoa + ", categoria=" + categoria + "]";
+				+ tipo + ", pessoa=" + pessoa + ", categoria=" + categoria + ", anexo=" + anexo + ", urlAnexo="
+				+ urlAnexo + "]";
 	}
 
 }

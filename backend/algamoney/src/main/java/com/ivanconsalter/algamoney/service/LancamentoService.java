@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.ivanconsalter.algamoney.dto.LancamentoEstatisticaPessoa;
 import com.ivanconsalter.algamoney.mail.Mailer;
@@ -27,6 +28,7 @@ import com.ivanconsalter.algamoney.repository.PessoaRepository;
 import com.ivanconsalter.algamoney.repository.UsuarioRepository;
 import com.ivanconsalter.algamoney.security.AuthorityEnum;
 import com.ivanconsalter.algamoney.service.exception.PessoaInexistenteOuInativaException;
+import com.ivanconsalter.algamoney.storage.S3;
 
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -51,6 +53,9 @@ public class LancamentoService {
 	
 	@Autowired
 	private Mailer mailer;
+	
+	@Autowired
+	private S3 s3;
 	
 //	@Scheduled(cron = "0 0 6 * * *")
 //	@Scheduled(fixedDelay = 1000 * 60 * 30)
@@ -102,6 +107,10 @@ public class LancamentoService {
 		
 		Optional<Pessoa> pessoa = pessoaRepository.findById(lancamento.getPessoa().getCodigo());
 		verificarSePessoaExisteOuAtiva(pessoa);
+		
+		if(StringUtils.hasText(lancamento.getAnexo())) {
+			s3.salvar(lancamento.getAnexo());
+		}
 		
 		return lancamentoRepository.save(lancamento);
 	}
