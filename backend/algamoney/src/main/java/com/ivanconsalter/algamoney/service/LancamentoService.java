@@ -122,9 +122,9 @@ public class LancamentoService {
 			validarPessoa(lancamento);
 		}
 
-		if (!StringUtils.hasLength(lancamento.getAnexo()) && StringUtils.hasText(lancamentoSalvo.getAnexo())) {
+		if (!StringUtils.hasText(lancamento.getAnexo()) && StringUtils.hasText(lancamentoSalvo.getAnexo())) {
 			s3.remover(lancamentoSalvo.getAnexo());
-		} else if (StringUtils.hasLength(lancamento.getAnexo())
+		} else if (StringUtils.hasText(lancamento.getAnexo())
 				&& !lancamento.getAnexo().equals(lancamentoSalvo.getAnexo())) {
 			s3.substituirAnexo(lancamentoSalvo.getAnexo(), lancamento.getAnexo());
 		}
