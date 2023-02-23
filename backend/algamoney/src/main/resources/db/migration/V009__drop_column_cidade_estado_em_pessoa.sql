@@ -1,0 +1,2 @@
+ALTER TABLE pessoa DROP COLUMN cidade;
+ALTER TABLE pessoa DROP COLUMN estado;
