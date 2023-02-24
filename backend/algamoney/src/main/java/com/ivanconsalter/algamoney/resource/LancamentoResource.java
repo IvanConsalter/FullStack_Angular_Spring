@@ -34,6 +34,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ivanconsalter.algamoney.dto.Anexo;
+import com.ivanconsalter.algamoney.dto.LancamentoEstatisticaCategoria;
 import com.ivanconsalter.algamoney.dto.LancamentoEstatisticaDia;
 import com.ivanconsalter.algamoney.event.RecursoCriadoEvent;
 import com.ivanconsalter.algamoney.exceptionhandler.Erro;
@@ -59,14 +60,14 @@ public class LancamentoResource {
 
 	@Autowired
 	private MessageSource messageSource;
-	
+
 	@Autowired
 	private S3 s3;
-	
+
 	@PostMapping(path = "/anexo")
 	@PreAuthorize("hasAuthority(T(com.ivanconsalter.algamoney.security.AuthorityEnum).ROLE_PESQUISAR_LANCAMENTO.name()) and hasAuthority('SCOPE_read')")
 	public Anexo uploadAnexo(@RequestParam MultipartFile anexo) throws IOException {
-		
+
 //		String nomeArquivoOriginal = anexo.getOriginalFilename();
 //		int ultimoPontoIndex = nomeArquivoOriginal.lastIndexOf(".");
 //		String nomeArquivo = nomeArquivoOriginal.substring(0, ultimoPontoIndex);
@@ -76,10 +77,10 @@ public class LancamentoResource {
 //		OutputStream outputStream = new FileOutputStream("C:\\Users\\ivan_\\Desktop\\" + novoNome);
 //		outputStream.write(anexo.getBytes());
 //		outputStream.close();
-		
+
 		String nome = s3.salvarTemporariamente(anexo);
 		return new Anexo(nome, s3.configurarUrl(nome));
-		
+
 	}
 
 	@GetMapping(path = "/relatorios/por-pessoa")
@@ -93,10 +94,18 @@ public class LancamentoResource {
 		return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_PDF_VALUE).body(relatorio);
 	}
 
+	@GetMapping(path = "/estatisticas/por-categoria")
+	@PreAuthorize("hasAuthority(T(com.ivanconsalter.algamoney.security.AuthorityEnum).ROLE_PESQUISAR_LANCAMENTO.name()) and hasAuthority('SCOPE_read')")
+	public List<LancamentoEstatisticaCategoria> porCategoria(
+			@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate mesReferencia) {
+		return this.lancamentoRepository.porCategoria(mesReferencia);
+	}
+
 	@GetMapping(path = "/estatisticas/por-dia")
 	@PreAuthorize("hasAuthority(T(com.ivanconsalter.algamoney.security.AuthorityEnum).ROLE_PESQUISAR_LANCAMENTO.name()) and hasAuthority('SCOPE_read')")
-	public List<LancamentoEstatisticaDia> porDia() {
-		return this.lancamentoRepository.porDia(LocalDate.now().minusYears(1).plusMonths(4));
+	public List<LancamentoEstatisticaDia> porDia(
+			@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate mesReferencia) {
+		return this.lancamentoRepository.porDia(mesReferencia);
 	}
 
 	@GetMapping()

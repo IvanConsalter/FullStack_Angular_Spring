@@ -22,8 +22,9 @@ import { Pessoa } from 'src/app/shared/model/pessoa.model';
 })
 export class PessoaCadastroComponent implements OnInit {
 
+  pessoa: Pessoa;
   pessoaForm: FormGroup;
-  contatos: Array<Contato> = [];
+  listContato: Array<Contato> = [];
   cidades: SelectItem[];
   estados: SelectItem[];
 
@@ -98,7 +99,7 @@ export class PessoaCadastroComponent implements OnInit {
 
   salvarNovaPessoa(): void {
     this.pessoaService
-      .salvarPessoa(this.pessoaForm.value, this.contatos)
+      .salvarPessoa(this.pessoaForm.value, this.listContato)
       .then(() => {
         this.messageService.add({
           severity: 'success',
@@ -111,7 +112,7 @@ export class PessoaCadastroComponent implements OnInit {
 
   atualizarPessoa(): void {
     this.pessoaService
-      .atualizarPessoa(this.pessoaForm.value, this.contatos)
+      .atualizarPessoa(this.pessoaForm.value, this.listContato)
       .then((pessoa: Pessoa) => {
         this.pessoaForm.patchValue(pessoa);
         this.atualizarTituloPagina();
@@ -128,8 +129,14 @@ export class PessoaCadastroComponent implements OnInit {
     this.pessoaService
       .consultarPessoaPorCodigo(codigoPessoa)
       .then((pessoa: Pessoa) => {
-        this.contatos = pessoa.contatos;
-        this.pessoaForm.patchValue(pessoa);
+        console.log(pessoa);
+        this.pessoa = {...pessoa};
+        this.listContato = pessoa.listContato;
+        console.log(this.pessoa);
+
+        this.pessoaForm.patchValue({...pessoa});
+        console.log(this.pessoaForm.value);
+
         this.atualizarTituloPagina();
       });
   }

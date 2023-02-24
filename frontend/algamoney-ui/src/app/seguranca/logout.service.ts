@@ -10,7 +10,7 @@ import { environment } from './../../environments/environment';
 })
 export class LogoutService {
 
-  tokensRevokeUrl = `${environment.apiUrl}/tokens/revoke`;
+  tokensRevokeUrl = `${environment.apiUrl}/token/revoke`;
 
   constructor(
     private http: HttpClient,

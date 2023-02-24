@@ -68,15 +68,15 @@ export class PessoaService {
       .toPromise();
   }
 
-  salvarPessoa(pessoa: Pessoa, contatos: Array<Contato>): Promise<Pessoa> {
-    pessoa.contatos = contatos;
+  salvarPessoa(pessoa: Pessoa, listContato: Array<Contato>): Promise<Pessoa> {
+    pessoa.listContato = listContato;
 
     return this.http.post<Pessoa>(this.pessoasUrl, pessoa)
       .toPromise<Pessoa>();
   }
 
-  atualizarPessoa(pessoa: Pessoa, contatos: Array<Contato>): Promise<Pessoa> {
-    pessoa.contatos = contatos;
+  atualizarPessoa(pessoa: Pessoa, listContato: Array<Contato>): Promise<Pessoa> {
+    pessoa.listContato = listContato;
 
     return this.http.put<Pessoa>(`${this.pessoasUrl}/${pessoa.codigo}`, pessoa)
       .toPromise();
@@ -102,7 +102,7 @@ export class PessoaService {
 
   consultarCidades(estadoId: number): Promise<Array<Cidade>> {
     let params = new HttpParams();
-    params = params.set('estado', estadoId.toString());
+    params = params.set('estadoCodigo', estadoId.toString());
 
     return this.http.get<Array<Cidade>>(this.cidadesUrl, { params })
       .toPromise();

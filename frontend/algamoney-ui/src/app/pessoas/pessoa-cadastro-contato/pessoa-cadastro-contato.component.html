@@ -9,7 +9,7 @@
     ></button>
   </div>
   <div class="p-col-12">
-    <p-table [value]="contatos" [responsive]="true">
+    <p-table [value]="listContato" [responsive]="true">
       <ng-template pTemplate="header">
         <tr>
           <th>Nome</th>
@@ -52,7 +52,7 @@
 <p-dialog header="{{ !estaEditando() ? 'Novo' : 'Edição de'}} Contato" [(visible)]="exibirFormularioContato" [modal]="true" >
   <form [formGroup]="contatoForm" (ngSubmit)="confirmarContato()">
     <div class="p-grid">
-      <div class="p-col-12 p-fluid" formGroupName="contatos">
+      <div class="p-col-12 p-fluid" formGroupName="listContato">
         <label>Nome</label>
         <input
           pInputText
@@ -60,10 +60,10 @@
           name="nome"
           formControlName="nome"
         >
-        <app-message [control]="contatoForm.get('contatos.nome')" error="required" message="Nome é obrigatório!"></app-message>
+        <app-message [control]="contatoForm.get('listContato.nome')" error="required" message="Nome é obrigatório!"></app-message>
       </div>
 
-      <div class="p-col-12 p-fluid" formGroupName="contatos">
+      <div class="p-col-12 p-fluid" formGroupName="listContato">
         <label>Email</label>
         <input
           pInputText
@@ -71,11 +71,11 @@
           name="email"
           formControlName="email"
         >
-        <app-message [control]="contatoForm.get('contatos.email')" error="required" message="Email é obrigatório!"></app-message>
-        <app-message [control]="contatoForm.get('contatos.email')" error="email" message="Informe um e-mail válido!"></app-message>
+        <app-message [control]="contatoForm.get('listContato.email')" error="required" message="Email é obrigatório!"></app-message>
+        <app-message [control]="contatoForm.get('listContato.email')" error="email" message="Informe um e-mail válido!"></app-message>
       </div>
 
-      <div class="p-col-12 p-fluid" formGroupName="contatos">
+      <div class="p-col-12 p-fluid" formGroupName="listContato">
         <label>Telefone</label>
         <p-inputMask
           mask="(99) 9 9999-9999"
@@ -89,7 +89,7 @@
           pButton
           type="submit"
           label="Salvar"
-          [disabled]="contatoForm.get('contatos').invalid"
+          [disabled]="contatoForm.get('listContato').invalid"
         ></button>
       </div>
 

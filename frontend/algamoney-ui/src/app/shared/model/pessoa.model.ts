@@ -6,5 +6,5 @@ export class Pessoa {
   nome: string;
   ativo = true;
   endereco = new Endereco();
-  contatos = new Array<Contato>();
+  listContato = new Array<Contato>();
 }

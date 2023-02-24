@@ -12,7 +12,7 @@ import { Contato } from 'src/app/shared/model/contato.model';
 })
 export class PessoaCadastroContatoComponent implements OnInit {
 
-  @Input() contatos: Array<Contato> = [];
+  @Input() listContato: Array<Contato> = [];
   contatoForm: FormGroup;
   contatoIndex?: number = null;
   exibirFormularioContato = false;
@@ -28,7 +28,7 @@ export class PessoaCadastroContatoComponent implements OnInit {
 
   configurarContatoForm(): void {
     this.contatoForm = this.formBuilder.group({
-      contatos: this.formBuilder.group({
+      listContato: this.formBuilder.group({
         codigo: [],
         nome: [null, [Validators.required]],
         email: [null, [Validators.required, Validators.email]],
@@ -48,14 +48,14 @@ export class PessoaCadastroContatoComponent implements OnInit {
   }
 
   salvarNovoContato(): void {
-    this.contatos.push(this.contatoForm.get('contatos').value);
-    this.contatoForm.get('contatos').reset(new Contato());
+    this.listContato.push(this.contatoForm.get('listContato').value);
+    this.contatoForm.get('listContato').reset(new Contato());
     this.contatoIndex = null;
   }
 
   editarContato(): void {
-    this.contatos[this.contatoIndex] = this.contatoForm.get('contatos').value;
-    this.contatoForm.get('contatos').reset(new Contato());
+    this.listContato[this.contatoIndex] = this.contatoForm.get('listContato').value;
+    this.contatoForm.get('listContato').reset(new Contato());
     this.contatoIndex = null;
   }
 
@@ -63,7 +63,7 @@ export class PessoaCadastroContatoComponent implements OnInit {
     this.confirmationService.confirm({
       message: 'Tem certeza que deseja excluir?',
       accept: () => {
-        this.contatos.splice(rowIndex, 1);
+        this.listContato.splice(rowIndex, 1);
       }
     });
   }
@@ -71,11 +71,11 @@ export class PessoaCadastroContatoComponent implements OnInit {
   prepararEdicaoContato(contato: Contato, rowIndex: number): void {
     this.contatoIndex = rowIndex;
     this.exibirFormularioContato = true;
-    this.contatoForm.get('contatos').patchValue(contato);
+    this.contatoForm.get('listContato').patchValue(contato);
   }
 
   estaEditando(): boolean {
-    if (this.contatoForm.get('contatos.codigo').value || this.contatoIndex !== null) {
+    if (this.contatoForm.get('listContato.codigo').value || this.contatoIndex !== null) {
       return true;
     }
 
