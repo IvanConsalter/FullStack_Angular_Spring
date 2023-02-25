@@ -27,6 +27,7 @@ export class PessoaCadastroComponent implements OnInit {
   listContato: Array<Contato> = [];
   cidades: SelectItem[];
   estados: SelectItem[];
+  estadoSelecionado: number | undefined;
 
   constructor(
     private pessoaService: PessoaService,
@@ -129,14 +130,10 @@ export class PessoaCadastroComponent implements OnInit {
     this.pessoaService
       .consultarPessoaPorCodigo(codigoPessoa)
       .then((pessoa: Pessoa) => {
-        console.log(pessoa);
-        this.pessoa = {...pessoa};
         this.listContato = pessoa.listContato;
-        console.log(this.pessoa);
-
-        this.pessoaForm.patchValue({...pessoa});
-        console.log(this.pessoaForm.value);
-
+        this.estadoSelecionado = pessoa.endereco.cidade.estado.codigo;
+        this.carregarCidades();
+        this.pessoaForm.patchValue(pessoa);
         this.atualizarTituloPagina();
       });
   }
@@ -157,9 +154,7 @@ export class PessoaCadastroComponent implements OnInit {
   }
 
   carregarCidades(): void {
-    const estadoSelecionado = this.pessoaForm.get('endereco.cidade.estado.codigo').value;
-
-    this.pessoaService.consultarCidades(estadoSelecionado)
+    this.pessoaService.consultarCidades(this.estadoSelecionado)
       .then( resposta => {
         this.cidades = resposta.map( cidade => {
           return { label: cidade.nome, value: cidade.codigo };

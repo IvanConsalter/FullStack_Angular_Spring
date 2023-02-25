@@ -21,12 +21,12 @@
       <ng-container formGroupName="endereco">
         <div class="p-col-12 p-md-4 p-fluid">
           <label>CEP</label>
-          <p-inputMask
-            mask="99.999-999"
+          <input
+            pInputText
+            type="text"
             name="cep"
             formControlName="cep"
-          ></p-inputMask>
-
+          >
           <app-message [control]="pessoaForm.get('endereco.cep')" error="obrigatoriedade" message="CEP é obrigatório!"></app-message>
         </div>
 
