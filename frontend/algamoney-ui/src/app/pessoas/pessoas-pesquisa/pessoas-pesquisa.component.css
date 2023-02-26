@@ -2,6 +2,22 @@
   margin-right: .5rem;
 }
 
+.status-pessoa {
+  color: #fff;
+  padding: 0.4rem;
+  border-radius: 0.3rem;
+}
+
+.status-pessoa.ativo {
+  background: #689F38;
+}
+
+.status-pessoa.inativo {
+  background: #D32F2F;
+}
+
 .status-pessoa:hover {
   cursor: pointer;
 }
+
+

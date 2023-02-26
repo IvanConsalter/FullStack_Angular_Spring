@@ -59,6 +59,7 @@
                 [pTooltip]="!pessoa.ativo ? 'Ativar' : 'Desativar'"
                 tooltipPosition="top"
                 (click)="alterarStatusPessoa(pessoa)"
+                [ngClass]="{ ativo: pessoa.ativo, inativo: !pessoa.ativo }"
               >
                 {{ pessoa.ativo ? "Ativo" : "Inativo" }}
               </a>
@@ -77,6 +78,7 @@
                 pTooltip="Excluir"
                 tooltipPosition="top"
                 pButton
+                class="p-button-danger"
                 (click)="confirmarExclusao(pessoa)"
               ></button>
             </td>

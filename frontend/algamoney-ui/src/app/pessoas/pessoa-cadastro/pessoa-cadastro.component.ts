@@ -153,7 +153,11 @@ export class PessoaCadastroComponent implements OnInit {
       .catch(erro => this.erroHandler.mostrarErro(erro));
   }
 
-  carregarCidades(): void {
+  carregarCidades(estadoCodigo?: number): void {
+    if (estadoCodigo) {
+      this.estadoSelecionado = estadoCodigo;
+    }
+
     this.pessoaService.consultarCidades(this.estadoSelecionado)
       .then( resposta => {
         this.cidades = resposta.map( cidade => {

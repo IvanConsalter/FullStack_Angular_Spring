@@ -20,6 +20,7 @@ import { PessoaCadastroComponent } from './pessoa-cadastro/pessoa-cadastro.compo
 
 import { PessoasRoutingModule } from './pessoas-routing.module';
 import { PessoaCadastroContatoComponent } from './pessoa-cadastro-contato/pessoa-cadastro-contato.component';
+import { NgxMaskModule } from 'ngx-mask';
 
 @NgModule({
   declarations: [
@@ -32,8 +33,12 @@ import { PessoaCadastroContatoComponent } from './pessoa-cadastro-contato/pessoa
     FormsModule,
     ReactiveFormsModule,
     PessoasRoutingModule,
+
     // My Shared Module
     SharedModule,
+
+    NgxMaskModule.forRoot(),
+
     // PrimeNg Modules
     TableModule,
     InputTextModule,

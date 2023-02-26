@@ -113,6 +113,7 @@
                 icon="pi pi-trash"
                 pTooltip="Excluir"
                 tooltipPosition="top"
+                class="p-button-danger"
                 (click)="confirmarExclusao(lancamento)"
                 [disabled]="!temPermissao('ROLE_REMOVER_LANCAMENTO')"
               ></button>

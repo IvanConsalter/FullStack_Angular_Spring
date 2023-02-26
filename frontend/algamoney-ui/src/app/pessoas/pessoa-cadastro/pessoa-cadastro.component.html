@@ -1,5 +1,5 @@
 <div class="container">
-  <form autocomplete="off" (ngSubmit)="salvarPessoa()" [formGroup]="pessoaForm">
+  <form (ngSubmit)="salvarPessoa()" [formGroup]="pessoaForm">
 
     <div class="p-grid">
       <div class="p-col-12">
@@ -24,6 +24,7 @@
           <input
             pInputText
             type="text"
+            mask="00000-000"
             name="cep"
             formControlName="cep"
           >
@@ -82,7 +83,7 @@
               [filter]="true"
               name="estado"
               formControlName="codigo"
-              (onChange)="carregarCidades()"
+              (onChange)="carregarCidades($event.value)"
               emptyFilterMessage="Nenhum resultado encontrado!"
               emptyMessage="Nenhum resultado encontrado!"
             ></p-dropdown>
