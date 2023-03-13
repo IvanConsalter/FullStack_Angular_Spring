@@ -1,5 +1,7 @@
 package com.ivanconsalter.algamoney.config.property;
 
+import java.util.List;
+
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -34,16 +36,23 @@ public class AlgamoneyApiProperty {
 	
 	public static class Seguranca {
 		
-		private boolean enableHttps;
+		private List<String> redirectsPermitidos;
+		private String authServerUrl;
 
-
-		public boolean isEnableHttps() {
-			return enableHttps;
+		public List<String> getRedirectsPermitidos() {
+			return redirectsPermitidos;
 		}
 
+		public void setRedirectsPermitidos(List<String> redirectsPermitidos) {
+			this.redirectsPermitidos = redirectsPermitidos;
+		}
 
-		public void setEnableHttps(boolean enableHttps) {
-			this.enableHttps = enableHttps;
+		public String getAuthServerUrl() {
+			return authServerUrl;
+		}
+
+		public void setAuthServerUrl(String authServerUrl) {
+			this.authServerUrl = authServerUrl;
 		}
 		
 		
