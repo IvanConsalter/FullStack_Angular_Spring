@@ -1,3 +1,5 @@
 /.metadata/
 
 src/main/resources/config/config.properties
+
+src/main/resources/keystore/algamoney.jks
