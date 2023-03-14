@@ -6,6 +6,8 @@ target/
 
 src/main/resources/config/config.properties
 
+src/main/resources/keystore/algamoney.jks
+
 ### STS ###
 .apt_generated
 .classpath
