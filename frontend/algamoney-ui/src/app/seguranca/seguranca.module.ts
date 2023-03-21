@@ -12,8 +12,6 @@ import { AuthGuard } from './auth.guard';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 
-import { LoginFormComponent } from './login-form/login-form.component';
-
 import { SegurancaRoutingModule } from './seguranca-routing.module';
 import { SharedModule } from '../shared/shared.module';
 
@@ -27,7 +25,6 @@ export function pegarToken(): string {
 
 @NgModule({
   declarations: [
-    LoginFormComponent
   ],
   imports: [
     CommonModule,

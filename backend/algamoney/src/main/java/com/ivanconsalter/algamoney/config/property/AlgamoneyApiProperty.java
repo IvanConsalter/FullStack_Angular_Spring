@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 public class AlgamoneyApiProperty {
 
 //	private final String originPermitida = "http://127.0.0.1:5500";
-	private final String originPermitida = "http://localhost:4200";
+	private final String originPermitida = "http://local-algamoney.com:4200";
 	
 	private final Seguranca seguranca = new Seguranca();
 	

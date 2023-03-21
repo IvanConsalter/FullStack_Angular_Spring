@@ -12,8 +12,7 @@ export class AppComponent implements OnInit{
 
   constructor(
     private config: PrimeNGConfig,
-    private translateService: TranslateService,
-    private router: Router
+    private translateService: TranslateService
   ) { }
 
   ngOnInit(): void {
@@ -22,11 +21,4 @@ export class AppComponent implements OnInit{
       .subscribe( resposta => this.config.setTranslation(resposta));
   }
 
-  exibirNavBar(): boolean {
-    if (this.router.url !== '/login') {
-      return true;
-    }
-
-    return false;
-  }
 }
