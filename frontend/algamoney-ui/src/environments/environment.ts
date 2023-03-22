@@ -7,7 +7,8 @@ export const environment = {
   apiUrl: 'http://localhost:8080',
   tokenAllowedDomains: [ /localhost:8080/],
   tokenDisallowedRoutes: [/\/oauth2\/token/],
-  oauthCallbackUrl: 'http://local-algamoney.com:4200/authorized'
+  oauthCallbackUrl: 'http://local-algamoney.com:4200/authorized',
+  logoutRedirectToUrl: 'http://local-algamoney.com:4200'
 };
 
 /*

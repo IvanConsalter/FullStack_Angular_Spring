@@ -5,8 +5,6 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { JwtModule, JwtHelperService } from '@auth0/angular-jwt';
 
-import { LogoutService } from './logout.service';
-
 import { AuthGuard } from './auth.guard';
 
 import { ButtonModule } from 'primeng/button';
@@ -26,7 +24,7 @@ export function pegarToken(): string {
 
 @NgModule({
   declarations: [
-  
+
     AuthorizedComponent
   ],
   imports: [
@@ -50,7 +48,6 @@ export function pegarToken(): string {
   ],
   providers: [
     JwtHelperService,
-    LogoutService,
     AuthGuard,
     {
       provide: HTTP_INTERCEPTORS,

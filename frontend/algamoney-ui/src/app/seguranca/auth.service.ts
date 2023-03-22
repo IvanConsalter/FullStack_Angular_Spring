@@ -8,22 +8,18 @@ import { environment } from 'src/environments/environment';
 import * as CryptoJS from 'crypto-js';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-
   oauthTokenUrl = `${environment.apiUrl}/oauth2/token`;
   oauthAuthorizeUrl = `${environment.apiUrl}/oauth2/authorize`;
   jwtPayload: any;
 
-  constructor(
-    private http: HttpClient,
-    private jwtHelper: JwtHelperService
-  ) {
+  constructor(private http: HttpClient, private jwtHelper: JwtHelperService) {
     this.carregarToken();
   }
 
-  login() {
+  login(): void {
     const state = this.gerarStringAleatoria(40);
     const codeVerifier = this.gerarStringAleatoria(128);
 
@@ -33,9 +29,9 @@ export class AuthService {
     const challengeMethod = 'S256';
     const codeChallenge = CryptoJS.SHA256(codeVerifier)
       .toString(CryptoJS.enc.Base64)
-      .replace(/\+/g, "-")
-      .replace(/\//g, "_")
-      .replace(/=+$/, "");
+      .replace(/\+/g, '-')
+      .replace(/\//g, '_')
+      .replace(/=+$/, '');
 
     const redirectURI = encodeURIComponent(environment.oauthCallbackUrl);
 
@@ -50,14 +46,13 @@ export class AuthService {
       'code_challenge=' + codeChallenge,
       'code_challenge_method=' + challengeMethod,
       'state=' + state,
-      'redirect_uri=' + redirectURI
+      'redirect_uri=' + redirectURI,
     ];
 
-    window.location.href = this.oauthAuthorizeUrl + '?' +  params.join('&');
+    window.location.href = this.oauthAuthorizeUrl + '?' + params.join('&');
   }
 
   obterNovoAccessToken(): Promise<void> {
-
     const headers = new HttpHeaders()
       .append('Content-Type', 'application/x-www-form-urlencoded')
       .append('Authorization', 'Basic YW5ndWxhcjpAbmd1bEByMA==');
@@ -66,15 +61,16 @@ export class AuthService {
       .append('grant_type', 'refresh_token')
       .append('refresh_token', localStorage.getItem('refreshToken'));
 
-    return this.http.post(this.oauthTokenUrl, payload, { headers })
+    return this.http
+      .post(this.oauthTokenUrl, payload, { headers })
       .toPromise()
-      .then( (resposta: any) => {
+      .then((resposta: any) => {
         this.armazenarToken(resposta.access_token);
         this.armazenarRefreshToken(resposta.refresh_token);
         console.log('Novo access token criado!');
         return Promise.resolve();
       })
-      .catch( (resposta) => {
+      .catch((resposta) => {
         console.log('Erro ao renovar token: ', resposta);
         return Promise.resolve();
       });
@@ -99,7 +95,8 @@ export class AuthService {
       .append('Content-Type', 'application/x-www-form-urlencoded')
       .append('Authorization', 'Basic YW5ndWxhcjpAbmd1bEByMA==');
 
-    return this.http.post<any>(this.oauthTokenUrl, payload, { headers })
+    return this.http
+      .post<any>(this.oauthTokenUrl, payload, { headers })
       .toPromise()
       .then((resposta: any) => {
         this.armazenarToken(resposta.access_token);
@@ -115,7 +112,6 @@ export class AuthService {
         console.error('Erro ao gerar o token com o code.', resposta);
         return Promise.resolve();
       });
-
   }
 
   isAccessTokenInvalido(): any {
@@ -130,7 +126,7 @@ export class AuthService {
 
   temQualquerPermissao(roles: any): boolean {
     for (const role of roles) {
-      if(this.temPermissao(role)) {
+      if (this.temPermissao(role)) {
         return true;
       }
     }
@@ -160,13 +156,20 @@ export class AuthService {
     this.jwtPayload = null;
   }
 
-  private gerarStringAleatoria(tamanho: number) {
+  private gerarStringAleatoria(tamanho: number): string {
     let resultado = '';
-    //Chars que são URL safe
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    // Chars que são URL safe
+    const chars =
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     for (let i = 0; i < tamanho; i++) {
       resultado += chars.charAt(Math.floor(Math.random() * chars.length));
     }
     return resultado;
-}
+  }
+
+  logout(): void {
+    this.limparAccessToken();
+    localStorage.clear();
+    window.location.href = environment.apiUrl + '/logout?returnTo=' + environment.logoutRedirectToUrl;
+  }
 }
