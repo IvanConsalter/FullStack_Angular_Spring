@@ -18,6 +18,7 @@ import { SharedModule } from '../shared/shared.module';
 import { MoneyHttpInterceptor } from './money-http-interceptor';
 
 import { environment } from 'src/environments/environment';
+import { AuthorizedComponent } from './authorized/authorized.component';
 
 export function pegarToken(): string {
   return localStorage.getItem('token');
@@ -25,6 +26,8 @@ export function pegarToken(): string {
 
 @NgModule({
   declarations: [
+  
+    AuthorizedComponent
   ],
   imports: [
     CommonModule,
